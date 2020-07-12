@@ -30,11 +30,11 @@ class _FilterDashLayoutState extends State<FilterDashLayout> {
       padding: const EdgeInsets.only(left: 16.0),
       child: 
         Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.centerRight,
           child: 
             Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 new Text("Dashbord", style: TextStyle(color:Colors.white,fontSize: 20),),

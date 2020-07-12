@@ -1,3 +1,4 @@
+import 'package:MindSpark/articlePage.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';

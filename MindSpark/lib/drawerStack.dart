@@ -5,11 +5,18 @@ import 'homeheader.dart';
 
 class DrawerStack extends StatefulWidget {
   @override
-  _DrawerStackState createState() => _DrawerStackState();
+  DrawerStackState createState() => DrawerStackState();
 }
-
-class _DrawerStackState extends State<DrawerStack> {
-  bool isCollapsed = true;
+class Check extends StatefulWidget{
+  static bool isCollapsed = true;
+  void set switchTask(bool newCollapsed){
+    isCollapsed = newCollapsed;
+    print(isCollapsed);
+  }
+   @override
+   DrawerStackState createState() => DrawerStackState();
+}
+class DrawerStackState extends State<DrawerStack> {
   double screenWidth, screenHeight;
   Duration duration = const Duration(milliseconds: 300);
   @override
@@ -29,13 +36,24 @@ class _DrawerStackState extends State<DrawerStack> {
     return FilterDashLayout();
   }
   Widget dashboard(context){
+    print(Check.isCollapsed);
     return AnimatedPositioned(
       duration: duration,
-      top: HomeHeaderState.isCollapsed ? 0: .2 * screenHeight,
-      bottom: HomeHeaderState.isCollapsed ? 0:.2 * screenWidth,
-      left: HomeHeaderState.isCollapsed ? 0:.6*screenWidth,
-      right: HomeHeaderState.isCollapsed ? 0:-.4*screenWidth,
-      child: Home(),
+      top: Check.isCollapsed ? 0: .1 * screenHeight,
+      bottom: Check.isCollapsed ? 0:.2 * screenWidth,
+      left: Check.isCollapsed ? 0:-.6*screenWidth,
+      right: Check.isCollapsed ? 0:.4*screenWidth,
+      child: Scaffold(
+        body:     
+          GestureDetector(
+            child: Home(),
+            onTap: () {
+              setState(() {
+                Check.isCollapsed = !Check.isCollapsed;
+              });
+            },
+          ),
+      )
     );
   }
 }

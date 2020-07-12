@@ -25,7 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   final Firestore db = Firestore.instance;
   Stream slides;
   String activeTag = "favorites";
-  int currentPage = 0;
+  static int currentPage = 0;
   int currentPageUp = 0;
   int currentPageSecond = 0;
   AnimationController animationController;
@@ -66,12 +66,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
-      return new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.black87,
-          elevation: 0.0,
-        ),
-        endDrawer: Drawer(),
+    return SafeArea(
+      child:
+      new Scaffold(
       body: 
         new Column(
           children: <Widget>[
@@ -87,31 +84,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               children: <Widget>[
                  Flexible(
                   child: 
-                    StreamBuilder(
-                    stream: slides,
-                    initialData: [],
-                    builder: (context, AsyncSnapshot snap){
-                      List slideList = snap.data.toList();
+                  GestureDetector(child:
+                      StreamBuilder(
+                      stream: slides,
+                      initialData: [],
+                      builder: (context, AsyncSnapshot snap){
+                        List slideList = snap.data.toList();
 
-                      return PageView.builder(
-                        controller: crtl,
-                        itemCount: slideList.length+1,
-                        itemBuilder: (context, int currentIndex){
-                          if(currentIndex == 0){
-                            return _buildTagPage();
+                        return PageView.builder(
+                          controller: crtl,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: slideList.length+1,
+                          itemBuilder: (context, int currentIndex){
+                            if(currentIndex == 0){
+                              return _buildTagPage();
+                            }
+                            else if(slideList.length >= currentIndex){
+                              bool active = currentIndex == currentPage;
+                              return _buildStoryPage(slideList[currentIndex-1], active);
+                            }
                           }
-                          else if(slideList.length >= currentIndex){
-                            bool active = currentIndex == currentPage;
-                            return _buildStoryPage(slideList[currentIndex-1], active);
-                          }
-                        }
-                      );
-                    },
+                        );
+                      },
+                    ),
+                    onTap: (){
+                      print("hello + $currentPage");
+                    }
                   )
                 ),
                 PageView.builder(
                   controller: crtl,
                   itemCount: 9,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, int currentIndex){
                     if(currentIndex == 0){
                       return _buildTagPage();
@@ -135,7 +139,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             ),
           ],
         )
-    );  
+    ),
+    ); 
   }
 
   Stream _queryDB({String tag = 'favorite'}){

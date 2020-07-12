@@ -3,12 +3,13 @@ import 'package:MindSpark/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'drawerStack.dart';
 
 
 Widget addButton = Icon(Icons.add, color: Colors.white);
 class HomeHeader extends StatefulWidget {
   @override
-  HomeHeaderState createState() => HomeHeaderState();
+  _HomeHeaderState createState() => _HomeHeaderState();
 
 }
 class Variables {
@@ -20,7 +21,7 @@ class Variables {
   
 }
 
-class HomeHeaderState extends State<HomeHeader> with SingleTickerProviderStateMixin{
+class _HomeHeaderState extends State<HomeHeader> with SingleTickerProviderStateMixin{
   int count = 6;
   static bool isCollapsed = true;
   AnimationController animationController;
@@ -110,8 +111,9 @@ class HomeHeaderState extends State<HomeHeader> with SingleTickerProviderStateMi
                       print(count);
                       setState(() {
                         count = count;
-                        isCollapsed = !isCollapsed;
-                        print(isCollapsed);
+                        Check.isCollapsed = !Check.isCollapsed;
+                        Check().switchTask = Check.isCollapsed;
+                        //print(check.isCollapsed);
                         
                       });
                       //Variables().collapsed = Variables.isCollapsed;
