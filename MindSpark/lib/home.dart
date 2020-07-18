@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:MindSpark/articlePage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:postgres/postgres.dart';
 import 'package:MindSpark/homeheader.dart';
 import 'package:liquid_swipe/Helpers/Helpers.dart';
 import 'dart:math' as math;
+import 'package:nice_button/niceButton.dart';
 
 Widget buttonSection = HomeHeader();
 Future<void> main() async {
@@ -69,6 +71,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     return SafeArea(
       child:
       new Scaffold(
+        backgroundColor: Colors.blueGrey,
       body: 
         new Column(
           children: <Widget>[
@@ -152,11 +155,33 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     final double blur  = active ? 10:0;
     final double offset  = active ? 20:0;
     final double top  = active ? 100:200;
-
+    var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       curve: Curves.easeOutQuint,
       margin: EdgeInsets.only(top: 10, bottom: 50, right: 30),
+      child: Container(
+        padding: EdgeInsets.only(left: 30, top: 10, bottom: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Hi", style: TextStyle(color: Colors.white)),
+            NiceButton(
+              radius: 30,
+              padding: const EdgeInsets.all(15),
+              text: "Register",
+              icon: Icons.account_box,
+              gradientColors: [secondColor, firstColor],
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ArticlePage(data: data,)
+                  )
+                );
+              }, 
+            ),
+          ]
+          ,)
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
@@ -164,7 +189,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/mind-spark-international.appspot.com/o/uploads%2F"+data['imageURL']+"?alt=media&"),
         ),
         boxShadow: [BoxShadow(color: Colors.black87, offset: Offset(offset, offset))]
-        ),);
+        ),
+        );
 
   }
 
@@ -172,7 +198,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     final double blur  = active ? 10:0;
     final double offset  = active ? 20:0;
     final double top  = active ? 100:200;
-
+    
     return AnimatedContainer(
       duration: Duration(milliseconds: 500),
       curve: Curves.easeOutQuint,

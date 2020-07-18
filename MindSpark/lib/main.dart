@@ -27,15 +27,26 @@ class _MyAppState extends State<MyApp>{
   int _currentIndex = 0;
   final List<Widget> children = [
     new DrawerStack(),
-    new Create(),
+    //new Create(),
     new Profile()
   ];
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      backgroundColor: Colors.blueGrey,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.purple,
+        onPressed: (){
+          Navigator.of(context).push(_createRoute());
+        },
+        child: Icon(Icons.add),
+
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
   
       bottomNavigationBar: CurvedNavigationBar(
-        color: Colors.white,
+      
+        color: Colors.black87,
         backgroundColor: Colors.blueGrey,
         buttonBackgroundColor: Colors.black12,
         height: 40,
@@ -43,7 +54,7 @@ class _MyAppState extends State<MyApp>{
         animationCurve: Curves.decelerate,
         items: <Widget>[
           Icon(Icons.home, size: 25, color: Colors.black),
-          Icon(Icons.add_circle, size: 25, color: Colors.black),
+          //Icon(Icons.add_circle, size: 25, color: Colors.black),
           Icon(Icons.portrait, size: 25, color: Colors.black),
         ],
     
@@ -61,6 +72,24 @@ class _MyAppState extends State<MyApp>{
       ));
     
   }
+
+  Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => Create(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(0.0, 1.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
 }
 class myStateless extends StatelessWidget{
   @override
