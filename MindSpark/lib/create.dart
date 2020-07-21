@@ -60,7 +60,7 @@ class _CreateState extends State<Create> {
                   child: new NiceButton(
                     radius: 30,
                     padding: const EdgeInsets.all(15),
-                    text: "Register",
+                    text: "Drop",
                     icon: Icons.account_box,
                     gradientColors: [secondColor, firstColor],
                   ),
@@ -79,7 +79,7 @@ class _CreateState extends State<Create> {
                   child: new NiceButton(
                     radius: 30,
                     padding: const EdgeInsets.all(15),
-                    text: "Register",
+                    text: "Photo",
                     icon: Icons.account_box,
                     gradientColors: [Colors.pink, Colors.purple],
                   ),

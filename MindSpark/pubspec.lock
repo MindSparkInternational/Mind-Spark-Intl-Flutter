@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  awesome_speed_dial:
+    dependency: "direct main"
+    description:
+      name: awesome_speed_dial
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -146,6 +153,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_arc_speed_dial:
+    dependency: "direct main"
+    description:
+      name: flutter_arc_speed_dial
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_staggered_grid_view:
     dependency: "direct main"
     description:

@@ -3,9 +3,9 @@ import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
+import 'package:nice_button/NiceButton.dart';
 import 'home.dart';
-import 'filterDashLayout.dart';
+import 'package:awesome_speed_dial/awesome_speed_dial.dart';
 import 'profile.dart';
 import 'create.dart';
 main() async {
@@ -34,15 +34,13 @@ class _MyAppState extends State<MyApp>{
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.blueGrey,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.purple,
-        onPressed: (){
-          Navigator.of(context).push(_createRoute());
-        },
-        child: Icon(Icons.add),
-
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: AwesomeSpeedDial(
+        fabButtons: <Widget>[float1(), float2(), float3()],
+        colorStartAnimation: Colors.purple,
+        colorEndAnimation: Colors.purple,
+        animatedIconData: AnimatedIcons.add_event,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
   
       bottomNavigationBar: CurvedNavigationBar(
       
@@ -66,30 +64,70 @@ class _MyAppState extends State<MyApp>{
           });
         },
         ),
-        body:  IndexedStack(
-        index: _currentIndex,
-        children: children,
-      ));
+        body: Center(
+          child: IndexedStack(
+            index: _currentIndex,
+            children: children,
+          ),
+
+        )
+        
+      );
     
   }
 
+  Widget float1() {
+    return FloatingActionButton(
+      shape: CircleBorder(),
+      onPressed: (){
+        print("hi");
+        Navigator.of(context).push(_createRoute());
+      },
+      backgroundColor: Colors.green,
+      heroTag: 'btn3',
+      tooltip: 'Second button',
+      child: Icon(Icons.list),
+    );
+  }
+
+  Widget float2() {
+    return FloatingActionButton(
+      onPressed: (){
+        print("hi");
+        Navigator.of(context).push(_createRoute());
+      },
+      heroTag: 'btn1',
+      tooltip: 'First button',
+      backgroundColor: Colors.red,
+      child: Icon(Icons.image),
+    );
+  }
+
+  Widget float3() {
+    return FloatingActionButton(
+      backgroundColor: Colors.yellow,
+      heroTag: 'btn2',
+      child: Icon(Icons.play_arrow,),
+      onPressed: () => Navigator.of(context).push(_createRoute()),
+    );
+  }
   Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => Create(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = Offset(0.0, 1.0);
-      var end = Offset.zero;
-      var curve = Curves.ease;
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => Create(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
-}
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
 class myStateless extends StatelessWidget{
   @override
