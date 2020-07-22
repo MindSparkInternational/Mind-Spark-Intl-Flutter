@@ -35,7 +35,14 @@ class _MyAppState extends State<MyApp>{
     return new Scaffold(
       backgroundColor: Colors.blueGrey,
       floatingActionButton: AwesomeSpeedDial(
-        fabButtons: <Widget>[float1(), float2(), float3()],
+        fabButtons: <Widget>[
+          FloatingActionButton(
+      backgroundColor: Colors.yellow,
+      heroTag: 'btn2',
+      child: Icon(Icons.play_arrow,),
+      onPressed: () => Navigator.of(context).push(_createRoute()),
+    ), 
+        float2(), float3()],
         colorStartAnimation: Colors.purple,
         colorEndAnimation: Colors.purple,
         animatedIconData: AnimatedIcons.add_event,

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'SizeConfig.dart';
 import 'test.dart';
 import 'editProf.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -12,6 +14,7 @@ class _ProfileState extends State<Profile> {
   final controller = PageController(
     initialPage: 0,
   );
+  bool dialVisible = true;
   String _currentName;
   final _nameController = TextEditingController();
   void displayBottomSheet(BuildContext context) {
@@ -20,12 +23,12 @@ class _ProfileState extends State<Profile> {
         builder: (ctx) {
           return Container(
               height: MediaQuery.of(context).size.height * 0.5,
-              child:EditProfile()
+              child: EditProfile()
               // Column(
               //   children: <Widget>[
               //     Text("Edit your Personal Information"),
               //   ],
-             // )
+              // )
               );
         });
   }
@@ -45,10 +48,10 @@ class _ProfileState extends State<Profile> {
                     'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
                 radius: 30.0,
               ),
-              title: TextFormField(),
+              title: Text("Jane Doe"),
               trailing: FlatButton(
                   onPressed: () {
-                  //  displayBottomSheet(context);
+                    //  displayBottomSheet(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => EditProfile()),
@@ -118,7 +121,7 @@ class _ProfileState extends State<Profile> {
                           Icons.link,
                           color: Colors.red,
                         ),
-                        title: TextField(),
+                        title: Text("ww.com"),
                         //  ),
                       ),
                       ListTile(
@@ -126,15 +129,15 @@ class _ProfileState extends State<Profile> {
                           Icons.date_range,
                           color: Colors.red,
                         ),
-                        title: TextField(),
+                        title: Text(" Join Date"),
                       ),
                       ListTile(
                         leading: Icon(Icons.location_on, color: Colors.red),
-                        title: TextField(),
+                        title: Text("Country"),
                       ),
                       ListTile(
                         leading: Icon(Icons.cake, color: Colors.red),
-                        title: TextField(),
+                        title: Text("jan 01"),
                       ),
                     ])),
           ),
@@ -225,103 +228,84 @@ class _ProfileState extends State<Profile> {
               ))
         ],
       ),
-      Divider(
-        color: Colors.grey,
-      ),
-      Container(
-        height: 350,
-        color: Colors.indigo,
-        child: Card(
-          child: PageView(
-              controller: controller,
-              onPageChanged: (page) => {print(page.toString())},
-              pageSnapping: true,
-              scrollDirection: Axis.horizontal,
-              dragStartBehavior: DragStartBehavior.start,
-              children: <Widget>[
-                _pageviewone(context),
-                Row(
-                  children: <Widget>[
-                    Padding(padding: EdgeInsets.only(left: 20)),
-                    // _getIconName(icon: Icons.person, title: 'Name '),
-                    // _getIconName(icon: Icons.thumb_up, title: 'Likes'),
-                    // _getIconName(icon: Icons.share, title: 'Share'),
-                    // _getIconName(icon: Icons.subject, title: 'Field'),
-                    // _getIconName(icon: Icons.video_library, title: 'Type'),
-                  ],
-                )
-              ]),
-        ),
+      SizedBox(
+        height: 20,
       ),
       Divider(
         color: Colors.grey,
       ),
       Container(
-          height: 280,
-          color: Colors.indigo,
-          child: Card(
-            child: PageView(
-                controller: controller,
-                onPageChanged: (page) => {print(page.toString())},
-                pageSnapping: true,
-                scrollDirection: Axis.horizontal,
-                dragStartBehavior: DragStartBehavior.start,
-                children: <Widget>[
-                  _pageviewone(context),
-                  Row(
-                    children: <Widget>[
-                      Padding(padding: EdgeInsets.only(left: 20)),
-                      // _getIconName(icon: Icons.person, title: 'Name '),
-                      // _getIconName(icon: Icons.thumb_up, title: 'Likes'),
-                      // _getIconName(icon: Icons.share, title: 'Share'),
-                      // _getIconName(icon: Icons.subject, title: 'Field'),
-                      // _getIconName(icon: Icons.video_library, title: 'Type'),
-                    ],
-                  )
-                ]),
-          )),
+        height: 480,
+        padding: EdgeInsets.all(20),
+        color: Colors.limeAccent,
+        // child:
+        //   Card(
+        child: PageView(
+            controller: controller,
+            onPageChanged: (page) => {print(page.toString())},
+            pageSnapping: true,
+            scrollDirection: Axis.vertical,
+            dragStartBehavior: DragStartBehavior.start,
+            children: <Widget>[
+              _pageviewone(context),
+              _pageviewone(context),
+              _pageviewone(context),
+            ]),
+        //  ),
+      ),
+      Divider(
+        color: Colors.grey,
+      ),
     ])));
   }
 }
 
-Widget _pageviewone(BuildContext context) => Container(
+Widget _pageviewone(BuildContext context) => Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+        side: BorderSide(width: 3, color: Colors.red),
+      ),
       child: Column(children: <Widget>[
         SizedBox(
           height: 15,
         ),
-        Text("Title"),
+        Text("Title for the article"),
         SizedBox(
           height: 10,
         ),
         CircleAvatar(
           backgroundImage: NetworkImage(
               'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
-          radius: 30.0,
+          radius: 85.0,
         ),
         SizedBox(
-          height: 15,
+          height: 10,
         ),
-        Text(" the detailed article"),
+        Flexible(
+          child: Text(
+            "      Lorem Ipsum has been the industry's gggrt \n      standard dummy text ever since the 1500s,\n      when an unknown printertook a galley of type\n     and scrambled it to make a type specimen .  ",
+          ),
+        ),
         Expanded(
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
                   children: <Widget>[
-                    Padding(padding: EdgeInsets.all(10)),
+                    Padding(padding: EdgeInsets.only(right: 7)),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                       onPressed: null,
                       child: Text("biology"),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 20)),
+                    Padding(padding: EdgeInsets.only(left: 18)),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
                       onPressed: null,
                       child: Text("biology"),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 20)),
+                    Padding(padding: EdgeInsets.only(left: 18)),
                     RaisedButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
@@ -332,30 +316,66 @@ Widget _pageviewone(BuildContext context) => Container(
                     ),
                   ],
                 ))),
-               // SizedBox(height: 20,),
+        SizedBox(
+          height: 18,
+        ),
         Row(
-          children: <Widget>[ 
-             Padding(padding: EdgeInsets.only(left:20)),
-            _getIconName(icon: Icons.person, title: 'Name '),
-            _getIconName(icon: Icons.thumb_up, title: 'Likes'),
-            _getIconName(icon: Icons.share, title: 'Share'),
-            _getIconName(icon: Icons.subject, title: 'Field'),
-            _getIconName(icon: Icons.video_library, title: 'Type'),
+          children: <Widget>[
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              onPressed: null,
+              child: Text("Author Name"),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 120),
+            ),
+            Align(
+                alignment: Alignment.bottomRight,
+                child: new FloatingActionButton(
+                  onPressed: null,
+                  backgroundColor: Colors.grey,
+                  child: buildSpeedDial(),
+                ))
           ],
         )
       ]),
     );
 
-Widget _getIconName({String title, IconData icon}) {
-  return Container(
-     // margin: EdgeInsets.only(top: 20.0),
-      width: 60.0,
-      height: 60.0,
-      child: Column(children: [
-        Icon(icon, size: 20.0, color: Colors.black),
-        Padding(
-          padding: EdgeInsets.only(top: 2.0),
-          child: Text(title, style: TextStyle(fontSize: 10.0)),
-        )
-      ]));
+SpeedDial buildSpeedDial() {
+  return SpeedDial(
+    backgroundColor: Colors.grey,
+    animatedIcon: AnimatedIcons.menu_close,
+    animatedIconTheme: IconThemeData(size: 20.0),
+    onOpen: () => print('OPENING DIAL'),
+    children: [
+      SpeedDialChild(
+        child: Icon(Icons.thumb_up, color: Colors.white),
+        backgroundColor: Colors.grey,
+        label: 'Likes ',
+        labelStyle: TextStyle(fontWeight: FontWeight.w500),
+        labelBackgroundColor: Colors.grey,
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.share, color: Colors.white),
+        backgroundColor: Colors.grey,
+        label: 'Share ',
+        labelStyle: TextStyle(fontWeight: FontWeight.w500),
+        labelBackgroundColor: Colors.grey,
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.subject, color: Colors.white),
+        backgroundColor: Colors.grey,
+        label: 'Field ',
+        labelBackgroundColor: Colors.grey,
+      ),
+      SpeedDialChild(
+        child: Icon(Icons.video_library, color: Colors.white),
+        backgroundColor: Colors.grey,
+        label: 'Type ',
+        labelBackgroundColor: Colors.grey,
+      ),
+    ],
+  );
 }
