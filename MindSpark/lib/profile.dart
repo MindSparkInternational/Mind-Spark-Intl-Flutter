@@ -17,21 +17,7 @@ class _ProfileState extends State<Profile> {
   bool dialVisible = true;
   String _currentName;
   final _nameController = TextEditingController();
-  void displayBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (ctx) {
-          return Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              child: EditProfile()
-              // Column(
-              //   children: <Widget>[
-              //     Text("Edit your Personal Information"),
-              //   ],
-              // )
-              );
-        });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +37,7 @@ class _ProfileState extends State<Profile> {
               title: Text("Jane Doe"),
               trailing: FlatButton(
                   onPressed: () {
-                    //  displayBottomSheet(context);
-                    Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => EditProfile()),
                     );
@@ -60,7 +45,8 @@ class _ProfileState extends State<Profile> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide(color: Colors.red)),
-                  child: Text("Edit Profile")),
+                  child: Text("Edit Profile")
+                  ),
             ),
           ),
           Container(
@@ -96,7 +82,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           Container(
-              padding: EdgeInsets.only(left: 80, right: 8),
+              padding: EdgeInsets.only(left: 60, right: 8),
               child: TextField(
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(8.0),
@@ -108,44 +94,24 @@ class _ProfileState extends State<Profile> {
               )),
           SizedBox(height: 10),
           Container(
-            height: 100,
-            child: Padding(
-                padding: EdgeInsets.only(left: 60),
-                child: GridView.count(
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 4),
-                    crossAxisCount: 2,
+
+
+            height: 50,
+            child: 
+         
+                  Row(
                     children: <Widget>[
-                      ListTile(
-                        leading: Icon(
-                          Icons.link,
-                          color: Colors.red,
-                        ),
-                        title: Text("ww.com"),
-                        //  ),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.date_range,
-                          color: Colors.red,
-                        ),
-                        title: Text(" Join Date"),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.location_on, color: Colors.red),
-                        title: Text("Country"),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.cake, color: Colors.red),
-                        title: Text("jan 01"),
-                      ),
-                    ])),
+                      Padding(padding: EdgeInsets.only(left:40)),
+                      _getIconName(icon: Icons.link, title: 'www.example.com'),
+                      _getIconName(icon: Icons.location_on, title: 'Country '),
+                    ])
+                     
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Container(
-              padding: EdgeInsets.only(left: 60),
+              padding: EdgeInsets.only(left: 20),
               child: Row(
                 children: <Widget>[
                   Padding(padding: EdgeInsets.only(left: 10)),
@@ -231,9 +197,7 @@ class _ProfileState extends State<Profile> {
       SizedBox(
         height: 20,
       ),
-      Divider(
-        color: Colors.grey,
-      ),
+    
       Container(
         height: 480,
         padding: EdgeInsets.all(20),
@@ -378,4 +342,14 @@ SpeedDial buildSpeedDial() {
       ),
     ],
   );
+}
+Widget _getIconName({String title, IconData icon}) {
+  return Container(
+         child: Row(children: [
+        Icon(icon, size: 22.0, color: Colors.red),
+        Padding(
+          padding: EdgeInsets.all( 10.0),
+          child: Text(title, style: TextStyle(fontSize: 14.0)),
+        )
+      ]));
 }
