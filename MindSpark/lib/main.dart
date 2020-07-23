@@ -1,4 +1,5 @@
 import 'package:MindSpark/articlePage.dart';
+import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -28,11 +29,13 @@ class _MyAppState extends State<MyApp>{
   final List<Widget> children = [
     new DrawerStack(),
     //new Create(),
+    //new CreatePost(),
     new Profile()
   ];
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.blueGrey,
       floatingActionButton: AwesomeSpeedDial(
         fabButtons: <Widget>[

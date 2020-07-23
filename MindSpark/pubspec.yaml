@@ -40,6 +40,7 @@ dependencies:
   awesome_speed_dial: ^0.0.1
   flutter_arc_speed_dial: ^1.0.3
   flutter_speed_dial: ^1.2.5
+  flutter_neumorphic: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

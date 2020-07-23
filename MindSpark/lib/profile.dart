@@ -23,12 +23,18 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-            child: ListView(children: <Widget>[
+            child: ListView (
+              children: <Widget>[
+    
+    
       Column(
         children: <Widget>[
           Container(
             color: Colors.white,
-            child: ListTile(
+            child:
+            ExpansionTile
+           //  ListTile
+             (
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(
                     'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
@@ -47,9 +53,8 @@ class _ProfileState extends State<Profile> {
                       side: BorderSide(color: Colors.red)),
                   child: Text("Edit Profile")
                   ),
-            ),
-          ),
-          Container(
+                    children: <Widget>[
+ Container(
             height: 40,
             padding: EdgeInsets.only(left: 80),
             child: Row(
@@ -81,7 +86,8 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
-          Container(
+
+ Container(
               padding: EdgeInsets.only(left: 60, right: 8),
               child: TextField(
                 decoration: InputDecoration(
@@ -93,6 +99,7 @@ class _ProfileState extends State<Profile> {
                 ),
               )),
           SizedBox(height: 10),
+            
           Container(
 
 
@@ -107,10 +114,10 @@ class _ProfileState extends State<Profile> {
                     ])
                      
           ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
+
+
+//-------
+   Container(
               padding: EdgeInsets.only(left: 20),
               child: Row(
                 children: <Widget>[
@@ -191,9 +198,29 @@ class _ProfileState extends State<Profile> {
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                 ],
-              ))
+              ),
+              ),
+
+
+                    ],
+
+
+
+            ),
+
+
+          ),
+         
+       
+          SizedBox(
+            height: 5,
+          ),
+       
+              
         ],
       ),
+
+      
       SizedBox(
         height: 20,
       ),
@@ -217,10 +244,14 @@ class _ProfileState extends State<Profile> {
             ]),
         //  ),
       ),
-      Divider(
-        color: Colors.grey,
-      ),
-    ])));
+      // Divider(
+      //   color: Colors.grey,
+      // ),
+    ],
+    ),
+
+    ),
+    );
   }
 }
 
