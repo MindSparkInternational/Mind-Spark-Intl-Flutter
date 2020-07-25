@@ -40,11 +40,11 @@ class _MyAppState extends State<MyApp>{
       floatingActionButton: AwesomeSpeedDial(
         fabButtons: <Widget>[
           FloatingActionButton(
-      backgroundColor: Colors.yellow,
-      heroTag: 'btn2',
-      child: Icon(Icons.play_arrow,),
-      onPressed: () => Navigator.of(context).push(_createRoute()),
-    ), 
+            backgroundColor: Colors.yellow,
+            heroTag: null,
+            child: Icon(Icons.play_arrow,),
+            onPressed: () => Navigator.of(context).push(_createRoute()),
+          ), 
         float2(), float3()],
         colorStartAnimation: Colors.purple,
         colorEndAnimation: Colors.purple,
