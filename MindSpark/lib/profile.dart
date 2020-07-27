@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'SizeConfig.dart';
-
+import 'package:camera/camera.dart';
 import 'editProf.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -31,12 +31,25 @@ class _ProfileState extends State<Profile> {
                   child: ExpansionTile
                       //  ListTile
                       (
-                    leading: CircleAvatar(
+                    leading: 
+                    GestureDetector(
+        onTap: () => Navigator.of(context).push(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              HeroDetail(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+        )),
+        child: 
+                   // InkWell(
+                   // child:
+                    CircleAvatar(
                       backgroundImage: NetworkImage(
                           'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
                       radius: 30.0,
                     ),
-                    title: Text("Jane Doe"),
+                    ),
+                 title: Text("Jane Doe"),
                     trailing: FlatButton(
                         onPressed: () {
                           Navigator.push(
@@ -308,7 +321,7 @@ Widget _pageviewone(BuildContext context) => Card(
             Align(
                 alignment: Alignment.bottomRight,
                 child: new FloatingActionButton(
-                  heroTag: "btn",
+                  heroTag: "btn1",
                   onPressed: null,
                   backgroundColor: Colors.grey,
                   child: buildSpeedDial(),
@@ -320,7 +333,6 @@ Widget _pageviewone(BuildContext context) => Card(
 
 SpeedDial buildSpeedDial() {
   return SpeedDial(
-    heroTag: null,
     backgroundColor: Colors.grey,
     animatedIcon: AnimatedIcons.menu_close,
     animatedIconTheme: IconThemeData(size: 20.0),
@@ -367,3 +379,33 @@ Widget _getIconName({String title, IconData icon}) {
   ]));
 }
 
+class HeroDetail extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Your Profile Picture'),
+        ),
+        body: Container(height: 500,
+        width: 500,
+
+          //color: Colors.amber,
+          child: Center(
+            child: 
+            Hero(
+              tag: 'myImage',
+            child: 
+              ClipOval(
+                        child: new SizedBox(
+                          width: 200.0,
+                          height: 200.0,
+              child:
+              Image.network('http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg',
+              fit: BoxFit.fill,),),
+            ),
+            )
+         )
+          ),
+        );
+  }
+}

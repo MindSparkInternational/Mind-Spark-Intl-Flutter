@@ -76,7 +76,7 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
     var future = Future(() {});
     for (var i = 0; i < fetchedList.length; i++) {
       future = future.then((_) {
-        return Future.delayed(Duration(milliseconds: 500), () {
+        return Future.delayed(Duration(milliseconds: 100), () {
           _animatedlistItems.add(fetchedList[i]);
           _animatedlistKey.currentState.insertItem(_animatedlistItems.length - 1);
         });

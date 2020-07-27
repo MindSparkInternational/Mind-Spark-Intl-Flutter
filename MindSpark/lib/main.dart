@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp>{
         print("hi");
         Navigator.of(context).push(_createRoute());
       },
-      heroTag: 'btn1',
+      heroTag: 'btn4',
       tooltip: 'First button',
       backgroundColor: Colors.red,
       child: Icon(Icons.image),
