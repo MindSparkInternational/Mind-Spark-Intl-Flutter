@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:postgres/postgres.dart';
 import 'package:MindSpark/homeheader.dart';
-import 'package:liquid_swipe/Helpers/Helpers.dart';
 import 'dart:math' as math;
 import 'package:nice_button/niceButton.dart';
 
@@ -71,11 +70,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
     return SafeArea(
       child:
       new Scaffold(
+        appBar: new AppBar(
+          title: Text("Mind Spark"),
+          automaticallyImplyLeading: false,
+        ),
         backgroundColor: Colors.blueGrey,
       body: 
         new Column(
           children: <Widget>[
-            buttonSection,
+            //buttonSection,
             SizedBox(
               height: 50
             ),
@@ -163,7 +166,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
       child: Container(
         padding: EdgeInsets.only(left: 30, top: 10, bottom: 30),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text("Hi", style: TextStyle(color: Colors.white)),
             NiceButton(
@@ -174,7 +178,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
               gradientColors: [secondColor, firstColor],
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ArticlePage(data: data,)
+                  builder: (context) => DragabbleScrollableSheetDemo(data: data,)
                   )
                 );
               }, 

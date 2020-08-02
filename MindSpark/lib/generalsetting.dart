@@ -2,7 +2,7 @@ import 'edit.dart';
 import 'report.dart';
 import 'package:flutter/material.dart';
 
-
+import 'package:hexcolor/hexcolor.dart';
 class PageWithAnimatedList extends StatefulWidget {
   @override
   _PageWithAnimatedListState createState() => _PageWithAnimatedListState();
@@ -21,14 +21,18 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
   void _loadItems() {
     final fetchedList = [
       Card(
-        
-            color: Colors.grey,
+   color: Hexcolor("#1f405e"),
+           // color: Colors.grey,
+             shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
         child:
       ListTile(
-        title: Text('Edit Profile'),
+        title: Text('Edit Profile', style: TextStyle(color: Colors.white),),
         trailing: Icon(
           Icons.edit,
-          color: Colors.redAccent,
+          color: Colors.white,
         ),
         onTap: () {
           Navigator.push(
@@ -40,20 +44,28 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
       ),
 
       Card(
-        color: Colors.grey,
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
+      color: Hexcolor("#1f405e"),
         child:
       ListTile(
-        title: Text('Theme dark and Light '),
-        trailing: Icon(Icons.lightbulb_outline, color: Colors.redAccent),
+        title: Text('Theme dark and Light ',style: TextStyle(color: Colors.white),),
+        trailing: Icon(Icons.lightbulb_outline, color: Colors.white),
         onTap: null,
       ),
       ),
       Card(
-            color: Colors.grey,
+       color: Hexcolor("#1f405e"),
+         shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
         child:
       ListTile(
-        title: Text('Report issues'),
-        trailing: Icon(Icons.report_problem, color: Colors.redAccent),
+        title: Text('Report issues',style: TextStyle(color: Colors.white),),
+        trailing: Icon(Icons.report_problem, color: Colors.white),
         onTap:(){
           Navigator.push(
             context,
@@ -63,11 +75,15 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
 
       ),),
       Card(
-            color: Colors.grey,
+  color: Hexcolor("#1f405e"),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
         child:
       ListTile(
-        title: Text('Logout '),
-        trailing: Icon(Icons.exit_to_app, color: Colors.redAccent),
+        title: Text('Logout ',style: TextStyle(color: Colors.white),),
+        trailing: Icon(Icons.exit_to_app, color: Colors.white),
         onTap: null,
       ),
       ),
@@ -111,7 +127,9 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Hexcolor("#0d1822"),
       appBar: AppBar(
+        backgroundColor: Hexcolor("#19222c"),
         title: Text("Settings Details"),
       
       ),

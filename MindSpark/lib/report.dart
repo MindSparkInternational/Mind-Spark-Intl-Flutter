@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 class ReportClass extends StatefulWidget {
   @override
   _ReportClassState createState() => _ReportClassState();
@@ -8,8 +9,9 @@ class _ReportClassState extends State<ReportClass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+         backgroundColor: Hexcolor("#0d1822"),
       appBar: AppBar(
-       // backgroundColor: Colors.transparent,
+      backgroundColor: Hexcolor("#19222c"),
 title: Text("Report Issues"),
 
       ),
@@ -21,9 +23,11 @@ title: Text("Report Issues"),
          Container(
   height: 200,
   child: Card(
+    elevation: 5.0,
+    color: Hexcolor("#19222c"),
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
-        side: BorderSide(width: 3, color: Colors.grey),
+       // side: BorderSide(width: 3, color: Colors.red),
       ),
     semanticContainer: true,
     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -38,17 +42,17 @@ title: Text("Report Issues"),
                     ),
                      TextField(
                       autofocus: false,
-                  style: TextStyle(fontSize: 15.0, color: Colors.black),
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Write issues',
-                   // helperText: 'Report',
+                    hintStyle: TextStyle(color:Colors.white),
                     filled: true,
                     fillColor: Colors.transparent,
                     contentPadding: const EdgeInsets.only(
                         left: 14.0, bottom: 6.0, top: 8.0),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
+                      borderSide: BorderSide(color: Hexcolor("#60aaa1"),),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     enabledBorder: UnderlineInputBorder(
@@ -61,8 +65,12 @@ title: Text("Report Issues"),
                      RaisedButton(onPressed: (){
                        Navigator.pop(context);
                      },
-                     child: Text("Submit"),
-                     )
+                      shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      side: BorderSide(color: Hexcolor("#60aaa1"),)),
+                        color: Hexcolor("#1f405e"),
+                     child: Text("Submit",style: TextStyle(color: Colors.white),)),
+                     
 
 
                 ],

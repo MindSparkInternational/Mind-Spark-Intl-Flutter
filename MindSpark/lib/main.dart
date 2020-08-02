@@ -2,16 +2,23 @@ import 'package:MindSpark/articlePage.dart';
 import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
+import 'package:MindSpark/loginScreen.dart';
+import 'package:MindSpark/splashScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:nice_button/NiceButton.dart';
 import 'home.dart';
 import 'package:awesome_speed_dial/awesome_speed_dial.dart';
+import 'loginStack.dart';
 import 'profile.dart';
 import 'create.dart';
-main() async {
+main()  {
   runApp(new MaterialApp(
     home: new MyApp(),
+    //home: Login()
+    //home: LoginStack(),
+    //home: Splash()
 
   ));
 
@@ -37,19 +44,14 @@ class _MyAppState extends State<MyApp>{
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.blueGrey,
-      floatingActionButton: AwesomeSpeedDial(
-        fabButtons: <Widget>[
-          FloatingActionButton(
-            backgroundColor: Colors.yellow,
-            heroTag: null,
-            child: Icon(Icons.play_arrow,),
-            onPressed: () => Navigator.of(context).push(_createRoute()),
-          ), 
-        float2(), float3()],
-        colorStartAnimation: Colors.purple,
-        colorEndAnimation: Colors.purple,
-        animatedIconData: AnimatedIcons.add_event,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Hexcolor("60aaa1"),
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost(),));
+        },
       ),
+        
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
   
       bottomNavigationBar: CurvedNavigationBar(

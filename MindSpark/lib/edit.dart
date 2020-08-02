@@ -1,8 +1,8 @@
-import 'dart:io';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:hexcolor/hexcolor.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -83,15 +83,19 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Hexcolor("#0d1822"),
         appBar: AppBar(
+          backgroundColor: Hexcolor("#19222c"),
           title: Text("Edit Screen"),
         ),
         body: Builder(
             builder: (context) => (Container(
                 child: Card(
+                    elevation: 5.0,
+                    color: Hexcolor("#19222c"),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide(width: 2, color: Colors.grey),
+                      //side: BorderSide(width: 2, color: Colors.red),
                     ),
                     child: Form(
                         key: _formKey,
@@ -127,7 +131,7 @@ class _EditProfileState extends State<EditProfile> {
                                 child: IconButton(
                                   icon: Icon(
                                     FontAwesomeIcons.camera,
-                                    color: Colors.grey,
+                                    color: Hexcolor("#60aaa1"),
                                     size: 30.0,
                                   ),
                                   onPressed: () {
@@ -142,18 +146,24 @@ class _EditProfileState extends State<EditProfile> {
                           TextField(
                             autofocus: false,
                             style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.person),
+                              icon: Icon(
+                                Icons.person,
+                                color: Hexcolor("#60aaa1"),
+                              ),
                               border: InputBorder.none,
                               hintText: 'Name',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               // helperText: 'Report',
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 6.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
+                                borderSide: BorderSide(color: Hexcolor("#60aaa1"),),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: UnderlineInputBorder(
@@ -168,22 +178,27 @@ class _EditProfileState extends State<EditProfile> {
                           TextField(
                             autofocus: false,
                             style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.email),
+                              icon: Icon(
+                                Icons.email,
+                                color: Hexcolor("#60aaa1"),
+                              ),
                               border: InputBorder.none,
                               hintText: 'Email',
-                              // helperText: 'Report',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 6.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
+                                borderSide: BorderSide(color:  Hexcolor("#60aaa1"),),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -194,22 +209,27 @@ class _EditProfileState extends State<EditProfile> {
                           TextField(
                             autofocus: false,
                             style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.person),
+                              icon: Icon(
+                                Icons.person,
+                                color: Hexcolor("#60aaa1"),
+                              ),
                               border: InputBorder.none,
-                              hintText: 'About yourSelf',
-                              // helperText: 'Report',
+                              hintText: 'About yourself',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 6.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
+                                borderSide: BorderSide(color: Hexcolor("#60aaa1"),),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -220,22 +240,28 @@ class _EditProfileState extends State<EditProfile> {
                           TextField(
                             autofocus: false,
                             style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.link),
+                              icon: Icon(
+                                Icons.link,
+                                color: Hexcolor("#60aaa1"),
+                              ),
                               border: InputBorder.none,
                               hintText: 'Link',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               // helperText: 'Report',
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 6.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
+                                borderSide: BorderSide(color: Hexcolor("#60aaa1"),),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -246,22 +272,28 @@ class _EditProfileState extends State<EditProfile> {
                           TextField(
                             autofocus: false,
                             style:
-                                TextStyle(fontSize: 15.0, color: Colors.black),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                             decoration: InputDecoration(
-                              icon: Icon(Icons.location_on),
+                              icon: Icon(
+                                Icons.location_on,
+                                color: Hexcolor("#60aaa1"),
+                              ),
                               border: InputBorder.none,
                               hintText: 'Country',
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
                               // helperText: 'Report',
                               filled: true,
                               fillColor: Colors.transparent,
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 6.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red),
+                                borderSide: BorderSide(color: Hexcolor("#60aaa1"),),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                                borderSide: BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
@@ -270,11 +302,20 @@ class _EditProfileState extends State<EditProfile> {
                             height: 20,
                           ),
                           RaisedButton(
+                              color: Hexcolor("#1f405e"),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  side: BorderSide(
+                                    color: Hexcolor("#60aaa1"),
+                                  )),
                               onPressed: () {
                                 uploadPic(context);
                                 //Navigator.pop(context);
                               },
-                              child: Text("Submit")),
+                              child: Text(
+                                "Submit",
+                                style: TextStyle(color: Colors.white),
+                              )),
                         ]))))))));
   }
 }
