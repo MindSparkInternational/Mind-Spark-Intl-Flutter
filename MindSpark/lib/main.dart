@@ -5,6 +5,7 @@ import 'package:MindSpark/filterDashLayout.dart';
 import 'package:MindSpark/homeheader.dart';
 import 'package:MindSpark/loginOrSign.dart';
 import 'package:MindSpark/loginScreen.dart';
+import 'package:MindSpark/onboarding.dart';
 import 'package:MindSpark/splashScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,12 @@ import 'create.dart';
 main()  {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
-    //home: new MyApp(),
+    home: new MyApp(),
     //home: Login()
     //home: LoginStack(),
     //home: Splash()
-    home: HomePage()
+    //home: HomePage()
+    //home: OnboardingScreen()
 
   ));
 

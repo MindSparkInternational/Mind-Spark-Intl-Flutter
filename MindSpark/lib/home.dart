@@ -1,243 +1,306 @@
-import 'dart:math';
 
-import 'package:MindSpark/articlePage.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:postgres/postgres.dart';
-import 'package:MindSpark/homeheader.dart';
-import 'dart:math' as math;
-import 'package:nice_button/niceButton.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+//import 'package:homescreen/createArticlepage.dart';
+//import 'package:homescreen/video.dart';
 
-Widget buttonSection = HomeHeader();
-Future<void> main() async {
-  runApp(new MaterialApp(
-    home: new Home(),
-  ));
-}
+
+
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
-  final PageController crtl = PageController(viewportFraction: .8);
-  final PageController crtlUp = PageController();
-  final PageController crtlSecond = PageController();
-  final Firestore db = Firestore.instance;
-  Stream slides;
-  String activeTag = "favorites";
-  static int currentPage = 0;
-  int currentPageUp = 0;
-  int currentPageSecond = 0;
-  AnimationController animationController;
-  @override
-  void initState() {
-    // TODO: implement initState
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 1),
-      );
-      animationController.forward();
-    _queryDB();
-    crtlUp.addListener(() {
-      int nextUp = crtlUp.page.round();
-      if(currentPage != nextUp){
-        setState(() {
-          currentPageSecond = nextUp;
-        });
-      }
-    });
-    crtlSecond.addListener(() {
-      int nextUp = crtlUp.page.round();
-      if(currentPage != nextUp){
-        setState(() {
-          currentPageUp = nextUp;
-        });
-      }
-    });
-    crtl.addListener(() {
-      int next = crtl.page.round();
+class _HomeState extends State<Home> {
+  final controller = PageController(
+    initialPage: 0,
+  );
 
-      if(currentPage != next){
-        setState(() {
-          currentPage = next;
-        });
-      }
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child:
-      new Scaffold(
-        appBar: new AppBar(
-          title: Text("Mind Spark"),
-          automaticallyImplyLeading: false,
+    return Scaffold(
+      //  backgroundColor: Colors.black,
+        appBar: AppBar(
+          title: Text("Homescreen"),
         ),
-        backgroundColor: Colors.blueGrey,
-      body: 
-        new Column(
+        body: Stack(
           children: <Widget>[
-            //buttonSection,
-            SizedBox(
-              height: 50
-            ),
-            new Text("$currentPage"),
-            Flexible(child:
-            new PageView(
-              controller: crtlUp,
-              scrollDirection: Axis.vertical,
-              children: <Widget>[
-                 Flexible(
-                  child: 
-                  GestureDetector(child:
-                      StreamBuilder(
-                      stream: slides,
-                      initialData: [],
-                      builder: (context, AsyncSnapshot snap){
-                        List slideList = snap.data.toList();
+            //  Text("hjkghf"),
+            ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
 
-                        return PageView.builder(
-                          controller: crtl,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: slideList.length+1,
-                          itemBuilder: (context, int currentIndex){
-                            if(currentIndex == 0){
-                              return _buildTagPage();
-                            }
-                            else if(slideList.length >= currentIndex){
-                              bool active = currentIndex == currentPage;
-                              return _buildStoryPage(slideList[currentIndex-1], active);
-                            }
-                          }
-                        );
-                      },
-                    ),
-                    onTap: (){
-                      print("hello + $currentPage");
-                    }
-                  )
+              padding: EdgeInsets.all(10),
+              children: <Widget>[
+
+                                     Container(
+                    height: 450,
+                    child: Card(
+                      child:
+                      _buidNewPage(),
+                    )),
+                //   Divider(),
+                Container(
+                  color: Colors.black,
+                  height: 450,
+                  child: _buidNewPage1(),
                 ),
-                PageView.builder(
-                  controller: crtl,
-                  itemCount: 9,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, int currentIndex){
-                    if(currentIndex == 0){
-                      return _buildTagPage();
-                    }
-                    bool active = currentIndex == currentPage;
-                    return _buildBlurbPage(active);
-                  }
-                ),
-                Flexible(
-                  child: 
-                   new PageView(
-                     children: <Widget>[
-                       new Container(color: Colors.black,),
-                       new Container(color: Colors.blue,),
-                       new Container(color: Colors.yellow,),
-                     ],
-                   )
+      
+                Container(
+                  color: Colors.black,
+                  height: 450,
+                  child: _buidNewPage3(),
                 ),
               ],
             )
-            ),
           ],
-        )
-    ),
-    ); 
-  }
-
-  Stream _queryDB({String tag = 'favorite'}){
-    Query query = db.collection("article");
-    slides = query.snapshots().map((list) => list.documents.map((doc) => doc.data));
-  }
-
-  _buildStoryPage(Map data, bool active){
-    final double blur  = active ? 10:0;
-    final double offset  = active ? 20:0;
-    final double top  = active ? 100:200;
-    var firstColor = Color(0xff5b86e5), secondColor = Color(0xff36d1dc);
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOutQuint,
-      margin: EdgeInsets.only(top: 10, bottom: 50, right: 30),
-      child: Container(
-        padding: EdgeInsets.only(left: 30, top: 10, bottom: 30),
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text("Hi", style: TextStyle(color: Colors.white)),
-            NiceButton(
-              radius: 30,
-              padding: const EdgeInsets.all(15),
-              text: "Register",
-              icon: Icons.account_box,
-              gradientColors: [secondColor, firstColor],
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => DragabbleScrollableSheetDemo(data: data,)
-                  )
-                );
-              }, 
-            ),
-          ]
-          ,)
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage("https://firebasestorage.googleapis.com/v0/b/mind-spark-international.appspot.com/o/uploads%2F"+data['imageURL']+"?alt=media&"),
         ),
-        boxShadow: [BoxShadow(color: Colors.black87, offset: Offset(offset, offset))]
-        ),
+
         );
 
+    //  Card(child: Text("hello"),);
   }
 
-  _buildBlurbPage( bool active){
-    final double blur  = active ? 10:0;
-    final double offset  = active ? 20:0;
-    final double top  = active ? 100:200;
-    
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOutQuint,
-      margin: EdgeInsets.only(top: 10, bottom: 50, right: 30),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage("https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Ffd%2Fd7%2F83%2Ffdd783a36cc9f52977908754e6dcb52a.jpg&imgrefurl=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F462533824216511142%2F&tbnid=PvEDGnROouzqSM&vet=12ahUKEwizvIfZ-cPqAhUPPd8KHUPXBRMQMygJegUIARDZAQ..i&docid=j2zthd2JJKWaxM&w=600&h=1212&q=pretty%20waterfalls&ved=2ahUKEwizvIfZ-cPqAhUPPd8KHUPXBRMQMygJegUIARDZAQ"),
+  Widget _buidNewPage() => (
+          // Container(
+          //    color: Colors.black,
+
+          //  child:
+          PageView(
+              physics: BouncingScrollPhysics(),
+              controller: controller,
+              onPageChanged: (page) =>
+                  {print("Inside pageview"), print(page.toString())},
+              pageSnapping: true,
+              scrollDirection: Axis.horizontal,
+              children: <Widget>[
+            Card(
+              shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          side: BorderSide(width: 3, color: Colors.red),
         ),
-        boxShadow: [BoxShadow(color: Colors.black87, offset: Offset(offset, offset))]
-        ),);
+                child: Center(
+              child: Icon(Icons.ac_unit),
+            )),
+            Card(
+              shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+           side: BorderSide(width: 3, color: Colors.red),
+        ),
+                child: Center(
+              child: Icon(Icons.person),
+            )),
+            Card(
+              shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+           side: BorderSide(width: 3, color: Colors.red),
+        ),
+                child: Center(
+              child: Icon(Icons.local_airport),
+            )),
+          ])
+      //   )
+      );
+  Widget _buidNewPage1() => (PageView(
+          physics: BouncingScrollPhysics(),
+          controller: controller,
+          onPageChanged: (page) =>
+              {print("Inside pageview2"), print(page.toString())},
+          pageSnapping: true,
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            Card(
+              // height: 100,
+              child: pic(),
+            ),
+            Card(
+              child: pic(),
+            ),
+            Card(
+                child: Card(
+              child: pic(),
+            ))
+          ]));
+  Widget _buidNewPage3() => (PageView(
+          physics: BouncingScrollPhysics(),
+          controller: controller,
+          onPageChanged: (page) =>
+              {print("Inside pageview3"), print(page.toString())},
+          pageSnapping: true,
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            Card(
+            shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+           side: BorderSide(width: 3, color: Colors.blue),
+        ),
+              child: Text("Post"),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+           side: BorderSide(width: 3, color: Colors.blue),
+        ),
+              child: Text("arll are post"),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+           side: BorderSide(width: 3, color: Colors.blue),
+        ),
+                child: Card(
+              child: Text(" post appear here"),
+            ))
+          ]));
 
+
+
+
+Widget pic()=>  Card(
+        elevation: 5.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          // side: BorderSide(width: 3, color: Colors.red),
+        ),
+      color: Colors.amber,
+        child: 
+        Column(children: <Widget>[
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            "Title for the article",
+            style: TextStyle(color: Colors.white),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CircleAvatar(
+            backgroundImage: NetworkImage(
+                'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg'),
+            radius: 85.0,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Flexible(
+            child: Text(
+              "      Lorem Ipsum has been the industry's  \n      standard dummy text ever since the \n      when an unknown printertook a galley  \n      and scrambled it to make a type.  ",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        
+
+                  ]));
+
+
+                  
+         
+}
+class PageWithAnimatedList extends StatefulWidget {
+  @override
+  _PageWithAnimatedListState createState() => _PageWithAnimatedListState();
+}
+
+class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
+  var _animatedlistItems = <Widget>[];
+  final GlobalKey<AnimatedListState> _animatedlistKey = GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+
+    _loadItems();
   }
 
-  _buildTagPage(){
-    return Container(
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          new Text("Hellow")
-        ],
-      )
+  void _loadItems() {
+    final fetchedList = [
+  
+
+      Card(
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+       // side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
+     // color: Hexcolor("#1f405e"),
+        child:
+      ListTile(
+        title: Text('Create Post ',style: TextStyle(color: Colors.black),),
+        trailing: Icon(Icons.photo_size_select_small, color: Colors.black),
+        /*
+        onTap: (){
+          Navigator.push(
+            context,
+            //MaterialPageRoute(builder: (context) => MyPost()),
+          );
+        },
+        */
+      ),
+      ),
+      Card(
+      // color: Hexcolor("#1f405e"),
+         shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        //side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+      ),
+        child:
+      ListTile(
+        title: Text('Create Video',style: TextStyle(color: Colors.black),),
+        trailing: Icon(Icons.video_library, color: Colors.black),
+        /*onTap:(){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => VideoCreate()),
+          );
+        } ,*/
+
+      ),),
+    
+    ];
+
+    var future = Future(() {});
+    for (var i = 0; i < fetchedList.length; i++) {
+      future = future.then((_) {
+        return Future.delayed(Duration(milliseconds: 100), () {
+          _animatedlistItems.add(fetchedList[i]);
+          _animatedlistKey.currentState.insertItem(_animatedlistItems.length - 1);
+        });
+      });
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return 
+  //  Scaffold(
+       // backgroundColor: Hexcolor("#0d1822"),
+     // appBar: AppBar(
+    //    backgroundColor: Hexcolor("#19222c"),
+     //   title: Text("Settings Details"),
+      
+     // ),
+     // body: 
+      AnimatedList(
+        key: _animatedlistKey,
+        padding: EdgeInsets.only(top: 10),
+        initialItemCount: _animatedlistItems.length,
+        itemBuilder: (context, index, animation) {
+          return SlideTransition(
+            position: CurvedAnimation(
+              curve: Curves.easeOut,
+              parent: animation,
+            ).drive((Tween<Offset>(
+              begin: Offset(1, 0),
+              end: Offset(0, 0),
+            ))),
+            child: _animatedlistItems[index],
+          );
+        },
+     // ),
     );
   }
-  _buildBlurbScroll(PageController crtl){
-   return PageView(
-     scrollDirection: Axis.vertical,
-     controller: crtl,
-     children: <Widget>[
-       new Container(color: Colors.black,),
-       new Container(color: Colors.purpleAccent,),
-       new Container(color: Colors.grey,),
-     ],
-   );
-  }
 }
+
+
 
