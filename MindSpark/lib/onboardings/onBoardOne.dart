@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'animations/FadeAnimation.dart';
+import 'package:MindSpark/animations/FadeAnimation.dart';
 
-class OnBoardTwo extends StatefulWidget {
+class OnBoardOne extends StatefulWidget {
   @override
-  _OnBoardTwoState createState() => _OnBoardTwoState();
+  _OnBoardOneState createState() => _OnBoardOneState();
 }
 
-class _OnBoardTwoState extends State<OnBoardTwo> {
+class _OnBoardOneState extends State<OnBoardOne> {
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
         child: Container(

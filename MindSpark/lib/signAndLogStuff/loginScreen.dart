@@ -1,11 +1,12 @@
 import 'package:MindSpark/main.dart';
-import 'package:MindSpark/signUp.dart';
+import 'signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/widgets.dart';
 
-import 'animations/FadeAnimation.dart';
+import 'package:MindSpark/animations/FadeAnimation.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -76,7 +77,11 @@ class _LoginState extends State<Login> {
                       child: MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {},
+                        onPressed: () async {
+                          var response = await http.get("https://mindsparkapi.herokuapp.com/rest-auth/user/", headers: {"Authorization":"Token 72d72dad50590a7b0f7c68fd58adca7d46eaf1e2"});
+                          print('Response status: ${response.statusCode}');
+                          print('Response body: ${response.body}');
+                        },
                         color: Colors.greenAccent,
                         elevation: 0,
                         shape: RoundedRectangleBorder(

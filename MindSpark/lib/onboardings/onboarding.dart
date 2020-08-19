@@ -1,6 +1,6 @@
-import 'package:MindSpark/loginOrSign.dart';
-import 'package:MindSpark/onBoardOne.dart';
-import 'package:MindSpark/onBoardingTwo.dart';
+import 'package:MindSpark/signAndLogStuff/loginOrSign.dart';
+import 'package:MindSpark/onboardings/onBoardOne.dart';
+import 'package:MindSpark/onboardings/onBoardingTwo.dart';
 import 'package:MindSpark/utilities/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

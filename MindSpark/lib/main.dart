@@ -3,28 +3,30 @@ import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
 import 'package:MindSpark/homeheader.dart';
-import 'package:MindSpark/loginOrSign.dart';
-import 'package:MindSpark/loginScreen.dart';
-import 'package:MindSpark/onboarding.dart';
+import 'package:MindSpark/signAndLogStuff/signUp.dart';
+import 'signAndLogStuff/loginOrSign.dart';
+
+import 'package:MindSpark/onboardings/onboarding.dart';
 import 'package:MindSpark/splashScreen.dart';
+import 'package:MindSpark/testFiles/videoUploadTest.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nice_button/NiceButton.dart';
 import 'home.dart';
-import 'package:awesome_speed_dial/awesome_speed_dial.dart';
-import 'loginStack.dart';
+import 'signAndLogStuff/loginScreen.dart';
 import 'profile.dart';
 import 'create.dart';
 main()  {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: new MyApp(),
+    //home: new MyApp(),
     //home: Login()
-    //home: LoginStack(),
+    //home: FilePickerDemo()
     //home: Splash()
     //home: HomePage()
     //home: OnboardingScreen()
+    home:SignUp()
 
   ));
 

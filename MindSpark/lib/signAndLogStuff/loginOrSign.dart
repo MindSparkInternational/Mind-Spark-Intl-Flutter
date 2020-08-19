@@ -1,7 +1,7 @@
-import 'package:MindSpark/signUp.dart';
+import 'signUp.dart';
 import 'package:flutter/material.dart';
 import 'loginScreen.dart';
-import 'animations/FadeAnimation.dart';
+import 'package:MindSpark/animations/FadeAnimation.dart';
 
 class HomePage extends StatelessWidget {
   @override

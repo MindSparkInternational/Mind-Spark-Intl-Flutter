@@ -1,6 +1,7 @@
+import 'package:MindSpark/signAndLogStuff/signUpTwo.dart';
 import 'package:flutter/material.dart';
 
-import 'animations/FadeAnimation.dart';
+import 'package:MindSpark/animations/FadeAnimation.dart';
 import 'loginScreen.dart';
 
 class SignUp extends StatefulWidget {
@@ -9,6 +10,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final firstController = TextEditingController();
+  final lastController = TextEditingController();
+  final passController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    firstController.dispose();
+    lastController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +40,7 @@ class _SignUpState extends State<SignUp> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
           height: MediaQuery.of(context).size.height - 50,
           width: double.infinity,
           child: Column(
@@ -48,9 +61,9 @@ class _SignUpState extends State<SignUp> {
               ),
               Column(
                 children: <Widget>[
-                  FadeAnimation(1.2, makeInput(label: "First Name")),
-                  FadeAnimation(1.3, makeInput(label: "Last Name")),
-                  FadeAnimation(1.4, makeInput(label: "Password", obscureText: true)),
+                  FadeAnimation(1.2, makeInput(label: "First Name", controller: firstController)),
+                  FadeAnimation(1.3, makeInput(label: "Last Name", controller: lastController)),
+                  FadeAnimation(1.4, makeInput(label: "Password", obscureText: true, controller: passController)),
                 ],
               ),
               FadeAnimation(1.5, Container(
@@ -67,7 +80,15 @@ class _SignUpState extends State<SignUp> {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {},
+                  onPressed: () {
+                      print(passController.text);
+                      print(firstController.text);
+                      print(lastController.text);
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => SignUpTwo(firstName: firstController.text),
+                      )
+                    );
+                  },
                   color: Colors.greenAccent,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -99,7 +120,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget makeInput({label, obscureText = false}) {
+  Widget makeInput({label, obscureText = false, controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -110,6 +131,7 @@ class _SignUpState extends State<SignUp> {
         ),),
         SizedBox(height: 5,),
         TextField(
+          controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
