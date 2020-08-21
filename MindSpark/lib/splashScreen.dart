@@ -1,5 +1,10 @@
+import 'dart:async';
+
+import 'package:MindSpark/main.dart';
+import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 
@@ -55,5 +60,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
           )
       )
     );
+  }
+  void startTimer() {
+    Timer(Duration(seconds: 3), () {
+      navigateUser(); //It will redirect  after 3 seconds
+    });
+  }
+    void navigateUser() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var status = prefs.getBool('isLoggedIn') ?? false;
+    print(status);
+    if (status) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login(),));
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(),));
+    }
   }
 }

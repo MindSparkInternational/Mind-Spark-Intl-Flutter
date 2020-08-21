@@ -1,9 +1,10 @@
 import 'package:MindSpark/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:convert';
 import 'package:flutter/widgets.dart';
 
 import 'package:MindSpark/animations/FadeAnimation.dart';
@@ -13,7 +14,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
- @override
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -56,8 +59,8 @@ class _LoginState extends State<Login> {
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: Column(
                       children: <Widget>[
-                        FadeAnimation(1.2, makeInput(label: "Email")),
-                        FadeAnimation(1.3, makeInput(label: "Password", obscureText: true)),
+                        FadeAnimation(1.2, makeInput(label: "Email", controller: emailController)),
+                        FadeAnimation(1.3, makeInput(label: "Password", obscureText: true, controller: passwordController)),
                       ],
                     ),
                   ),
@@ -78,9 +81,14 @@ class _LoginState extends State<Login> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () async {
-                          var response = await http.get("https://mindsparkapi.herokuapp.com/rest-auth/user/", headers: {"Authorization":"Token 72d72dad50590a7b0f7c68fd58adca7d46eaf1e2"});
+                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                          preferences.setString("email", emailController.text);
+                          var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/login/", body:{"email":emailController.text, "password":passwordController.text});
                           print('Response status: ${response.statusCode}');
                           print('Response body: ${response.body}');
+                          final Map<String, dynamic> responseJson = json.decode(response.body);
+                          String accessToken = responseJson["key"];
+                          print('Response Child: ${responseJson["key"]}');
                         },
                         color: Colors.greenAccent,
                         elevation: 0,
@@ -127,7 +135,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget makeInput({label, obscureText = false}) {
+  Widget makeInput({label, obscureText = false, controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -139,6 +147,7 @@ class _LoginState extends State<Login> {
         SizedBox(height: 5,),
         Container(
           child: TextField(
+            controller: controller,
             obscureText: obscureText,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),

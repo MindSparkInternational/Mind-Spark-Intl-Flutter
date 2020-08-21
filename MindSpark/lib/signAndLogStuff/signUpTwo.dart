@@ -1,16 +1,23 @@
 import 'package:MindSpark/animations/FadeAnimation.dart';
+import 'package:MindSpark/signAndLogStuff/signUpThree.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpTwo extends StatefulWidget {
   final String firstName;
-  SignUpTwo({this.firstName});
+  final String lastName;
+  final String password;
+  SignUpTwo({this.firstName, this.lastName, this.password});
   @override
-  _SignUpTwoState createState() => _SignUpTwoState(firstName);
+  _SignUpTwoState createState() => _SignUpTwoState(firstName, lastName, password);
 }
 
 class _SignUpTwoState extends State<SignUpTwo> {
   String firstName;
-  _SignUpTwoState(this.firstName);
+  String lastName;
+  String password;
+  final emailController = TextEditingController();
+  _SignUpTwoState(this.firstName, this.lastName, this.password);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +55,7 @@ class _SignUpTwoState extends State<SignUpTwo> {
                     color: Colors.grey[700]
                   ),)),
                   SizedBox(height: 20,),
-                  FadeAnimation(1.2, makeInput(label: "Please enter your email")),
+                  FadeAnimation(1.2, makeInput(label: "Please enter your email", controller: emailController)),
                   SizedBox(height:30),
                   FadeAnimation(3, 
                     Container(
@@ -60,8 +67,11 @@ class _SignUpTwoState extends State<SignUpTwo> {
                         border: Border.all(color: Colors.black)
                       ),
                       child: MaterialButton(
-                        onPressed: (){
-
+                        onPressed: () async {
+                          var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/registration/", body: {"email":emailController.text,"password1":password, "password2":password});
+                          print('Response status: ${response.statusCode}');
+                          print('Response body: ${response.body}');
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpThree(), ));
                         },
                         minWidth: double.infinity,
                         height: 100,

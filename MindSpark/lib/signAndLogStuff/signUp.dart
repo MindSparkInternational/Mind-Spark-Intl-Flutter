@@ -1,6 +1,6 @@
 import 'package:MindSpark/signAndLogStuff/signUpTwo.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:MindSpark/animations/FadeAnimation.dart';
 import 'loginScreen.dart';
 
@@ -80,12 +80,12 @@ class _SignUpState extends State<SignUp> {
                 child: MaterialButton(
                   minWidth: double.infinity,
                   height: 60,
-                  onPressed: () {
+                  onPressed: () async {
                       print(passController.text);
                       print(firstController.text);
                       print(lastController.text);
                       Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => SignUpTwo(firstName: firstController.text),
+                        builder: (context) => SignUpTwo(firstName: firstController.text, lastName: lastController.text, password: passController.text,),
                       )
                     );
                   },

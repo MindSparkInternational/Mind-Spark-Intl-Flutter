@@ -52,6 +52,7 @@ dependencies:
   simple_animations: ^2.2.1
   file_picker: ^1.13.3
   http: ^0.12.2
+  shared_preferences: ^0.5.8
 dev_dependencies:
   flutter_test:
     sdk: flutter

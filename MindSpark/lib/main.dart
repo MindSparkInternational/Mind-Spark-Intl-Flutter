@@ -4,6 +4,7 @@ import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/filterDashLayout.dart';
 import 'package:MindSpark/homeheader.dart';
 import 'package:MindSpark/signAndLogStuff/signUp.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signAndLogStuff/loginOrSign.dart';
 
 import 'package:MindSpark/onboardings/onboarding.dart';
@@ -17,16 +18,19 @@ import 'home.dart';
 import 'signAndLogStuff/loginScreen.dart';
 import 'profile.dart';
 import 'create.dart';
-main()  {
+main()  async{
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  var email = preferences.getString("email");
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     //home: new MyApp(),
-    //home: Login()
+    home: email == null ? Login() : MyApp()
     //home: FilePickerDemo()
     //home: Splash()
     //home: HomePage()
     //home: OnboardingScreen()
-    home:SignUp()
+    //home:SignUp()
 
   ));
 
@@ -56,8 +60,12 @@ class _MyAppState extends State<MyApp>{
       floatingActionButton: FloatingActionButton(
         backgroundColor: Hexcolor("60aaa1"),
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost(),));
+        onPressed: () async {
+          //Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.remove("email");
+          
         },
       ),
         
