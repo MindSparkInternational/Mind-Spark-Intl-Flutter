@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:MindSpark/dataClasses/user.dart';
 import 'package:MindSpark/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'signUp.dart';
@@ -89,6 +92,21 @@ class _LoginState extends State<Login> {
                           final Map<String, dynamic> responseJson = json.decode(response.body);
                           String accessToken = responseJson["key"];
                           print('Response Child: ${responseJson["key"]}');
+                          preferences.setString("token", "Token"+ " " + accessToken);
+                          var getUserFromDb = await http.get("https://mindsparkapi.herokuapp.com/endpoint/user_props", headers: {"Authorization": "Token " + accessToken});
+                          final Map<String, dynamic> userPropsJson = json.decode(getUserFromDb.body);
+                          User loggedUser = new User();
+                          loggedUser.id = userPropsJson["id"];
+                          var getUserStuffFromDb = await http.get("https://mindsparkapi.herokuapp.com/endpoint/user_props", headers: {"Authorization": "Token " + accessToken});
+                          final Map<String, dynamic> userJson = json.decode(getUserFromDb.body);
+                          loggedUser.age = userJson["age"];
+                          loggedUser.email = userJson["email"];
+                          loggedUser.country = userJson["country"];
+                          loggedUser.firstName = userJson["full_name"];
+                          loggedUser.lastName = userJson["full_name"];
+                          loggedUser.country = userJson["country"];
+                          print(loggedUser.firstName);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp(),));
                         },
                         color: Colors.greenAccent,
                         elevation: 0,

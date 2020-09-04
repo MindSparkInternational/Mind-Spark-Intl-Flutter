@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:MindSpark/animations/FadeAnimation.dart';
 import 'package:MindSpark/signAndLogStuff/signUpThree.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +73,10 @@ class _SignUpTwoState extends State<SignUpTwo> {
                           var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/registration/", body: {"email":emailController.text,"password1":password, "password2":password});
                           print('Response status: ${response.statusCode}');
                           print('Response body: ${response.body}');
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpThree(), ));
+                          final Map<String, dynamic> responseJson = json.decode(response.body);
+                          String accessToken = responseJson["key"];
+                          print('Response Child: ${responseJson["key"]}');
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpThree(firstName: firstName, lastName: lastName, password: password, token: accessToken,), ));
                         },
                         minWidth: double.infinity,
                         height: 100,

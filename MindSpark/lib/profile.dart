@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'SizeConfig.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -14,6 +16,22 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  @override
+  void initState(){
+    // TODO: implement 
+    //SharedPreferences preferences = await SharedPreferences.getInstance();
+    //var token = preferences.getString("token");
+    //print(token);
+    getToken();
+    super.initState();
+  }
+  void getToken() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var token = preferences.getString("token");
+    //return token;
+  }
+  
   final controller = PageController(
     initialPage: 0,
   );
@@ -71,7 +89,11 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     trailing: FlatButton(
-                        onPressed: () {
+                        onPressed: () async{
+                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                          var token = preferences.getString("token");
+                          print(token);
+                          getToken();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
