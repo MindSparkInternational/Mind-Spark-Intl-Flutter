@@ -73,7 +73,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     title: InkWell(
-                      onTap: () {
+                      /*onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -82,7 +82,7 @@ class _ProfileState extends State<Profile> {
                               // ArticlePage()
                               ),
                         );
-                      },
+                      },*/
                       child: Text(
                         "Jane Doe",
                         style: TextStyle(color: Colors.white),

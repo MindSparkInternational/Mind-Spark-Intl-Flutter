@@ -25,7 +25,7 @@ main()  async{
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
     //home: new MyApp(),
-    home: email == null ? Login() : Login()//MyApp()
+    home: email == null ? Login() : MyApp()
     //home: FilePickerDemo()
     //home: Splash()
     //home: HomePage()
@@ -103,6 +103,7 @@ class _MyAppState extends State<MyApp>{
         )
         
       );
+      
     
   }
 
