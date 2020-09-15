@@ -73,3 +73,43 @@ class ArticleTagItem extends StatelessWidget {
     );
   }
 }
+
+class PostTags extends StatelessWidget {
+  const PostTags({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 3.0),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(25)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+          child: Text('Tag'),
+        ),
+      ),
+    );
+  }
+}
+
+class ArticleTag extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 6.0, bottom: 5),
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
+            child: Text(
+              "Subject",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: Hexcolor('#FBD772'),
+              borderRadius: BorderRadius.circular(30)),
+        ),
+      );
+}

@@ -1,14 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'edit.dart';
 import 'report.dart';
-import 'package:flutter/material.dart';
 
-import 'package:hexcolor/hexcolor.dart';
-class PageWithAnimatedList extends StatefulWidget {
+class ProfieSettings extends StatefulWidget {
   @override
-  _PageWithAnimatedListState createState() => _PageWithAnimatedListState();
+  _ProfieSettingsState createState() => _ProfieSettingsState();
 }
 
-class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
+class _ProfieSettingsState extends State<ProfieSettings> {
   var _animatedlistItems = <Widget>[];
   final GlobalKey<AnimatedListState> _animatedlistKey = GlobalKey();
   @override
@@ -21,71 +21,90 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
   void _loadItems() {
     final fetchedList = [
       Card(
-   color: Hexcolor("#1f405e"),
-           // color: Colors.grey,
-             shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
-      ),
-        child:
-      ListTile(
-        title: Text('Edit Profile', style: TextStyle(color: Colors.white),),
-        trailing: Icon(
-          Icons.edit,
-          color: Colors.white,
+        color: Hexcolor("#1f405e"),
+        // color: Colors.grey,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(
+            width: 2,
+            color: Hexcolor("#60aaa1"),
+          ),
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => EditProfile()),
-          );
-        },
+        child: ListTile(
+          title: Text(
+            'Edit Profile',
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditProfile()),
+            );
+          },
+        ),
       ),
-      ),
-
       Card(
         shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
-      ),
-      color: Hexcolor("#1f405e"),
-        child:
-      ListTile(
-        title: Text('Theme dark and Light ',style: TextStyle(color: Colors.white),),
-        trailing: Icon(Icons.lightbulb_outline, color: Colors.white),
-        onTap: null,
-      ),
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(
+            width: 2,
+            color: Hexcolor("#60aaa1"),
+          ),
+        ),
+        color: Hexcolor("#1f405e"),
+        child: ListTile(
+          title: Text(
+            'Theme dark and Light ',
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: Icon(Icons.lightbulb_outline, color: Colors.white),
+          onTap: null,
+        ),
       ),
       Card(
-       color: Hexcolor("#1f405e"),
-         shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
+        color: Hexcolor("#1f405e"),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(
+            width: 2,
+            color: Hexcolor("#60aaa1"),
+          ),
+        ),
+        child: ListTile(
+          title: Text(
+            'Report issues',
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: Icon(Icons.report_problem, color: Colors.white),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ReportClass()),
+            );
+          },
+        ),
       ),
-        child:
-      ListTile(
-        title: Text('Report issues',style: TextStyle(color: Colors.white),),
-        trailing: Icon(Icons.report_problem, color: Colors.white),
-        onTap:(){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ReportClass()),
-          );
-        } ,
-
-      ),),
       Card(
-  color: Hexcolor("#1f405e"),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-        side: BorderSide(width: 2, color: Hexcolor("#60aaa1"),),
-      ),
-        child:
-      ListTile(
-        title: Text('Logout ',style: TextStyle(color: Colors.white),),
-        trailing: Icon(Icons.exit_to_app, color: Colors.white),
-        onTap: null,
-      ),
+        color: Hexcolor("#1f405e"),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          side: BorderSide(
+            width: 2,
+            color: Hexcolor("#60aaa1"),
+          ),
+        ),
+        child: ListTile(
+          title: Text(
+            'Logout ',
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: Icon(Icons.exit_to_app, color: Colors.white),
+          onTap: null,
+        ),
       ),
     ];
 
@@ -94,7 +113,8 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
       future = future.then((_) {
         return Future.delayed(Duration(milliseconds: 100), () {
           _animatedlistItems.add(fetchedList[i]);
-          _animatedlistKey.currentState.insertItem(_animatedlistItems.length - 1);
+          _animatedlistKey.currentState
+              .insertItem(_animatedlistItems.length - 1);
         });
       });
     }
@@ -127,11 +147,10 @@ class _PageWithAnimatedListState extends State<PageWithAnimatedList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Hexcolor("#0d1822"),
+      backgroundColor: Hexcolor("#0d1822"),
       appBar: AppBar(
         backgroundColor: Hexcolor("#19222c"),
         title: Text("Settings Details"),
-      
       ),
       body: AnimatedList(
         key: _animatedlistKey,

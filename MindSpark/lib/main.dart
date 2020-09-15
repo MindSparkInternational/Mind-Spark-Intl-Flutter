@@ -54,56 +54,7 @@ class _MyAppState extends State<MyApp>{
   ];
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.blueGrey,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Hexcolor("60aaa1"),
-        child: Icon(Icons.add),
-        onPressed: () async {
-          //Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost(),));
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Login(),));
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          preferences.remove("email");
-          preferences.remove("token");
-          
-        },
-      ),
-        
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-  
-      bottomNavigationBar: CurvedNavigationBar(
-      
-        color: Colors.black87,
-        backgroundColor: Colors.blueGrey,
-        buttonBackgroundColor: Colors.black12,
-        height: 40,
-      
-        animationCurve: Curves.decelerate,
-        items: <Widget>[
-          Icon(Icons.home, size: 25, color: Colors.black),
-          //Icon(Icons.add_circle, size: 25, color: Colors.black),
-          Icon(Icons.portrait, size: 25, color: Colors.black),
-        ],
-    
-        index: _currentIndex,
-        onTap: (index){
-          print("Current index is $index");
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        ),
-        body: Center(
-          child: IndexedStack(
-            index: _currentIndex,
-            children: children,
-          ),
-
-        )
-        
-      );
-      
+    return new Home();
     
   }
 

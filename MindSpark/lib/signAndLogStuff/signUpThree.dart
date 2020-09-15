@@ -3,6 +3,9 @@
 import 'package:MindSpark/signAndLogStuff/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class SignUpThree extends StatefulWidget {
   final String firstName;
@@ -40,10 +43,11 @@ class _SignUpThreeState extends State<SignUpThree> {
         ),
         body: new Center(
           child: new RaisedButton(
-            onPressed: () {
+            onPressed: () async{
               print(token);
-              var request = http.MultipartRequest('POST', Uri.parse("https://mindsparkapi.herokuapp.com/endpoint/create_post"));
-              http.post("https://mindsparkapi.herokuapp.com/endpoint/create_post", headers: {"Authorization":"Token cde832d427bcd0f312de8b28dc8a0ba56daa80fb"}, body: {"body":{"body":"test"}, "sub_head":"test", "type":"test","fields":"test","title":"test"});
+              SharedPreferences preferences = await SharedPreferences.getInstance();
+              preferences.setString("token", "Token " + token);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp(),));
 
             },
           )

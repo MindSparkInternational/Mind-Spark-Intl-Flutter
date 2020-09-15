@@ -4,6 +4,7 @@ import 'package:MindSpark/animations/FadeAnimation.dart';
 import 'package:MindSpark/signAndLogStuff/signUpThree.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpTwo extends StatefulWidget {
   final String firstName;
@@ -73,6 +74,8 @@ class _SignUpTwoState extends State<SignUpTwo> {
                           var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/registration/", body: {"email":emailController.text,"password1":password, "password2":password});
                           print('Response status: ${response.statusCode}');
                           print('Response body: ${response.body}');
+                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                          preferences.setString("email", emailController.text);
                           final Map<String, dynamic> responseJson = json.decode(response.body);
                           String accessToken = responseJson["key"];
                           print('Response Child: ${responseJson["key"]}');
