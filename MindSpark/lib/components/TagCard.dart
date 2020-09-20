@@ -75,7 +75,9 @@ class ArticleTagItem extends StatelessWidget {
 }
 
 class PostTags extends StatelessWidget {
-  const PostTags({
+  final String name;
+  PostTags({
+    this.name,
     Key key,
   }) : super(key: key);
 
@@ -88,7 +90,7 @@ class PostTags extends StatelessWidget {
             color: Colors.white, borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-          child: Text('Tag'),
+          child: Text(name),
         ),
       ),
     );

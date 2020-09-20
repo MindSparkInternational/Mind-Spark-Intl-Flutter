@@ -1,15 +1,28 @@
-class User{
-  String firstName, lastName, email, country;
-  int id, age;
-  List<User> followers = new List<User>();
-  List<User> following = new List<User>();
+import 'package:MindSpark/dataClasses/comment.dart';
 
-  String getFirstName() { return firstName;}
-  String getLastName() { return lastName;}
-  String getEmail() { return email;}
-  String getCountry() { return country;}
-  int getId() { return id;}
-  int getAge() { return age;}
-  List<User> getFollowers(){ return followers;}
-  List<User> getFollowing(){ return following;}
+class User{
+  String id;
+  String email;
+  String firstName;
+  String lastName;
+  String date;
+  int age;
+  String country;
+  String img;
+  User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img});
+
+  factory User.fromJson(Map<String, dynamic> json){
+    print("Made it");
+    print("fields runtype: ${json['fields'].runtimeType}");
+    return User(
+      id: json["id"],
+      email: json["email"],
+      firstName: json["first_name"],
+      lastName: json["last_name"],
+      date: json["date_joined"],
+      age: json["age"],
+      img: "",
+      country: ""
+    );
+  }
 }

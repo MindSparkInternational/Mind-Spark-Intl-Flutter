@@ -62,7 +62,9 @@ class SaveBar extends StatelessWidget {
 }
 
 class LikesBar extends StatelessWidget {
-  const LikesBar({
+  int likes;
+  LikesBar({
+    this.likes,
     Key key,
   }) : super(key: key);
 
@@ -71,12 +73,17 @@ class LikesBar extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          Icon(
-            Icons.thumb_up,
-            color: Colors.black,
+          GestureDetector(
+            child:Icon(
+              Icons.thumb_up,
+              color: Colors.black,
+            ),
+            onTap: (){
+              
+            }
           ),
           Text(
-            ' 25',
+            "$likes",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           )
         ],

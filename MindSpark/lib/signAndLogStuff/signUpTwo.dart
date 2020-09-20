@@ -71,7 +71,7 @@ class _SignUpTwoState extends State<SignUpTwo> {
                       ),
                       child: MaterialButton(
                         onPressed: () async {
-                          var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/registration/", body: {"email":emailController.text,"password1":password, "password2":password});
+                          var response = await http.post("https://mindsparkapi.herokuapp.com/api/v1/registration/", body: {"email":emailController.text,"password1":password, "password2":password});
                           print('Response status: ${response.statusCode}');
                           print('Response body: ${response.body}');
                           SharedPreferences preferences = await SharedPreferences.getInstance();

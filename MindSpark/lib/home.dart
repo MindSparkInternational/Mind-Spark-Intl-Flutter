@@ -1,4 +1,5 @@
 import 'package:MindSpark/profile.dart';
+import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -6,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'components/TagCard.dart';
 import 'components/PostCard.dart';
 import 'components/ArticleCard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -45,10 +47,19 @@ class _HomeState extends State<Home> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.add,
-                            size: 50,
-                            color: Hexcolor('#0F3460'),
+                          GestureDetector(
+                            child: Icon(
+                              Icons.add,
+                              size: 50,
+                              color: Hexcolor('#0F3460'),
+                            ),
+                            onTap: () async{
+                              SharedPreferences preferences = await SharedPreferences.getInstance();
+                              preferences.remove("token");
+                              preferences.remove("email");
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+
+                            }
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),

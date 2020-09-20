@@ -10,11 +10,23 @@ import 'package:MindSpark/components/CommentBox.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MyCard2 extends StatefulWidget {
+  String title;
+  String author;
+  String body;
+  List<dynamic> fields;
+  int likes;
+  MyCard2({this.title, this.author, this.body, this.fields, this.likes});
   @override
-  _MyCard2State createState() => _MyCard2State();
+  _MyCard2State createState() => _MyCard2State(title: title, author: author, body: body, fields: fields, likes: likes);
 }
 
 class _MyCard2State extends State<MyCard2> {
+  String title;
+  String author;
+  String body;
+  int likes;
+  List<dynamic> fields;
+  _MyCard2State({this.title, this.author, this.body, this.fields, this.likes});
   String sampletext =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   bool showFullCaption = false;
@@ -39,7 +51,7 @@ class _MyCard2State extends State<MyCard2> {
                         BoxDecoration(borderRadius: BorderRadius.circular(10)),
                     child: Center(
                         child: Text(
-                      'Climate Change,Not hunters, may have caused the extinction of wooly rhinos',
+                      title,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -87,7 +99,7 @@ class _MyCard2State extends State<MyCard2> {
                                                         const EdgeInsets.all(
                                                             3.0),
                                                     child: Text(
-                                                      'Brian Wamwea',
+                                                      author,
                                                     ),
                                                   ),
                                                 ),
@@ -99,7 +111,7 @@ class _MyCard2State extends State<MyCard2> {
                                               padding:
                                                   const EdgeInsets.all(7.0),
                                               child: Text(
-                                                '11:53AM, 12-3-2020',
+                                                '12-3-2020',
                                                 style: TextStyle(
                                                     fontWeight:
                                                         FontWeight.bold),
@@ -212,9 +224,9 @@ class _MyCard2State extends State<MyCard2> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    PostTags(),
-                                                    PostTags(),
-                                                    PostTags(),
+                                                    PostTags(name: fields[0]),
+                                                    PostTags(name: fields[0]),
+                                                    PostTags(name: fields[0]),
                                                   ],
                                                 ),
                                               ),
@@ -228,7 +240,7 @@ class _MyCard2State extends State<MyCard2> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    LikesBar(),
+                                                    LikesBar(likes: likes,),
                                                     SizedBox(
                                                       width: 8,
                                                     ),
@@ -262,7 +274,7 @@ class _MyCard2State extends State<MyCard2> {
                                           padding: const EdgeInsets.all(5.0),
                                           child: SingleChildScrollView(
                                               child: Text(
-                                            sampletext,
+                                            body,
                                             style:
                                                 TextStyle(color: Colors.black),
                                           )),
@@ -297,7 +309,7 @@ class _MyCard2State extends State<MyCard2> {
                                                         const EdgeInsets.all(
                                                             5.0),
                                                     child: Text(
-                                                      '$sampletext',
+                                                      '$body',
                                                       style: TextStyle(
                                                           fontSize: 13,
                                                           color: Colors.black),
