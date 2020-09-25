@@ -1,9 +1,12 @@
+import 'package:MindSpark/dataClasses/post.dart';
+import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/profile.dart';
 import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'components/TagCard.dart';
 import 'components/PostCard.dart';
 import 'components/ArticleCard.dart';
@@ -87,30 +90,30 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 50.0, bottom: 10, left: 10, right: 10),
-                    child: Container(
-                        height: 40,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            TagItem('Followed'),
-                            TagItem('Followers'),
-                            TagItem('Maths'),
-                            TagItem('Biology'),
-                            TagItem('Physics'),
-                            TagItem('Chemistry'),
-                            TagItem('Life Science'),
-                            TagItem('Astronomy'),
-                            TagItem('Data Science'),
-                            TagItem('Robotics'),
-                            TagItem('Programming'),
-                            TagItem('Artificial Intelligence'),
-                            TagItem('BreakThroughs'),
-                          ],
-                        )),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //       top: 50.0, bottom: 10, left: 10, right: 10),
+                  //   child: Container(
+                  //       height: 40,
+                  //       child: ListView(
+                  //         scrollDirection: Axis.horizontal,
+                  //         children: [
+                  //           TagItem('Followed'),
+                  //           TagItem('Followers'),
+                  //           TagItem('Maths'),
+                  //           TagItem('Biology'),
+                  //           TagItem('Physics'),
+                  //           TagItem('Chemistry'),
+                  //           TagItem('Life Science'),
+                  //           TagItem('Astronomy'),
+                  //           TagItem('Data Science'),
+                  //           TagItem('Robotics'),
+                  //           TagItem('Programming'),
+                  //           TagItem('Artificial Intelligence'),
+                  //           TagItem('BreakThroughs'),
+                  //         ],
+                  //       )),
+                  // ),
                   Expanded(
                     child: Container(
                       color: Colors.blue,
@@ -159,18 +162,31 @@ class _HomeState extends State<Home> {
             ),
       );
   Widget _buidNewPage1() => Container(
-        child: (PageView(
-            physics: BouncingScrollPhysics(),
-            controller: controller,
-            onPageChanged: (page) =>
-                {print("Inside pageview2"), print(page.toString())},
-            pageSnapping: true,
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              MyCard2(),
-              MyCard2(),
-              MyCard2(),
-            ])),
+    color: Hexcolor('#E5E5E5'),
+    child: Consumer<PostModel>(builder: (context, postModel, child) {
+      return new PageView.builder(
+      itemCount: postModel.posts.length,
+      itemBuilder: (context, index){
+        String author = Provider.of<PostModel>(context, listen: true).posts[index].author;
+        String title = Provider.of<PostModel>(context, listen: true).posts[index].title;
+        String body = Provider.of<PostModel>(context, listen: true).posts[index].body;
+        int likes = Provider.of<PostModel>(context, listen: true).posts[index].likes;
+        return MyCard2(author: author, title: title, body: body, likes: likes );
+      });
+    },)
+    
+        // child: (PageView(
+        //     physics: BouncingScrollPhysics(),
+        //     controller: controller,
+        //     onPageChanged: (page) =>
+        //         {print("Inside pageview2"), print(page.toString())},
+        //     pageSnapping: true,
+        //     scrollDirection: Axis.horizontal,
+        //     children: <Widget>[
+        //       MyCard2(),
+        //       MyCard2(),
+        //       MyCard2(),
+        //     ])),
       );
 }
 

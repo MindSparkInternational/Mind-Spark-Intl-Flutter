@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
+import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/main.dart';
+import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -23,6 +28,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     _controller.repeat(reverse: true);
+    getAllData(context);
+    startTimer();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,7 +69,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     );
   }
   void startTimer() {
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(milliseconds: 3), () {
       navigateUser(); //It will redirect  after 3 seconds
     });
   }
@@ -76,4 +83,37 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(),));
     }
   }
+
+   Future<void> secondPostData(BuildContext context) async{
+     Provider.of<PostModel>(context,listen: false).setList(await fetchPostData(context));
+   }
+   Future<List<Post>> fetchPostData(BuildContext context) async{
+     SharedPreferences preferences = await SharedPreferences.getInstance();
+       String token = preferences.get("token");
+       List<Post> list = new List();
+       print(token);
+       var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/posts/create/", headers: {
+         "Authorization":"$token" 
+         }
+       );
+       var responseBody = json.decode(response.body);
+       print('responseBodyHome type is ${responseBody.runtimeType}');
+       print('responseBodyHome length is ${responseBody.length}');
+       print("hi");
+       for(Map map in responseBody){
+         var thing = Post.fromJson(map);
+         print('thing type is ${thing.runtimeType}');
+         list.add(Post.fromJson(map as Map<String, dynamic>));
+         print("hello");
+       }
+       print(list.length);
+       print(list[0].title);
+       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
+       print(json.decode(response.body));
+       return list;
+   }
+
+   void getAllData(BuildContext context) async{
+     await secondPostData(context);
+   }
 }

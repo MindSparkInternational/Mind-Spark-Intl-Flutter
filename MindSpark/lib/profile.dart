@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
       headers: {"Authorization":"$token"},
     );
     var responseBody = json.decode(response.body);
-    print("I am her")
+    print("I am her");
     for(Map map in responseBody){
       var thing = Post.fromJson(map);
       print('thing author type is ${thing.runtimeType}');

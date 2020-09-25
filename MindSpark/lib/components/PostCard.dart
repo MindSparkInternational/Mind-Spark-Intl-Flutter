@@ -224,9 +224,9 @@ class _MyCard2State extends State<MyCard2> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    PostTags(name: fields[0]),
-                                                    PostTags(name: fields[0]),
-                                                    PostTags(name: fields[0]),
+                                                    PostTags(name: "text"),
+                                                    PostTags(name: "text"),
+                                                    PostTags(name: "text"),
                                                   ],
                                                 ),
                                               ),
