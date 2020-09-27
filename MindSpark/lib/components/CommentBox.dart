@@ -1,6 +1,11 @@
+import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:flutter/material.dart';
 
 class CommentBox extends StatelessWidget {
+  CommentBox({this.caption, this.author});
+  String caption;
+  String author;
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,7 +34,7 @@ class CommentBox extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              'Username',
+                              "$author",
                               style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
@@ -52,7 +57,7 @@ class CommentBox extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
                       child: Text(
-                        'Lkhsd aslknasd klndsa kajn dakdsj nfasdlkj fnasdkj nasdkj fnasdkj fnasd kjnads kljna sdkljna dskj asdkjas dnask ljnasd na sdkljnas kjlna sdkjlna dskjn as',
+                        caption,
                         style: TextStyle(fontSize: 13, color: Colors.black),
                       ),
                     ),

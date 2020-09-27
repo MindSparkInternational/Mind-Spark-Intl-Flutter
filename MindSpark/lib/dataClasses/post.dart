@@ -10,6 +10,7 @@ class Post{
   String date;
   List<dynamic> fields;
   List<dynamic> comments;
+  List<Comment> finalComments;
   int likes;
   int shares;
   List<dynamic> medias;

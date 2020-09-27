@@ -1,3 +1,4 @@
+import 'package:MindSpark/dataClasses/comment.dart';
 import "package:MindSpark/dataClasses/post.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,5 +19,8 @@ class PostModel extends ChangeNotifier{
   void setList(List<Post> postsInput){
     posts = postsInput;
     notifyListeners();
+  }
+  void setComments(int index, List<Comment> comment){
+    posts[index].finalComments = comment;
   }
 } 

@@ -1,3 +1,4 @@
+import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/profile.dart';
@@ -171,7 +172,10 @@ class _HomeState extends State<Home> {
         String title = Provider.of<PostModel>(context, listen: true).posts[index].title;
         String body = Provider.of<PostModel>(context, listen: true).posts[index].body;
         int likes = Provider.of<PostModel>(context, listen: true).posts[index].likes;
-        return MyCard2(author: author, title: title, body: body, likes: likes );
+        List<dynamic> fields = Provider.of<PostModel>(context, listen: true).posts[index].fields;
+        String date = Provider.of<PostModel>(context, listen: true).posts[index].date;
+        List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
+        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date );
       });
     },)
     

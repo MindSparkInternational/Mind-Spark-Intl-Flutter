@@ -1,16 +1,19 @@
+import 'dart:convert';
+
 import 'package:MindSpark/components/CommentBox.dart';
+import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class PostCommentScreen extends StatefulWidget {
   PostCommentScreen(this.captionText);
-  String captionText;
+  List<Comment> captionText;
   @override
   _PostCommentScreenState createState() => _PostCommentScreenState();
 }
 
 class _PostCommentScreenState extends State<PostCommentScreen> {
-  String getCaptionText() {
+  List<Comment> getCaptionText() {
     return widget.captionText;
   }
 
@@ -51,7 +54,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
               padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
               child: Container(
                 padding: EdgeInsets.all(5),
-                child: Text(getCaptionText()),
+                child: Text("Comments"),
               ),
             ),
             Divider(
@@ -62,10 +65,12 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
               return Container(
                 height: constraints.maxHeight,
                 child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (index, context) {
+                    itemCount: getCaptionText().length,
+                    itemBuilder: (context, index) {
+                      //var parsedJson = json.decode(getCaptionText()[index]);
+                      print("made it");
                       return Container(
-                        child: CommentBox(),
+                        child: CommentBox(caption: getCaptionText()[index].content, author: getCaptionText()[index].author,),
                       );
                     }),
               );
