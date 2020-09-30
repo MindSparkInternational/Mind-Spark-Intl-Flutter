@@ -4,6 +4,7 @@ import 'package:MindSpark/onboardings/onBoardingTwo.dart';
 import 'package:MindSpark/utilities/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -38,6 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
     child: Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -118,7 +120,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               color: Colors.greenAccent,
               child: GestureDetector(
-                onTap: () => print('Get started'),
+                onTap: () async{
+                  SharedPreferences preferences= await SharedPreferences.getInstance();
+                  preferences.setInt("checkOnboard",2);
+                },
                 child: Center(
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 5.0),
