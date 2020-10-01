@@ -1,13 +1,34 @@
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'dataClasses/article.dart';
+import 'dataClasses/comment.dart';
 
 class ArticleScreen extends StatefulWidget {
+  String title;
+  String author;
+  String body;
+  String subHead;
+  List<dynamic> fields;
+  List<Comment> comments;
+  int likes;
+  String date;
+  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date});
   @override
-  _ArticleScreenState createState() => _ArticleScreenState();
+  _ArticleScreenState createState() => _ArticleScreenState(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date);
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
+  String title;
+  String author;
+  String body;
+  String date;
+  int likes;
+  String subHead;
+  List<dynamic> fields;
+  List<Comment> comments;
+ _ArticleScreenState({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -59,13 +80,16 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Brian Wamwea",
+                                                '$author',
+                                             
+                                                //"Brian Wamwea",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15),
                                               ),
-                                              Text(
-                                                "Friday 12 May 2020",
+                                              Text( date.substring(0, date.indexOf("T")),
+                                                
+                                               // "Friday 12 May 2020",
                                                 style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 12),
@@ -82,8 +106,9 @@ class _ArticleScreenState extends State<ArticleScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Container(
-                                  child: Text(
-                                    'Climate Change, Not Hunters, May Have Killed off Woolly Rhinos',
+                                  child: Text('$title',
+                                // widget.title,
+                                  // 'Climate Change, Not Hunters, May Have Killed off Woolly Rhinos',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontSize: 22,
@@ -210,8 +235,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10.0),
                                       child: Container(
-                                          child: Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet.',
+                                          child: Text('$subHead',
+                                       // 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet.',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 20),
@@ -222,8 +247,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 25.0, vertical: 5),
                                       child: Container(
-                                        child: Text(
-                                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet. Sit amet venenatis urna cursus eget nunc. Pharetra vel turpis nunc eget. Eleifend mi in nulla posuere sollicitudin. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Netus et malesuada fames ac turpis egestas sed tempus urna. Pharetra vel turpis nunc eget lorem dolor. Feugiat sed lectus vestibulum mattis ullamcorper velit. Cursus in hac habitasse platea dictumst. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat lacus laoreet non curabitur gravida arcu ac. Molestie a iaculis at erat. Sem et tortor consequat id porta nibh. Elementum eu facilisis sed odio morbi quis commodo. Pretium fusce id velit ut tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet. Sit amet venenatis urna cursus eget nunc. Pharetra vel turpis nunc eget. Eleifend mi in nulla posuere sollicitudin. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Netus et malesuada fames ac turpis egestas sed tempus urna. Pharetra vel turpis nunc eget lorem dolor. Feugiat sed lectus vestibulum mattis ullamcorper velit. Cursus in hac habitasse platea dictumst. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat lacus laoreet non curabitur gravida arcu ac. Molestie a iaculis at erat. Sem et tortor consequat id porta nibh. Elementum eu facilisis sed odio morbi quis commodo. Pretium fusce id velit ut tortor.",
+                                        child: Text('$body',
+                                         // "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet. Sit amet venenatis urna cursus eget nunc. Pharetra vel turpis nunc eget. Eleifend mi in nulla posuere sollicitudin. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Netus et malesuada fames ac turpis egestas sed tempus urna. Pharetra vel turpis nunc eget lorem dolor. Feugiat sed lectus vestibulum mattis ullamcorper velit. Cursus in hac habitasse platea dictumst. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat lacus laoreet non curabitur gravida arcu ac. Molestie a iaculis at erat. Sem et tortor consequat id porta nibh. Elementum eu facilisis sed odio morbi quis commodo. Pretium fusce id velit ut tortor.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet consectetur adipiscing elit. Justo donec enim diam vulputate ut pharetra sit amet. Sit amet venenatis urna cursus eget nunc. Pharetra vel turpis nunc eget. Eleifend mi in nulla posuere sollicitudin. Natoque penatibus et magnis dis parturient montes nascetur ridiculus. Netus et malesuada fames ac turpis egestas sed tempus urna. Pharetra vel turpis nunc eget lorem dolor. Feugiat sed lectus vestibulum mattis ullamcorper velit. Cursus in hac habitasse platea dictumst. Arcu felis bibendum ut tristique et egestas quis ipsum suspendisse. Volutpat lacus laoreet non curabitur gravida arcu ac. Molestie a iaculis at erat. Sem et tortor consequat id porta nibh. Elementum eu facilisis sed odio morbi quis commodo. Pretium fusce id velit ut tortor.",
                                           textAlign: TextAlign.justify,
                                           style: TextStyle(fontSize: 18),
                                         ),

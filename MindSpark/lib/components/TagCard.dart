@@ -97,15 +97,57 @@ class PostTags extends StatelessWidget {
   }
 }
 
-class ArticleTag extends StatelessWidget {
+
+
+class ArticleTag extends StatefulWidget {
+List<dynamic> fields;
+ArticleTag({this.fields});
+
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(left: 6.0, bottom: 5),
-        child: Container(
+  _ArticleTagState createState() => _ArticleTagState(fields:fields);
+}
+
+class _ArticleTagState extends State<ArticleTag> {
+  List<dynamic> fields;
+_ArticleTagState({this.fields});
+ 
+ 
+  @override
+  Widget build(BuildContext context) =>
+  
+   Padding(
+       padding: const EdgeInsets.only(left: 6.0, bottom: 5),
+ child: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
+            child: Text(fields.toString(),
+            // "$fields",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          decoration: BoxDecoration(
+              color: Hexcolor('#FBD772'),
+              borderRadius: BorderRadius.circular(30)),
+        ),
+        
+      );
+ }
+
+
+
+/*  //When ArticleTag is stateless
+  class ArticleTag extends StatelessWidget {
+ 
+  @override
+  Widget build(BuildContext context) =>
+   Padding(
+       padding: const EdgeInsets.only(left: 6.0, bottom: 5),
+ child: Container(
+
+           child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
             child: Text(
-              "Subject",
+              "Subject ,",
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -114,4 +156,40 @@ class ArticleTag extends StatelessWidget {
               borderRadius: BorderRadius.circular(30)),
         ),
       );
-}
+ }
+
+*/
+
+/*
+Container(
+                      height: 20,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: fields.length,
+                        itemBuilder: (context, index) {
+                          print('$fields');
+                          return Card(
+                            color: Hexcolor("#FBD772"),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                                side: BorderSide(
+                                    //color: Hexcolor("#1f405e"),
+                                    )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                child: Text(
+                                  "${fields[index]}",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),*/
+                  
+
+       
+

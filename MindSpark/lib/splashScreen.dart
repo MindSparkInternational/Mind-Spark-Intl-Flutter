@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:MindSpark/dataClasses/article.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
+import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/onboardings/onboarding.dart';
 import 'package:MindSpark/signAndLogStuff/loginOrSign.dart';
 import 'package:http/http.dart' as http;
@@ -97,6 +99,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   }
 
   Future<void> secondPostData(BuildContext context) async{
+    Provider.of<ArticleModel>(context,listen: false).setList(await fetchAricleData(context));
     Provider.of<PostModel>(context,listen: false).setList(await fetchPostData(context));
   }
   Future<List<Post>> fetchPostData(BuildContext context) async{
@@ -133,6 +136,46 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
         post.finalComments = commentList;
         print("Post comment content ${post.finalComments[0].author} ${post.title}");
       }
+      //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
+      print(json.decode(response.body));
+      return list;
+  }
+  Future<List<Article>> fetchAricleData(BuildContext context) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+     String token = preferences.get("token");
+      
+      List<Article> list = new List();
+      print("$token");
+      var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/articles/get/", headers: {
+        "Authorization":"$token" 
+        }
+      );
+      var responseBody = json.decode(response.body);
+      print('responseBodyHome type is ${responseBody.runtimeType}');
+      print('responseBodyHome length is ${responseBody.length}');
+      print("$responseBody");
+      print("hi");
+      for(Map map in responseBody){
+        var thing = Article.fromJson(map);
+        print('thing type is ${thing.runtimeType}');
+        list.add(Article.fromJson(map as Map<String, dynamic>));
+        print("hello");
+      }
+      print("$list.length");
+      print("$list[0].title");
+      // for(Article article in list){
+      //   List<Comment> commentList = new List();
+      //   var responseComment = await http.get("https://mindsparkapi.herokuapp.com/api/v1/posts/comment/?post_id=${article.id}", headers: {
+      //     "Authorization":"$token",
+      //     }
+      //   );
+      //   var responseBodyComment = json.decode(responseComment.body);
+      //   for(Map map in responseBodyComment){
+      //     commentList.add(Comment.fromJson(map as Map<String, dynamic>));
+      //   }
+      //   article.finalComments = commentList;
+      //   print("Post comment content ${article.finalComments[0].author} ${article.title}");
+      // }
       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
       print(json.decode(response.body));
       return list;

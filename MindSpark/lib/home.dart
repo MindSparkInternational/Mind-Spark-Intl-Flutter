@@ -1,5 +1,6 @@
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/post.dart';
+import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/profile.dart';
 import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
@@ -146,21 +147,40 @@ class _HomeState extends State<Home> {
       );
 
   Widget _buidNewPage() => Container(
-        color: Hexcolor('#E5E5E5'),
-        child: (PageView(
-                physics: BouncingScrollPhysics(),
-                controller: controller,
-                onPageChanged: (page) =>
-                    {print("Inside pageview"), print(page.toString())},
-                pageSnapping: true,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-              ArticleCard(),
-              ArticleCard(),
-              ArticleCard(),
-            ])
-            //   )
-            ),
+    color: Hexcolor('#E5E5E5'),
+    child: Consumer<ArticleModel>(builder: (context, articleModel, child) {
+      return new PageView.builder(
+      itemCount: articleModel.articles.length,
+      itemBuilder: (context, index){
+        String author = Provider.of<ArticleModel>(context, listen: true).articles[index].author;
+        String title = Provider.of<ArticleModel>(context, listen: true).articles[index].title;
+        String subHead = Provider.of<ArticleModel>(context, listen: true).articles[index].subHead;
+        String body = Provider.of<ArticleModel>(context, listen: true).articles[index].body;
+        int likes = Provider.of<ArticleModel>(context, listen: true).articles[index].likes;
+        List<dynamic> fields = Provider.of<ArticleModel>(context, listen: true).articles[index].fields;
+        String date = Provider.of<ArticleModel>(context, listen: true).articles[index].date;
+        List<Comment> comments = Provider.of<ArticleModel>(context, listen: true).articles[index].finalComments;
+        return 
+        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: [],subHead: subHead,);
+
+        //ArticleCard
+      });
+    },)
+        // color: Hexcolor('#E5E5E5'),
+        // child: (PageView(
+        //         physics: BouncingScrollPhysics(),
+        //         controller: controller,
+        //         onPageChanged: (page) =>
+        //             {print("Inside pageview"), print(page.toString())},
+        //         pageSnapping: true,
+        //         scrollDirection: Axis.horizontal,
+        //         children: <Widget>[
+        //       ArticleCard(),
+        //       ArticleCard(),
+        //       ArticleCard(),
+        //     ])
+        //     //   )
+        //     ),
       );
   Widget _buidNewPage1() => Container(
     color: Hexcolor('#E5E5E5'),
