@@ -1,6 +1,7 @@
 
 
 import 'package:MindSpark/signAndLogStuff/signUp.dart';
+import 'package:MindSpark/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +48,7 @@ class _SignUpThreeState extends State<SignUpThree> {
               print(token);
               SharedPreferences preferences = await SharedPreferences.getInstance();
               preferences.setString("token", "Token " + token);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Splash(),));
 
             },
           )

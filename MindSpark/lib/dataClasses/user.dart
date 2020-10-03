@@ -9,20 +9,22 @@ class User{
   int age;
   String country;
   String img;
-  User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img});
+  String bio;
+  User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img, this.bio});
 
   factory User.fromJson(Map<String, dynamic> json){
-    print("Made it");
-    print("fields runtype: ${json['fields'].runtimeType}");
+    print("Made it to User");
+    
     return User(
       id: json["id"],
       email: json["email"],
-      firstName: json["first_name"],
-      lastName: json["last_name"],
+      firstName: "",
+      lastName: "",
       date: json["date_joined"],
       age: json["age"],
       img: "",
-      country: ""
+      country: "",
+      bio: ""
     );
   }
 }

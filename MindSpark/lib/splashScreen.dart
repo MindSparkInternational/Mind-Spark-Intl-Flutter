@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:MindSpark/dataClasses/article.dart';
+import 'package:MindSpark/dataClasses/extraUser.dart';
+import 'package:MindSpark/dataClasses/user.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/models/articleModel.dart';
+import 'package:MindSpark/models/userModel.dart';
 import 'package:MindSpark/onboardings/onboarding.dart';
 import 'package:MindSpark/signAndLogStuff/loginOrSign.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +37,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
     _controller.repeat(reverse: true);
-    getAllData(context);
+    
     startTimer();
   }
   @override
@@ -81,18 +84,22 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   }
     void navigateUser() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var status = prefs.getBool('isLoggedIn') ?? false;
-    print(status);
-    var email = prefs.getString("email");
+    print("hi there");
+
+    
     var checkOnboard = prefs.getInt("checkOnboard");
     print("checkOnboard $checkOnboard");
-    if(checkOnboard == 1){
-      prefs.setInt("checkOnboard", 2);
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => OnboardingScreen(),));
-    }
-    else if (email == null) {
+    //prefs.remove("email");
+    var email = prefs.getString("email");
+    print("This is an email ${prefs.getString("email")}");
+    // if(checkOnboard == 1){
+    //   prefs.setInt("checkOnboard", 2);
+    //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => OnboardingScreen(),));
+    // }
+    if (email == null) {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login(),));
     } else {
+      await getAllData(context);
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home(),));
     }
     
@@ -101,6 +108,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   Future<void> secondPostData(BuildContext context) async{
     Provider.of<ArticleModel>(context,listen: false).setList(await fetchAricleData(context));
     Provider.of<PostModel>(context,listen: false).setList(await fetchPostData(context));
+    Provider.of<UserModel>(context,listen: false).setUser(await getUserData(context));
+    Provider.of<UserModel>(context,listen: false).setExtraUser(await getExtraUserData(context));
   }
   Future<List<Post>> fetchPostData(BuildContext context) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -123,6 +132,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
       }
       print(list.length);
       print(list[0].title);
+      print("MADE IT HERE WOW");
       for(Post post in list){
         List<Comment> commentList = new List();
         var responseComment = await http.get("https://mindsparkapi.herokuapp.com/api/v1/posts/comment/?post_id=${post.id}", headers: {
@@ -134,12 +144,14 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
           commentList.add(Comment.fromJson(map as Map<String, dynamic>));
         }
         post.finalComments = commentList;
-        print("Post comment content ${post.finalComments[0].author} ${post.title}");
+        //print("Post comment content ${post.finalComments[0].author} ${post.title}");
       }
+      print("made it here");
       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
       print(json.decode(response.body));
       return list;
   }
+
   Future<List<Article>> fetchAricleData(BuildContext context) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
      String token = preferences.get("token");
@@ -180,8 +192,41 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
       print(json.decode(response.body));
       return list;
   }
+  Future<User> getUserData(BuildContext context) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String token = preferences.getString("token");
+    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/auth/user/", headers: {
+        "Authorization":"$token" 
+        }
+      );
+    print("Made it past api call");
+    var responseBody = json.decode(response.body);
+    print("USER BODY$responseBody");
+    User user = User.fromJson(responseBody);
+    print(user.age);
+    return user;
+    
+  }
+  Future<ExtraUser> getExtraUserData(BuildContext context) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String token = preferences.getString("token");
+    // String token = 'Token 713be29dfbca9a93134a5672718e725b5b9bff54';
+    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/users/props/", headers: {
+        "Authorization":"$token" 
+        }
+      );
+    print("Made it past api call");
+    var responseBody = json.decode(response.body);
+    print("USER BODY$responseBody");
+    ExtraUser user = ExtraUser.fromJson(responseBody);
+    print(user.id);
 
-   void getAllData(BuildContext context) async{
+    return user;
+    
+  }
+
+
+   Future<void> getAllData(BuildContext context) async{
      await secondPostData(context);
    }
 }

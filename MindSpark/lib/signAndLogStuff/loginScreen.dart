@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:MindSpark/dataClasses/user.dart';
 import 'package:MindSpark/main.dart';
+import 'package:MindSpark/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'signUp.dart';
 import 'package:flutter/material.dart';
@@ -86,27 +87,15 @@ class _LoginState extends State<Login> {
                         onPressed: () async {
                           SharedPreferences preferences = await SharedPreferences.getInstance();
                           preferences.setString("email", emailController.text);
-                          var response = await http.post("https://mindsparkapi.herokuapp.com/rest-auth/login/", body:{"email":emailController.text, "password":passwordController.text});
+                          var response = await http.post("https://mindsparkapi.herokuapp.com/api/v1/auth/login/", body:{"email":emailController.text, "password":passwordController.text});
                           print('Response status: ${response.statusCode}');
                           print('Response body: ${response.body}');
                           final Map<String, dynamic> responseJson = json.decode(response.body);
                           String accessToken = responseJson["key"];
                           print('Response Child: ${responseJson["key"]}');
                           preferences.setString("token", "Token"+ " " + accessToken);
-                          var getUserFromDb = await http.get("https://mindsparkapi.herokuapp.com/endpoint/user_props", headers: {"Authorization": "Token " + accessToken});
-                          final Map<String, dynamic> userPropsJson = json.decode(getUserFromDb.body);
-                          User loggedUser = new User();
-                          loggedUser.id = userPropsJson["id"];
-                          var getUserStuffFromDb = await http.get("https://mindsparkapi.herokuapp.com/endpoint/user_props", headers: {"Authorization": "Token " + accessToken});
-                          final Map<String, dynamic> userJson = json.decode(getUserFromDb.body);
-                          loggedUser.age = userJson["age"];
-                          loggedUser.email = userJson["email"];
-                          loggedUser.country = userJson["country"];
-                          loggedUser.firstName = userJson["full_name"];
-                          loggedUser.lastName = userJson["full_name"];
-                          loggedUser.country = userJson["country"];
-                          print(loggedUser.firstName);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp(),));
+                          
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Splash(),));
                         },
                         color: Colors.greenAccent,
                         elevation: 0,

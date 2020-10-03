@@ -3,6 +3,7 @@ import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/models/postModel.dart';
+import 'package:MindSpark/models/userModel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -111,7 +112,7 @@ class _ProfileState extends State<Profile> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'John Doe(Full Name)',
+                                                  "${Provider.of<UserModel>(context, listen: true).user.email} ",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -246,7 +247,7 @@ class _ProfileState extends State<Profile> {
                                                     Radius.circular(10.0))),
                                             child: Column(
                                               children: <Widget>[
-                                                Text("577",
+                                                Text("${Provider.of<UserModel>(context).extraUser.followers}",
                                                     style: TextStyle(
                                                         color: Colors.white)),
                                                 FittedBox(
@@ -267,7 +268,7 @@ class _ProfileState extends State<Profile> {
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(children: <Widget>[
-                                              Text("577",
+                                              Text("${Provider.of<UserModel>(context).extraUser.followers}",
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                               FittedBox(
@@ -382,18 +383,18 @@ class MyArticlesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       double maxHeight = constraints.maxHeight;
-      return Consumer<PostModel>(builder: (context, postModel, child) {
+      return Consumer<UserModel>(builder: (context, postModel, child) {
       return new ListView.builder(
-      itemCount: postModel.posts.length,
+      itemCount: postModel.extraUser.posts.length,
       itemBuilder: (context, index){
-        String author = Provider.of<PostModel>(context, listen: true).posts[index].author;
-        String title = Provider.of<PostModel>(context, listen: true).posts[index].title;
-        String body = Provider.of<PostModel>(context, listen: true).posts[index].body;
-        int likes = Provider.of<PostModel>(context, listen: true).posts[index].likes;
-        List<dynamic> fields = Provider.of<PostModel>(context, listen: true).posts[index].fields;
-        String date = Provider.of<PostModel>(context, listen: true).posts[index].date;
-        List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
-        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date );
+        String author = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].author;
+        String title = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].title;
+        String body = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].body;
+        int likes = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].likes;
+        List<dynamic> fields = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].fields;
+        String date = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].date;
+        List<Comment> comments = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].finalComments;
+        return Container(height: maxHeight , child:MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date ));
       });
     },);
     });

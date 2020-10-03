@@ -3,6 +3,7 @@ import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/models/articleModel.dart';
+import 'package:MindSpark/models/userModel.dart';
 import 'package:provider/provider.dart';
 import 'package:MindSpark/homeheader.dart';
 import 'package:MindSpark/models/postModel.dart';
@@ -13,7 +14,7 @@ import 'signAndLogStuff/loginOrSign.dart';
 
 import 'package:MindSpark/onboardings/onboarding.dart';
 import 'package:MindSpark/splashScreen.dart';
-import 'package:MindSpark/testFiles/videoUploadTest.dart';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -33,6 +34,7 @@ main()  async{
     [
       ListenableProvider<PostModel>(create: (_) => PostModel()),
       ListenableProvider<ArticleModel>(create: (_) => ArticleModel()),
+      ListenableProvider<UserModel>(create: (_) => UserModel()),
     ],
     child:
         new MaterialApp(
