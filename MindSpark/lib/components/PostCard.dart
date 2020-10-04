@@ -348,14 +348,14 @@ class _MyCard2State extends State<MyCard2> {
                                                                     .downToUp));
                                                       },
                                                       child: Text(
-                                                        "View ${comments.length} Comments",
+                                                        comments.length == 0 ? "No Comments":"View ${comments.length} Comments",
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             color: Colors.grey),
                                                       ),
                                                     ),
-                                                    CommentBox(caption:comments[0].content, author: comments[0].author,),
+                                                    comments.length == 0 ?CommentBox(caption:"No Comments", author: "",):CommentBox(caption:comments[0].content, author: comments[0].author,),
                                                   ],
                                                 )),
                                           ),
