@@ -125,7 +125,7 @@ class _ProfileState extends State<Profile> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                Text(
-                                   "${Provider.of<UserModel>(context, listen: true).user.email} ",
+                                   "${Provider.of<UserModel>(context, listen: true).user.firstName} ${Provider.of<UserModel>(context, listen: true).user.lastName} ",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,

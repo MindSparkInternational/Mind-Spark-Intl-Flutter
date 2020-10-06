@@ -18,8 +18,8 @@ class User{
     return User(
       id: json["id"],
       email: json["email"],
-      firstName: "",
-      lastName: "",
+      firstName: json["first_name"],
+      lastName: json["last_name"],
       date: json["date_joined"],
       age: json["age"],
       img: "",

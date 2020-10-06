@@ -4,6 +4,7 @@ import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/models/userModel.dart';
+import 'package:MindSpark/signAndLogStuff/signUpThree.dart';
 import 'package:provider/provider.dart';
 import 'package:MindSpark/homeheader.dart';
 import 'package:MindSpark/models/postModel.dart';
@@ -27,6 +28,7 @@ import 'create.dart';
 main()  async{
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
+ 
   var email = preferences.getString("email");
   email == null ? preferences.setInt("checkOnboard", 1) : preferences.setInt("checkOnboard", 2);
   runApp(
@@ -41,6 +43,7 @@ main()  async{
         debugShowCheckedModeBanner: false,
         //home: new MyApp(),
         home: Splash()
+        //home: SignUpThree()
         //home: email == null ? Login() : MyApp()
         //home: FilePickerDemo()
         //home: Splash()

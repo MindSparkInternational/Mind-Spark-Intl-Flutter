@@ -79,7 +79,7 @@ class _SignUpTwoState extends State<SignUpTwo> {
                           final Map<String, dynamic> responseJson = json.decode(response.body);
                           String accessToken = responseJson["key"];
                           print('Response Child: ${responseJson["key"]}');
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpThree(firstName: firstName, lastName: lastName, password: password, token: accessToken,), ));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpThree(email: emailController.text,firstName: firstName, lastName: lastName, password: password, token: accessToken,), ));
                         },
                         minWidth: double.infinity,
                         height: 100,
