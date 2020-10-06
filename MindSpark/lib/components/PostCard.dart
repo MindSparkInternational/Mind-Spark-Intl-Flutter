@@ -9,6 +9,9 @@ import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/components/EngageMentComponents.dart';
 import 'package:MindSpark/components/CommentBox.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:MindSpark/models/postModel.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class MyCard2 extends StatefulWidget {
   String title;
@@ -16,11 +19,12 @@ class MyCard2 extends StatefulWidget {
   String body;
   List<dynamic> fields;
   List<Comment> comments;
+  List<dynamic> medias;
   int likes;
   String date;
-  MyCard2({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+  MyCard2({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias});
   @override
-  _MyCard2State createState() => _MyCard2State(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date);
+  _MyCard2State createState() => _MyCard2State(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date, medias: medias);
 }
 
 class _MyCard2State extends State<MyCard2> {
@@ -30,15 +34,23 @@ class _MyCard2State extends State<MyCard2> {
   String date;
   int likes;
   List<dynamic> fields;
+  List<dynamic> medias;
   List<Comment> comments;
-  _MyCard2State({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+  _MyCard2State({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias});
   String sampletext =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   bool showFullCaption = false;
   bool isTapped = false;
   bool commentTapped = false;
-  
+  PageController controller;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller = PageController();
+  }
  
+
 
   @override
   Widget build(BuildContext context) => FadeAnimation(0.25, LayoutBuilder(
@@ -137,14 +149,32 @@ class _MyCard2State extends State<MyCard2> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(25),
-                                            child: Image.asset(
-                                              'assets/img/Image1.png',
-                                              fit: BoxFit.fitWidth,
-                                            ),
+                                            child: PageView.builder(
+                                              itemCount: medias.length,
+                                              controller: controller,
+                                              itemBuilder: (context, index) {
+                                                return Image.network("${medias[index]}",
+                                                fit: BoxFit.fitWidth,);
+                                              },
+                                              
+                                              )
+                                            
+                                            
                                           ),
                                         ),
                                       ),
                                     ),
+                                    medias.length > 1 ?
+                                    SmoothPageIndicator(
+                                      controller: controller, 
+                                      count: medias.length,
+                                      effect: ScrollingDotsEffect(
+                                        activeDotColor: Colors.blue,
+                                        dotHeight: 10,
+                                        dotWidth: 10
+                                      )
+                                    ):
+                                    Container(),
                                     Container(
                                       child: Row(
                                         mainAxisAlignment:

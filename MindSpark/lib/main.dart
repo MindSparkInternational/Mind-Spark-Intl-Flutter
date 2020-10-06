@@ -29,7 +29,9 @@ main()  async{
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
  
+  
   var email = preferences.getString("email");
+
   email == null ? preferences.setInt("checkOnboard", 1) : preferences.setInt("checkOnboard", 2);
   runApp(
     new MultiProvider(providers: 

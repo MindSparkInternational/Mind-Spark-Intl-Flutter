@@ -195,7 +195,8 @@ class _HomeState extends State<Home> {
         List<dynamic> fields = Provider.of<PostModel>(context, listen: true).posts[index].fields;
         String date = Provider.of<PostModel>(context, listen: true).posts[index].date;
         List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
-        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date );
+        List<dynamic> medias =  Provider.of<PostModel>(context, listen: true).posts[index].medias;
+        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, );
       });
     },)
     

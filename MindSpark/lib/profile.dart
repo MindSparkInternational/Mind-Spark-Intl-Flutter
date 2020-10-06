@@ -435,6 +435,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
         List<dynamic> fields = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].fields;
         String date = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].date;
         List<Comment> comments = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].finalComments;
+        print("comment size ${comments.length}");
         return Container(height: maxHeight ,
          child:
          Example(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,)
