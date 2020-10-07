@@ -1,5 +1,6 @@
 import 'package:MindSpark/signAndLogStuff/signUpTwo.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:MindSpark/animations/FadeAnimation.dart';
 import 'loginScreen.dart';
@@ -84,10 +85,23 @@ class _SignUpState extends State<SignUp> {
                       print(passController.text);
                       print(firstController.text);
                       print(lastController.text);
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) => SignUpTwo(firstName: firstController.text, lastName: lastController.text, password: passController.text,),
-                      )
-                    );
+                      if(passController.text.length > 8)
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => SignUpTwo(firstName: firstController.text, lastName: lastController.text, password: passController.text,),
+                        )
+                      );
+                      else{
+                        Fluttertoast.showToast(
+                          msg: "Password must be longer than 8 characters",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
+                      }
                   },
                   color: Colors.greenAccent,
                   elevation: 0,

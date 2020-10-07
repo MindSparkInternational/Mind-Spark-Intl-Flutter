@@ -57,6 +57,7 @@ dependencies:
   provider: ^4.2.0
   country_list_pick: ^1.0.1+2
   smooth_page_indicator: ^0.2.0
+  fluttertoast: ^7.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,6 +75,7 @@ flutter:
     - assets/img/waveLight.png
     - assets/img/Image2.jpg
     - assets/img/Image1.png
+    - assets/img/Copy_of_Farmers_Near_You.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
