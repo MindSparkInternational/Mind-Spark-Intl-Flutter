@@ -78,7 +78,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     );
   }
   void startTimer() {
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(milliseconds: 1), () {
       navigateUser(); //It will redirect  after 3 seconds
     });
   }
@@ -172,6 +172,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
         print('thing type is ${thing.runtimeType}');
         list.add(Article.fromJson(map as Map<String, dynamic>));
         print("hello");
+      }
+      for(Article article in list){
+        List<Comment> commentList = new List();
+        var responseComment = await http.get("https://mindsparkapi.herokuapp.com/api/v1/articles/comment/?article_id=${article.id}", headers: {
+          "Authorization":"$token",
+          }
+        );
+        var responseBodyComment = json.decode(responseComment.body);
+        for(Map map in responseBodyComment){
+          commentList.add(Comment.fromJson(map as Map<String, dynamic>));
+        }
+        article.finalComments = commentList;
+        print("Article splash comment length ${article.finalComments.length}");
+        //print("Post comment content ${post.finalComments[0].author} ${post.title}");
       }
       print("$list.length");
       print("$list[0].title");

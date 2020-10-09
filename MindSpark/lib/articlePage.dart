@@ -1,6 +1,8 @@
+import 'package:MindSpark/components/PostCommentScreen.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:page_transition/page_transition.dart';
 import 'dataClasses/article.dart';
 import 'dataClasses/comment.dart';
 
@@ -125,13 +127,28 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
+                                        
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
                                           children: [
-                                            ArticleTagItem('History'),
-                                            ArticleTagItem('Math'),
-                                            ArticleTagItem('Science'),
+                                            Container(
+                                              height: constraints.maxHeight*.04,
+                                              width: constraints.maxWidth*.4,
+                                              child: ListView.builder(
+                                                scrollDirection: Axis.horizontal,
+                                                itemCount: fields.length,
+                                                itemBuilder: (context, index) {
+                                                  if(fields != null || fields.length > 0)
+                                                    return ArticleTagItem(fields[index],);
+                                                  else  
+                                                    return Container();
+                                                },
+                                              ),
+                                            ),
+                                            // ArticleTagItem('History'),
+                                            // ArticleTagItem('Math'),
+                                            // ArticleTagItem('Science'),
                                           ],
                                         ),
                                       ),
@@ -196,24 +213,35 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                               )),
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.comment),
-                                                  Text('Comment'),
-                                                ],
-                                              )),
+                                      GestureDetector(
+                                        child: Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.comment),
+                                                    Text('Comment'),
+                                                  ],
+                                                )),
+                                          ),
                                         ),
+                                        onTap: (){
+                                          Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                child: PostCommentScreen(
+                                                    comments),
+                                                type: PageTransitionType
+                                                    .downToUp));
+                                        },
                                       )
                                     ],
                                   ),

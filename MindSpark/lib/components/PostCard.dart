@@ -262,9 +262,24 @@ class _MyCard2State extends State<MyCard2> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   children: [
-                                                    PostTags(name: "text"),
-                                                    PostTags(name: "text"),
-                                                    PostTags(name: "text"),
+                                                    Container(
+                                                      height: constraints.maxHeight*.04,
+                                                      width: constraints.maxWidth*.4,
+                                                      child: ListView.builder(
+                                                        scrollDirection: Axis.horizontal,
+                                                        itemCount: fields.length,
+                                                        itemBuilder: (context, index) {
+                                                          if(fields != null || fields.length > 0)
+                                                            return PostTags(name: fields[index],);
+                                                          else  
+                                                            return Container();
+                                                        },
+                                                      ),
+                                                    ),
+                                                    
+                                                    // PostTags(name: "text"),
+                                                    // PostTags(name: "text"),
+                                                    // PostTags(name: "text"),
                                                   ],
                                                 ),
                                               ),

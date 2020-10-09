@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Hexcolor('#E5E5E5'),
-        body: SafeArea(
+        body: SafeArea( 
           child: Stack(
             children: [
               Container(
@@ -160,8 +160,9 @@ class _HomeState extends State<Home> {
         List<dynamic> fields = Provider.of<ArticleModel>(context, listen: true).articles[index].fields;
         String date = Provider.of<ArticleModel>(context, listen: true).articles[index].date;
         List<Comment> comments = Provider.of<ArticleModel>(context, listen: true).articles[index].finalComments;
+        List<dynamic> medias =  Provider.of<ArticleModel>(context, listen: true).articles[index].medias;
         return 
-        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: [],subHead: subHead,);
+        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias,);
 
         //ArticleCard
       });
@@ -192,11 +193,11 @@ class _HomeState extends State<Home> {
         String title = Provider.of<PostModel>(context, listen: true).posts[index].title;
         String body = Provider.of<PostModel>(context, listen: true).posts[index].body;
         int likes = Provider.of<PostModel>(context, listen: true).posts[index].likes;
-        List<dynamic> fields = Provider.of<PostModel>(context, listen: true).posts[index].fields;
+        List<dynamic> fields = Provider.of<PostModel>(context, listen: true).posts[index].fields; 
         String date = Provider.of<PostModel>(context, listen: true).posts[index].date;
         List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
         List<dynamic> medias =  Provider.of<PostModel>(context, listen: true).posts[index].medias;
-        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, );
+        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, fields: fields );
       });
     },)
     

@@ -197,7 +197,7 @@ class _SignUpThreeState extends State<SignUpThree> {
                   new SizedBox(height: 0),
                   countryIsChosen && dateIsChosen?
                   new Column(children: [
-                    new SizedBox(height: constraints.maxHeight*.3,),
+                    new SizedBox(height: constraints.maxHeight*.2,),
                     new Container(
                     alignment: Alignment.center,
                     height: constraints.maxHeight*.15,

@@ -100,16 +100,16 @@ class PostTags extends StatelessWidget {
 
 
 class ArticleTag extends StatefulWidget {
-List<dynamic> fields;
-ArticleTag({this.fields});
+String name;
+ArticleTag({this.name});
 
   @override
-  _ArticleTagState createState() => _ArticleTagState(fields:fields);
+  _ArticleTagState createState() => _ArticleTagState(name:name);
 }
 
 class _ArticleTagState extends State<ArticleTag> {
-  List<dynamic> fields;
-_ArticleTagState({this.fields});
+  String name;
+_ArticleTagState({this.name});
  
  
   @override
@@ -120,7 +120,7 @@ _ArticleTagState({this.fields});
  child: Container(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
-            child: Text(fields.toString(),
+            child: Text(name.toString(),
             // "$fields",
               style: TextStyle(color: Colors.black),
             ),

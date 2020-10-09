@@ -8,6 +8,7 @@ import 'package:MindSpark/components/EngageMentComponents.dart';
 import 'package:MindSpark/components/PostCard.dart';
 import 'package:MindSpark/articlePage.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ArticleCard extends StatefulWidget {
   String title;
@@ -18,9 +19,10 @@ class ArticleCard extends StatefulWidget {
   List<Comment> comments;
   int likes;
   String date;
-  ArticleCard({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead});
+  List<dynamic> medias;
+  ArticleCard({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias});
   @override
-  _ArticleCardState createState() => _ArticleCardState(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date,subHead:subHead);
+  _ArticleCardState createState() => _ArticleCardState(title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead);
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -29,13 +31,21 @@ class _ArticleCardState extends State<ArticleCard> {
   String body;
   String date;
   String subHead;
+  List<dynamic> medias;
   int likes;
   List<dynamic> fields;
   List<Comment> comments;
-  _ArticleCardState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead});
+  PageController controller;
+  _ArticleCardState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias});
   
   @override
-  Widget build(BuildContext context) => FadeAnimation(
+  Widget build(BuildContext context) {
+    @override
+    void initState() { 
+      super.initState();
+      controller = PageController();
+    }
+    return FadeAnimation(
       0.25,
       Container(
           padding: EdgeInsets.all(15),
@@ -91,22 +101,37 @@ class _ArticleCardState extends State<ArticleCard> {
                                         height: constraints.maxHeight * 0.55,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: Colors.red,
+                                         
                                           borderRadius:
                                               BorderRadius.circular(30),
                                         ),
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(30),
-                                          child: Image.asset(
-                                            'assets/img/Image2.jpg',
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child: PageView.builder(
+                                            itemCount: medias.length,
+                                            controller: controller,
+                                            itemBuilder: (context, index) {
+                                              return Image.network("${medias[index]}",
+                                                fit: BoxFit.fitWidth,);
+                                            }, 
+                                          )
                                         ),
                                       ),
+                                      medias.length > 1 ?
+                                    SmoothPageIndicator(
+                                      controller: controller, 
+                                      count: medias.length,
+                                      effect: ScrollingDotsEffect(
+                                        activeDotColor: Colors.blue,
+                                        dotHeight: 10,
+                                        dotWidth: 10
+                                      )
+                                    ):
+                                    Container(),
                                     
                                    Consumer<ArticleModel>(builder: (context, articleModel, child){
-                                      return ArticleDetails(author:author,date:date);
+                                      return ArticleDetails(author:author,date:date, fields: fields, constraint: constraints,);
                                    },),
                                     //  ArticleDetails(author:author,date: date,),
 //                                      Divider(
@@ -155,10 +180,10 @@ class _ArticleCardState extends State<ArticleCard> {
                                         BoxConstraints constraints) {
                                   return GestureDetector(
                                     onTap: () {
-                                      
+                                      print("Comment Length for article ${comments.length}");
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                   return ArticleScreen(title: title,body: body,author: author,date: date, subHead:subHead);
+                                   return ArticleScreen(title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields,);
                                       }));
                                     },
                                     child: Container(
@@ -186,4 +211,5 @@ class _ArticleCardState extends State<ArticleCard> {
               ),
             ],
           )));
+  }
 }

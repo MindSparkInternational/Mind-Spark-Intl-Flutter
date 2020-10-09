@@ -8,18 +8,25 @@ import 'package:provider/provider.dart';
 class ArticleDetails extends StatefulWidget {
   String date;
   String author;
-  ArticleDetails({this.date, this.author}); 
+  List<dynamic> fields;
+  BoxConstraints constraint;
+  ArticleDetails({this.date, this.author, this.fields, this.constraint}); 
   @override
-  _ArticleDetailsState createState() => _ArticleDetailsState(date:date,author:author);
+  _ArticleDetailsState createState() => _ArticleDetailsState(date:date,author:author, fields: fields, constraints: constraint);
 }
 
 class _ArticleDetailsState extends State<ArticleDetails> {
 
   String author;
   String date;
-    _ArticleDetailsState({this.date, this.author});
+  List<dynamic> fields;
+  BoxConstraints constraints;
+    _ArticleDetailsState({this.date, this.author, this.fields, this.constraints});
      
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => 
+  
+   Container(
+          
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +40,7 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                   child: Container(
                       margin: EdgeInsets.all(3),
                       child: Text(
-                       '$author',
+                      '$author',
                     // 'Brian Wamwea',
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w700),
@@ -42,10 +49,10 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                 Padding(
                   padding: const EdgeInsets.only(right: 5.0, top: 3),
                   child: Container(
-                      margin: EdgeInsets.all(3),
+                      margin: EdgeInsets.all(3), 
                       child: Text(
                       date.substring(0, date.indexOf("T")),
-                       //'03/25/2010',
+                      //'03/25/2010',
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w600),
                       )),
@@ -53,21 +60,31 @@ class _ArticleDetailsState extends State<ArticleDetails> {
               ],
             ),
             //tis is when AtricleTag is Stateless 
-             Container(
+            Container(
               child: Row(
-                 children: [
-                     Consumer<ArticleModel>(builder: (context, articleModel, child){
-                return ArticleTag(fields: [],);
-                                   },),
-                 // ArticleTag(),
-            //       //ArticleTag(),
-            //      // ArticleTag(),
-                 ],
-               ),
-             ),
+                children: [
+                    Container(
+                      height: constraints.maxHeight*.05,
+                      width: constraints.maxWidth*.5,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: fields.length,
+                        itemBuilder: (context, index) {
+                          if(fields != null || fields.length > 0)
+                            return ArticleTag(name: fields[index],);
+                          else  
+                            return Container();
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ],
         ),
-      );
+    );
+   
+    
 }
 
 class SaveBar extends StatelessWidget {
