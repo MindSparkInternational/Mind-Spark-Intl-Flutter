@@ -1,3 +1,4 @@
+import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/models/articleModel.dart';
@@ -59,10 +60,8 @@ class _HomeState extends State<Home> {
                               color: Hexcolor('#0F3460'),
                             ),
                             onTap: () async{
-                              SharedPreferences preferences = await SharedPreferences.getInstance();
-                              preferences.remove("token");
-                              preferences.remove("email");
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+                              
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePost()));
 
                             }
                           ),
@@ -152,6 +151,7 @@ class _HomeState extends State<Home> {
       return new PageView.builder(
       itemCount: articleModel.articles.length,
       itemBuilder: (context, index){
+        String id = Provider.of<ArticleModel>(context, listen: true).articles[index].id;
         String author = Provider.of<ArticleModel>(context, listen: true).articles[index].author;
         String title = Provider.of<ArticleModel>(context, listen: true).articles[index].title;
         String subHead = Provider.of<ArticleModel>(context, listen: true).articles[index].subHead;
@@ -162,7 +162,7 @@ class _HomeState extends State<Home> {
         List<Comment> comments = Provider.of<ArticleModel>(context, listen: true).articles[index].finalComments;
         List<dynamic> medias =  Provider.of<ArticleModel>(context, listen: true).articles[index].medias;
         return 
-        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias,);
+        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id);
 
         //ArticleCard
       });
@@ -190,6 +190,7 @@ class _HomeState extends State<Home> {
       itemCount: postModel.posts.length,
       itemBuilder: (context, index){
         String author = Provider.of<PostModel>(context, listen: true).posts[index].author;
+        String id = Provider.of<PostModel>(context, listen: true).posts[index].id;
         String title = Provider.of<PostModel>(context, listen: true).posts[index].title;
         String body = Provider.of<PostModel>(context, listen: true).posts[index].body;
         int likes = Provider.of<PostModel>(context, listen: true).posts[index].likes;
@@ -197,7 +198,7 @@ class _HomeState extends State<Home> {
         String date = Provider.of<PostModel>(context, listen: true).posts[index].date;
         List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
         List<dynamic> medias =  Provider.of<PostModel>(context, listen: true).posts[index].medias;
-        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, fields: fields );
+        return MyCard2(author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, fields: fields, id:id );
       });
     },)
     

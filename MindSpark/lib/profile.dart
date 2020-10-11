@@ -379,7 +379,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Expanded(
                     child: TabBarView(
-                        children: [MyArticlesTab(), MyPostsTab(constraints)]),
+                        children: [MyArticlesTab(), SavedScreen(constraints: constraints,)]),
                   )
                 ],
               ),
@@ -423,6 +423,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
         Consumer<UserModel>(builder: (context, postModel, child) {
 
        return   
+       postModel.extraUser.posts == null ?
          ListView.builder(
       
       itemCount: postModel.extraUser.posts.length,
@@ -440,7 +441,8 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
          child:
          Example(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,)
          );
-      });
+      }):
+      Container();
     },));
     });
   }
@@ -812,7 +814,51 @@ List<dynamic> fields;
 }
 
 
+class SavedScreen extends StatefulWidget {
+  SavedScreen({this.constraints});
+  final BoxConstraints constraints;
+  
+  @override
+  _SavedScreenState createState() => _SavedScreenState(constraints: constraints);
+}
 
+class _SavedScreenState extends State<SavedScreen> {
+  final BoxConstraints constraints;
+  _SavedScreenState({this.constraints});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: constraints.maxHeight,
+      color: Hexcolor('#E5E5E5'),
+      child: Consumer<UserModel>(
+        builder: (context, savedModel, child){
+          return new ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: savedModel.extraUser.bookmarks.length,
+            itemBuilder: (context, index){
+              String id = savedModel.extraUser.bookmarks[index].id;
+              String author = savedModel.extraUser.bookmarks[index].author;
+              String title = savedModel.extraUser.bookmarks[index].title;
+              String subHead = savedModel.extraUser.bookmarks[index].subHead;
+              String body = savedModel.extraUser.bookmarks[index].body;
+              int likes = savedModel.extraUser.bookmarks[index].likes;
+              List<dynamic> fields = savedModel.extraUser.bookmarks[index].fields;
+              String date = savedModel.extraUser.bookmarks[index].date;
+              List<Comment> comments = savedModel.extraUser.bookmarks[index].finalComments;
+              List<dynamic> medias =  savedModel.extraUser.bookmarks[index].medias;
+              return 
+              Container(
+                height: constraints.maxHeight,
+                child: ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id)
+              );
+              
+            },
+          );
+        },
+      )
+    );
+  }
+}
 class MyPostsTab extends StatelessWidget {
   MyPostsTab(this.constraints);
   final BoxConstraints constraints;

@@ -30,6 +30,7 @@ main()  async{
   SharedPreferences preferences = await SharedPreferences.getInstance();
  
   //preferences.remove("email");
+  
   var email = preferences.getString("email");
 
   email == null ? preferences.setInt("checkOnboard", 1) : preferences.setInt("checkOnboard", 2);
@@ -44,11 +45,11 @@ main()  async{
         new MaterialApp(
         debugShowCheckedModeBanner: false,
         //home: new MyApp(),
-        home: Splash()
+        //home: Splash()
         //home: SignUpThree()
         //home: email == null ? Login() : MyApp()
         //home: FilePickerDemo()
-        //home: Splash()
+        home: Splash()
         //home: HomePage()
         //home: OnboardingScreen()
         //home:SignUp()

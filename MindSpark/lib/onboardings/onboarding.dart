@@ -1,9 +1,11 @@
+import 'package:MindSpark/onboardings/onBoardThree.dart';
 import 'package:MindSpark/signAndLogStuff/loginOrSign.dart';
 import 'package:MindSpark/onboardings/onBoardOne.dart';
 import 'package:MindSpark/onboardings/onBoardingTwo.dart';
 import 'package:MindSpark/utilities/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -12,7 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 3;
+  final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
@@ -42,6 +44,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     
     return SafeArea(
     child: Scaffold(
+      backgroundColor:  Hexcolor("#059b9c"),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Container(
@@ -67,6 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: <Widget>[
                       OnBoardOne(),
                       OnBoardTwo(),
+                      OnBoardThree(),
                       HomePage()
                     ],
                   ),

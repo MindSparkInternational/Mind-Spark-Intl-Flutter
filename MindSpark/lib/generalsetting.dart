@@ -1,5 +1,7 @@
+import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'edit.dart';
 import 'report.dart';
 
@@ -103,7 +105,12 @@ class _ProfieSettingsState extends State<ProfieSettings> {
             style: TextStyle(color: Colors.white),
           ),
           trailing: Icon(Icons.exit_to_app, color: Colors.white),
-          onTap: null,
+          onTap: () async{
+            SharedPreferences preferences = await SharedPreferences.getInstance();
+            preferences.remove("token");
+            preferences.remove("email");
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login()));
+          },
         ),
       ),
     ];

@@ -42,6 +42,7 @@ dependencies:
   flutter_speed_dial: ^1.2.5
   flutter_neumorphic: ^3.0.1
   font_awesome_flutter: ^8.2.0
+  multi_image_picker: ^4.7.14
   camera: 
   path_provider: ^1.6.11
   path: 
@@ -76,6 +77,9 @@ flutter:
     - assets/img/Image2.jpg
     - assets/img/Image1.png
     - assets/img/Copy_of_Farmers_Near_You.png
+    - assets/img/image0.png
+    - assets/img/Article2For_SwipeFeature.png
+    - assets/img/ProfileSelected.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -114,6 +118,7 @@ flutter:
          - asset: assets/fonts/SourceSansPro/SourceSansPro-Italic.ttf
          - asset: assets/fonts/SourceSansPro/SourceSansPro-Light.ttf
          - asset: assets/fonts/SourceSansPro/SourceSanspro-LightItalic.ttf
+         
 
            
 

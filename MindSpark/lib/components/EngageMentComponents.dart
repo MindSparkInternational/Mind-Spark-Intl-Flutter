@@ -3,6 +3,8 @@ import 'package:MindSpark/models/articleModel.dart';
 import 'package:flutter/material.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class ArticleDetails extends StatefulWidget {
@@ -99,13 +101,27 @@ class SaveBar extends StatelessWidget {
   }
 }
 
-class LikesBar extends StatelessWidget {
+class LikesBar extends StatefulWidget {
   int likes;
+  String id;
   LikesBar({
     this.likes,
+    this.id,
     Key key,
   }) : super(key: key);
+  @override
+  _LikesBarState createState() => _LikesBarState(likes: likes, id: id, key: key);
+}
 
+class _LikesBarState extends State<LikesBar> {
+  int likes;
+  bool selected = false;
+  String id;
+  _LikesBarState({
+    this.likes,
+    this.id,
+    Key key,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -114,10 +130,27 @@ class LikesBar extends StatelessWidget {
           GestureDetector(
             child:Icon(
               Icons.thumb_up,
-              color: Colors.black,
+              color: selected ? Colors.blue: Colors.black,
             ),
-            onTap: (){
+            onTap: () async{
               
+              SharedPreferences preferences = await SharedPreferences.getInstance();
+              var response = await http.put("https://mindsparkapi.herokuapp.com/api/v1/posts/like/",
+                headers: {
+                  "Authorization":preferences.getString("token")
+                },
+                body: {
+                  "post_id":id
+                }
+              );
+              setState(() {
+                selected = !selected;
+                if(selected)
+                  likes +=1;
+                else{
+                  likes -=1;
+                }
+              });
             }
           ),
           Text(

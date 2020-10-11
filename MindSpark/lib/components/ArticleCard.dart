@@ -15,14 +15,15 @@ class ArticleCard extends StatefulWidget {
   String author;
   String body;
   String subHead;
+  String id;
   List<dynamic> fields;
   List<Comment> comments;
   int likes;
   String date;
   List<dynamic> medias;
-  ArticleCard({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias});
+  ArticleCard({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
   @override
-  _ArticleCardState createState() => _ArticleCardState(title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead);
+  _ArticleCardState createState() => _ArticleCardState(title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead, id: id);
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -31,12 +32,13 @@ class _ArticleCardState extends State<ArticleCard> {
   String body;
   String date;
   String subHead;
+  String id;
   List<dynamic> medias;
   int likes;
   List<dynamic> fields;
   List<Comment> comments;
   PageController controller;
-  _ArticleCardState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias});
+  _ArticleCardState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
   
   @override
   Widget build(BuildContext context) {
@@ -183,7 +185,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                       print("Comment Length for article ${comments.length}");
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                   return ArticleScreen(title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields,);
+                                   return ArticleScreen(title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields, id: id,);
                                       }));
                                     },
                                     child: Container(

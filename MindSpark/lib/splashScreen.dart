@@ -42,6 +42,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   }
   @override
   Widget build(BuildContext context) {
+    precacheImage(AssetImage("images/assets/image0.png"), context);
     return Scaffold(
       backgroundColor: Hexcolor("19222c"),
       body:  
@@ -217,6 +218,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     var responseBody = json.decode(response.body);
     print("USER BODY$responseBody");
     User user = User.fromJson(responseBody);
+    preferences.setString("user_id", user.id);
     print(user.age);
     return user;
     
@@ -224,14 +226,15 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   Future<ExtraUser> getExtraUserData(BuildContext context) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString("token");
+    String user_id = preferences.getString("user_id");
     // String token = 'Token 713be29dfbca9a93134a5672718e725b5b9bff54';
-    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/users/props/", headers: {
+    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/users/props?user_id=${user_id}", headers: {
         "Authorization":"$token" 
         }
       );
     print("Made it past api call");
     var responseBody = json.decode(response.body);
-    print("USER BODY$responseBody");
+    print("USER BODY36$responseBody");
     ExtraUser user = ExtraUser.fromJson(responseBody);
     print(user.id);
 

@@ -3,8 +3,10 @@ import 'package:MindSpark/components/TagCard.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dataClasses/article.dart';
 import 'dataClasses/comment.dart';
+import 'package:http/http.dart' as http;
 
 class ArticleScreen extends StatefulWidget {
   String title;
@@ -15,9 +17,10 @@ class ArticleScreen extends StatefulWidget {
   List<Comment> comments;
   int likes;
   String date;
-  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date});
+  String id;
+  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date, this.id});
   @override
-  _ArticleScreenState createState() => _ArticleScreenState(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date);
+  _ArticleScreenState createState() => _ArticleScreenState(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date, id: id);
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
@@ -26,10 +29,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
   String body;
   String date;
   int likes;
+  String id;
   String subHead;
   List<dynamic> fields;
   List<Comment> comments;
- _ArticleScreenState({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date});
+ _ArticleScreenState({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -175,25 +179,42 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.bookmark),
-                                                  Text('Save'),
-                                                ],
-                                              )),
+                                      GestureDetector(
+                                        child: Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.bookmark),
+                                                    Text('Save'),
+                                                  ],
+                                                )),
+                                          ),
                                         ),
+                                        onTap: () async{
+                                           SharedPreferences preferences = await SharedPreferences.getInstance();
+                                           String token = preferences.getString("token");
+                                           var response = await http.put(
+                                             "https://mindsparkapi.herokuapp.com/api/v1/articles/bookmark/",
+                                             headers: {
+                                               "Authorization": token,
+                                             },
+                                             body: {
+                                               "article_id": id
+                                             }
+                                             
+                                           );
+                                        },
                                       ),
+                                      
                                       Expanded(
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),

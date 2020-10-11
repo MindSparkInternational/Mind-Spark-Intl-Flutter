@@ -11,7 +11,9 @@ import 'package:MindSpark/components/CommentBox.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:MindSpark/models/postModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:http/http.dart' as http;
 
 class MyCard2 extends StatefulWidget {
   String title;
@@ -22,21 +24,23 @@ class MyCard2 extends StatefulWidget {
   List<dynamic> medias;
   int likes;
   String date;
-  MyCard2({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias});
+  String id;
+  MyCard2({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
   @override
-  _MyCard2State createState() => _MyCard2State(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date, medias: medias);
+  _MyCard2State createState() => _MyCard2State(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date, medias: medias, id:id);
 }
 
 class _MyCard2State extends State<MyCard2> {
   String title;
   String author;
   String body;
+  String id;
   String date;
   int likes;
   List<dynamic> fields;
   List<dynamic> medias;
   List<Comment> comments;
-  _MyCard2State({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias});
+  _MyCard2State({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
   String sampletext =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   bool showFullCaption = false;
@@ -200,6 +204,7 @@ class _MyCard2State extends State<MyCard2> {
                                               ),
                                             ),
                                           ),
+
                                           Expanded(
                                             child: Padding(
                                               padding:
@@ -223,29 +228,46 @@ class _MyCard2State extends State<MyCard2> {
                                               ),
                                             ),
                                           ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 1,
-                                                      horizontal: 5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(Icons.bookmark),
-                                                    Text('Save')
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          // GestureDetector(
+                                          //   child: Expanded(
+                                          //     child: Padding(
+                                          //       padding:
+                                          //           const EdgeInsets.symmetric(
+                                          //               vertical: 1,
+                                          //               horizontal: 5),
+                                          //       child: Container(
+                                          //         decoration: BoxDecoration(
+                                          //             color: Colors.white,
+                                          //             borderRadius:
+                                          //                 BorderRadius.circular(
+                                          //                     25)),
+                                          //         child: Row(
+                                          //           mainAxisAlignment:
+                                          //               MainAxisAlignment.center,
+                                          //           children: [
+                                          //             Icon(Icons.bookmark),
+                                          //             Text('Save')
+                                          //           ],
+                                          //         ),
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          //   onTap: () async{
+                                          //     SharedPreferences preferences = await SharedPreferences.getInstance();
+                                          //     String token = preferences.getString("token");
+                                          //     var response = await http.put(
+                                          //       "https://mindsparkapi.herokuapp.com/api/v1/articles/bookmark/",
+                                          //       headers: {
+                                          //         "Authorization": token,
+                                          //       },
+                                          //       body: {
+                                          //         "article_id": id
+                                          //       }
+                                                
+                                          //     );
+                                          //   },
+                                          // )
+                                          
                                         ],
                                       ),
                                     ),
@@ -293,7 +315,7 @@ class _MyCard2State extends State<MyCard2> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    LikesBar(likes: likes,),
+                                                    LikesBar(likes: likes, id: id,),
                                                     SizedBox(
                                                       width: 8,
                                                     ),
