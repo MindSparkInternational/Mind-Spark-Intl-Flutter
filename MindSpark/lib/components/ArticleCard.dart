@@ -1,4 +1,5 @@
 import 'package:MindSpark/dataClasses/comment.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/models/articleModel.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,14 @@ class ArticleCard extends StatefulWidget {
   String id;
   List<dynamic> fields;
   List<Comment> comments;
+  DiffUser diffUser;
   int likes;
   String date;
+  String authorId;
   List<dynamic> medias;
-  ArticleCard({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
+  ArticleCard({this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id, this.authorId});
   @override
-  _ArticleCardState createState() => _ArticleCardState(title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead, id: id);
+  _ArticleCardState createState() => _ArticleCardState(diffUser:diffUser,authorId: authorId,title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead, id: id);
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -31,14 +34,16 @@ class _ArticleCardState extends State<ArticleCard> {
   String author;
   String body;
   String date;
+  DiffUser diffUser;
   String subHead;
   String id;
+  String authorId;
   List<dynamic> medias;
   int likes;
   List<dynamic> fields;
   List<Comment> comments;
   PageController controller;
-  _ArticleCardState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
+  _ArticleCardState({this.diffUser,this.title,this.authorId, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
   
   @override
   Widget build(BuildContext context) {
@@ -133,7 +138,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                     Container(),
                                     
                                    Consumer<ArticleModel>(builder: (context, articleModel, child){
-                                      return ArticleDetails(author:author,date:date, fields: fields, constraint: constraints,);
+                                      return ArticleDetails(diffUser:diffUser,authorId: authorId,author:author,date:date, fields: fields, constraint: constraints,);
                                    },),
                                     //  ArticleDetails(author:author,date: date,),
 //                                      Divider(

@@ -1,6 +1,7 @@
 import 'package:MindSpark/components/PostCommentScreen.dart';
 import 'package:MindSpark/dataClasses/article.dart';
 import 'package:MindSpark/dataClasses/post.dart';
+import 'package:MindSpark/dataClasses/user.dart';
 
 class ExtraUser{
   String id;
@@ -8,8 +9,9 @@ class ExtraUser{
   int following;
   int followers;
   List<Post> posts;
+  User userFull;
   List<Article> bookmarks;
-  ExtraUser({this.id,  this.user,this.followers, this.following, this.posts, this.bookmarks});
+  ExtraUser({this.id,  this.user,this.followers, this.following, this.posts, this.bookmarks, this.userFull});
 
   factory ExtraUser.fromJson(Map<String, dynamic> json){
     print("Made it to User");
@@ -25,11 +27,12 @@ class ExtraUser{
     
     return ExtraUser(
       id: json["id"],
-      user: json["user"],
+      //user: json["user"],
       following: json["following"],
       followers: json["followers"],
       posts: list,
-      bookmarks: book
+      bookmarks: book,
+      userFull: User.fromJson(json["user"])
     );
   }
 }

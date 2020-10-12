@@ -1,11 +1,15 @@
 import 'package:MindSpark/dataClasses/comment.dart';
 
+import 'diffUser.dart';
+
 class Article{
   String title;
   String author;
   String id;
   String body;
+  String authorId;
   String subHead;
+  DiffUser diffUser;
   String postType;
   String date;
   List<dynamic> fields;
@@ -14,7 +18,7 @@ class Article{
   int likes;
   int shares;
   List<dynamic> medias;
-  Article({this.title, this.author, this.id, this.body, this.subHead,this.postType,this.fields,this.comments,this.likes,this.shares,this.medias, this.date});
+  Article({this.title, this.diffUser,this.authorId,this.author, this.id, this.body, this.subHead,this.postType,this.fields,this.comments,this.likes,this.shares,this.medias, this.date});
 
   factory Article.fromJson(Map<String, dynamic> json){
     print("Made it");
@@ -31,7 +35,8 @@ class Article{
       likes: json["likes"],
       shares: json["Shares"],
       medias: json["medias"],
-      date: json["created_at"]
+      date: json["created_at"],
+      authorId: json["author_id"]
     );
   }
 }

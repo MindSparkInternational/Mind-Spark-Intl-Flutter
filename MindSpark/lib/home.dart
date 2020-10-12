@@ -1,5 +1,6 @@
 import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/models/postModel.dart';
@@ -156,13 +157,16 @@ class _HomeState extends State<Home> {
         String title = Provider.of<ArticleModel>(context, listen: true).articles[index].title;
         String subHead = Provider.of<ArticleModel>(context, listen: true).articles[index].subHead;
         String body = Provider.of<ArticleModel>(context, listen: true).articles[index].body;
+        String authorId = Provider.of<ArticleModel>(context, listen: true).articles[index].authorId;
         int likes = Provider.of<ArticleModel>(context, listen: true).articles[index].likes;
         List<dynamic> fields = Provider.of<ArticleModel>(context, listen: true).articles[index].fields;
         String date = Provider.of<ArticleModel>(context, listen: true).articles[index].date;
         List<Comment> comments = Provider.of<ArticleModel>(context, listen: true).articles[index].finalComments;
         List<dynamic> medias =  Provider.of<ArticleModel>(context, listen: true).articles[index].medias;
+        DiffUser diffUser = Provider.of<ArticleModel>(context, listen: true).articles[index].diffUser;
+        print("THIS IS A DIFF USER TEST ${diffUser.posts.length}");
         return 
-        ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id);
+        ArticleCard(diffUser: diffUser ,authorId: authorId,author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id);
 
         //ArticleCard
       });

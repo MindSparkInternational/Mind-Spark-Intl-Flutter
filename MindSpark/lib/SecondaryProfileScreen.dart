@@ -1,6 +1,7 @@
 import 'package:MindSpark/components/ArticleCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/models/userModel.dart';
@@ -32,18 +33,19 @@ import 'package:MindSpark/components/CommentBox.dart';
 import 'package:page_transition/page_transition.dart';
 
 
-class Profile extends StatefulWidget {
+class SecondProfile extends StatefulWidget {
+  DiffUser diffUser;
+  SecondProfile({this.diffUser});
   @override
-  _ProfileState createState() => _ProfileState();
+  _SecondProfileState createState() => _SecondProfileState(diffUser: diffUser);
 }
 
-class _ProfileState extends State<Profile> {
+class _SecondProfileState extends State<SecondProfile> {
+  DiffUser diffUser;
+  _SecondProfileState({this.diffUser});
   @override
   void initState() {
     // TODO: implement
-    //SharedPreferences preferences = await SharedPreferences.getInstance();
-    //var token = preferences.getString("token");
-    //print(token);
     getToken();
     super.initState();
   }
@@ -125,7 +127,7 @@ class _ProfileState extends State<Profile> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                Text(
-                                   "${Provider.of<UserModel>(context, listen: true).user.firstName} ${Provider.of<UserModel>(context, listen: true).user.lastName} ",
+                                   "${diffUser.user.firstName} ${diffUser.user.firstName} ",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -354,32 +356,19 @@ class _ProfileState extends State<Profile> {
                             ],
                           )),
                         ),
-                        TabBar(
-                            indicatorColor: Colors.black,
-                            indicatorWeight: 0.3,
-                            labelColor: Colors.black,
-                            tabs: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.tag_faces),
-                                  Text('My Content')
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.bookmark),
-                                  Text('SavedPosts')
-                                ],
-                              ),
-                            ])
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.tag_faces),
+                            Text('My Content')
+                          ],
+                        ),
+                              
                       ],
                     ),
                   ),
                   Expanded(
-                    child: TabBarView(
-                        children: [MyArticlesTab(), SavedScreen(constraints: constraints,)]),
+                    child: MyArticlesTab(diffUser: diffUser,),
                   )
                 ],
               ),
@@ -397,11 +386,12 @@ class MyArticlesTab extends StatefulWidget {
   String body;
   List<dynamic> fields;
   List<Comment> comments;
+  DiffUser diffUser;
   int likes;
   String date;
-   MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+   MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
   @override
-  _MyArticlesTabState createState() => _MyArticlesTabState();
+  _MyArticlesTabState createState() => _MyArticlesTabState(diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date);
 }
 
 class _MyArticlesTabState extends State<MyArticlesTab> {
@@ -410,9 +400,10 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
   String body;
   String date;
   int likes;
+  DiffUser diffUser;
   List<dynamic> fields;
   List<Comment> comments;
-  _MyArticlesTabState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+  _MyArticlesTabState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -423,29 +414,30 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
         Consumer<UserModel>(builder: (context, postModel, child) {
 
        return   
-       postModel.extraUser.posts != null ?
-         ListView.builder(
-          itemCount: postModel.extraUser.posts.length,
-          itemBuilder: (context, index){
-            print("TOTAL LENGTH ${postModel.extraUser.posts.length}");
-            String author = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].author;
-            String title = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].title;
-            String id = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].id;
-            String body = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].body;
-            int likes = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].likes;
-            List<dynamic> fields = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].fields;
-            List<dynamic> medias = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].medias;
-            String date = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].date;
-            List<Comment> comments = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].finalComments;
-            //print("comment size ${comments.length}");
-            print("aa$id");
-            return Container(height: maxHeight ,
-            child:
-            MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,medias: medias,likes:likes, id:id)
-            );
-        }
-      ):
-      Container();
+       diffUser.posts == null ?
+        Container(child:Text("Hello")):
+        Container(
+          height: maxHeight,
+          child: 
+          ListView.builder(
+            itemCount: postModel.extraUser.posts.length,
+            itemBuilder: (context, index){
+              String author = diffUser.posts[index].author;
+              print("aa$author");
+              String title = diffUser.posts[index].title;
+              String body = diffUser.posts[index].body;
+              int likes = diffUser.posts[index].likes;
+              List<dynamic> fields = diffUser.posts[index].fields;
+              String date = diffUser.posts[index].date;
+              List<Comment> comments = diffUser.posts[index].finalComments;
+              print("comment size ${comments.length}");
+              return Container(height: maxHeight ,
+              child:
+              MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,)
+              );
+            }
+          )
+        );
     },));
     });
   }

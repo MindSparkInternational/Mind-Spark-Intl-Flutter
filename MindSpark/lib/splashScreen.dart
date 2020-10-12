@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:MindSpark/dataClasses/article.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/dataClasses/extraUser.dart';
 import 'package:MindSpark/dataClasses/user.dart';
 import 'package:MindSpark/home.dart';
@@ -185,6 +186,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
           commentList.add(Comment.fromJson(map as Map<String, dynamic>));
         }
         article.finalComments = commentList;
+        print("AUTHOR ID FROM ARTICLE${article.authorId}");
+        var diffUserResponse = await http.get(
+          "https://mindsparkapi.herokuapp.com/api/v1/users/props?user_id=${article.authorId}",
+          headers: {
+            "Authorization": "$token"
+          }
+        );
+        
+        DiffUser user;
+        var diffUserResponseBody = json.decode(diffUserResponse.body);
+        print(diffUserResponseBody);
+        print("CHECKPOINT FOR DIFF USER");
+        user = DiffUser.fromJson(diffUserResponseBody as Map<String, dynamic>);
+        article.diffUser = user;
         print("Article splash comment length ${article.finalComments.length}");
         //print("Post comment content ${post.finalComments[0].author} ${post.title}");
       }
@@ -226,9 +241,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
   Future<ExtraUser> getExtraUserData(BuildContext context) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString("token");
-    String user_id = preferences.getString("user_id");
+    String userId = preferences.getString("user_id");
     // String token = 'Token 713be29dfbca9a93134a5672718e725b5b9bff54';
-    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/users/props?user_id=${user_id}", headers: {
+    var response = await http.get("https://mindsparkapi.herokuapp.com/api/v1/users/props?user_id=${userId}", headers: {
         "Authorization":"$token" 
         }
       );
@@ -236,7 +251,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
     var responseBody = json.decode(response.body);
     print("USER BODY36$responseBody");
     ExtraUser user = ExtraUser.fromJson(responseBody);
-    print(user.id);
+    print("THIS IS A PARSE CHECK ${user.userFull.firstName}");
 
     return user;
     

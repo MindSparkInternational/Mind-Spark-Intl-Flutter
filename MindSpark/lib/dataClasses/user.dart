@@ -10,7 +10,8 @@ class User{
   String country;
   String img;
   String bio;
-  User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img, this.bio});
+  List<String> roles;
+  User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img, this.bio, this.roles});
 
   factory User.fromJson(Map<String, dynamic> json){
     print("Made it to User");
@@ -24,7 +25,8 @@ class User{
       age: json["age"],
       img: "",
       country: "",
-      bio: ""
+      bio: "",
+      
     );
   }
 }

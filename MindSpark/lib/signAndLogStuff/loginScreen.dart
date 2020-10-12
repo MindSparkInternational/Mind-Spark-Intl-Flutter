@@ -129,12 +129,6 @@ class _LoginState extends State<Login> {
             ),
             FadeAnimation(1.2, Container(
               height: MediaQuery.of(context).size.height / 3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/background.png'),
-                  fit: BoxFit.cover
-                )
-              ),
             ))
           ],
         ),

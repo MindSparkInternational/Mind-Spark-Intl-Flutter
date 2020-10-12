@@ -1,4 +1,6 @@
 
+import 'package:MindSpark/SecondaryProfileScreen.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/models/articleModel.dart';
 import 'package:flutter/material.dart';
 import 'package:MindSpark/components/TagCard.dart';
@@ -12,18 +14,22 @@ class ArticleDetails extends StatefulWidget {
   String author;
   List<dynamic> fields;
   BoxConstraints constraint;
-  ArticleDetails({this.date, this.author, this.fields, this.constraint}); 
+  String authorId;
+  DiffUser diffUser;
+  ArticleDetails({this.date, this.author, this.fields, this.constraint, this.authorId, this.diffUser}); 
   @override
-  _ArticleDetailsState createState() => _ArticleDetailsState(date:date,author:author, fields: fields, constraints: constraint);
+  _ArticleDetailsState createState() => _ArticleDetailsState(diffUser: diffUser,authorId:authorId,date:date,author:author, fields: fields, constraints: constraint);
 }
 
 class _ArticleDetailsState extends State<ArticleDetails> {
 
   String author;
+  String authorId;
+  DiffUser diffUser;
   String date;
   List<dynamic> fields;
   BoxConstraints constraints;
-    _ArticleDetailsState({this.date, this.author, this.fields, this.constraints});
+    _ArticleDetailsState({this.date, this.author,this.authorId, this.fields, this.diffUser, this.constraints});
      
   Widget build(BuildContext context) => 
   
@@ -39,7 +45,8 @@ class _ArticleDetailsState extends State<ArticleDetails> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 3),
-                  child: Container(
+                  child: GestureDetector(
+                    child: Container(
                       margin: EdgeInsets.all(3),
                       child: Text(
                       '$author',
@@ -47,6 +54,11 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w700),
                       )),
+                      onTap: () async{
+                        print(authorId);
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondProfile(diffUser: diffUser,)));
+                      },
+                  )
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 5.0, top: 3),
