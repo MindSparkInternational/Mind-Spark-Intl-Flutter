@@ -127,7 +127,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                Text(
-                                   "${diffUser.user.firstName} ${diffUser.user.firstName} ",
+                                   "${diffUser.user.firstName} ${diffUser.user.lastName} ",
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -391,7 +391,7 @@ class MyArticlesTab extends StatefulWidget {
   String date;
    MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
   @override
-  _MyArticlesTabState createState() => _MyArticlesTabState(diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date);
+  _MyArticlesTabState createState() => _MyArticlesTabState(diffUser:diffUser);
 }
 
 class _MyArticlesTabState extends State<MyArticlesTab> {
@@ -430,10 +430,12 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
               List<dynamic> fields = diffUser.posts[index].fields;
               String date = diffUser.posts[index].date;
               List<Comment> comments = diffUser.posts[index].finalComments;
-              print("comment size ${comments.length}");
+              List<dynamic> medias = diffUser.posts[index].medias;
+              String id = diffUser.posts[index].id;
+              print("comment size ${comments}");
               return Container(height: maxHeight ,
               child:
-              MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,)
+              MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments, id: id,medias: medias,likes:likes)
               );
             }
           )

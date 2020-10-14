@@ -1,5 +1,7 @@
+import 'package:MindSpark/SecondaryProfileScreen.dart';
 import 'package:MindSpark/components/PostCommentScreen.dart';
 import 'package:MindSpark/components/TagCard.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:page_transition/page_transition.dart';
@@ -16,11 +18,12 @@ class ArticleScreen extends StatefulWidget {
   List<dynamic> fields;
   List<Comment> comments;
   int likes;
+  DiffUser diffUser;
   String date;
   String id;
-  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date, this.id});
+  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date, this.id, this.diffUser});
   @override
-  _ArticleScreenState createState() => _ArticleScreenState(title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date, id: id);
+  _ArticleScreenState createState() => _ArticleScreenState(diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date, id: id);
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
@@ -28,12 +31,13 @@ class _ArticleScreenState extends State<ArticleScreen> {
   String author;
   String body;
   String date;
+  DiffUser diffUser;
   int likes;
   String id;
   String subHead;
   List<dynamic> fields;
   List<Comment> comments;
- _ArticleScreenState({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
+ _ArticleScreenState({this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +89,20 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                '$author',
-                                             
-                                                //"Brian Wamwea",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
+                                              GestureDetector(
+                                                child: Text(
+                                                  '$author',
+                                              
+                                                  //"Brian Wamwea",
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 15),
+                                                ),
+                                                onTap: (){
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondProfile(diffUser: diffUser,)));
+                                                },
                                               ),
+                                              
                                               Text( date.substring(0, date.indexOf("T")),
                                                 
                                                // "Friday 12 May 2020",

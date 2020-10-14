@@ -2,6 +2,8 @@ import 'package:MindSpark/dataClasses/article.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/dataClasses/user.dart';
 
+import 'comment.dart';
+
 class DiffUser{
   
   User user;
@@ -16,6 +18,13 @@ class DiffUser{
     List<Post> list = new List();
     for(Map map in json["posts"]){
       list.add(Post.fromJson(map as Map<String, dynamic>));
+    }
+    for(Post post in list){
+      List<Comment> commentsList = new List();
+      for(Map map in post.comments){
+        commentsList.add(Comment.fromJson(map as Map<String, dynamic>));
+      }
+      post.finalComments = commentsList;
     }
     List<Article> articleList = new List();
     for(Map map in json["articles"]){

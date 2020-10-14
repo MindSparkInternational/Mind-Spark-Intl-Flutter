@@ -438,7 +438,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
             String date = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].date;
             List<Comment> comments = Provider.of<UserModel>(context, listen: true).extraUser.posts[index].finalComments;
             //print("comment size ${comments.length}");
-            print("aa$id");
+            print("aa$comments");
             return Container(height: maxHeight ,
             child:
             MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments,medias: medias,likes:likes, id:id)

@@ -190,7 +190,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                       print("Comment Length for article ${comments.length}");
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                   return ArticleScreen(title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields, id: id,);
+                                   return ArticleScreen(diffUser: diffUser,title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields, id: id,);
                                       }));
                                     },
                                     child: Container(

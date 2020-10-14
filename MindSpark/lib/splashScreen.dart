@@ -147,6 +147,20 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
         }
         post.finalComments = commentList;
         //print("Post comment content ${post.finalComments[0].author} ${post.title}");
+        var diffUserResponse = await http.get(
+          "https://mindsparkapi.herokuapp.com/api/v1/users/props?user_id=${post.authorId}",
+          headers: {
+            "Authorization": "$token"
+          }
+        );
+        
+        DiffUser user;
+        var diffUserResponseBody = json.decode(diffUserResponse.body);
+        print(diffUserResponseBody);
+        print("CHECKPOINT FOR DIFF USER");
+        user = DiffUser.fromJson(diffUserResponseBody as Map<String, dynamic>);
+        post.diffUser = user;
+        print("Post splash comment length ${post.finalComments.length}");
       }
       print("made it here");
       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
