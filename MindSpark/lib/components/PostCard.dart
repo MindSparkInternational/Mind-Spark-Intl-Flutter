@@ -207,11 +207,7 @@ class _MyCard2State extends State<MyCard2> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             25)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [Text('Share')],
-                                                ),
+                                                
                                               ),
                                             ),
                                           ),

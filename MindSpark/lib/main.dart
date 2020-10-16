@@ -1,5 +1,4 @@
 import 'package:MindSpark/articlePage.dart';
-import 'package:MindSpark/createPost.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/drawerStack.dart';
 import 'package:MindSpark/models/articleModel.dart';
@@ -45,11 +44,11 @@ main()  async{
         new MaterialApp(
         debugShowCheckedModeBanner: false,
         //home: new MyApp(),
-        home: Splash()
+        //home: Splash()
         //home: SignUpThree()
         //home: email == null ? Login() : MyApp()
         //home: FilePickerDemo()
-        //home: Splash()
+        home: Splash()
         //home: HomePage()
         //home: OnboardingScreen()
         //home:SignUp()

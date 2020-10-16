@@ -41,81 +41,80 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
-    child: Scaffold(
-      backgroundColor:  Hexcolor("#059b9c"),
+        child: Scaffold(
+      backgroundColor: Hexcolor("#059b9c"),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Container(
-          
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerRight,
+          //  child: Padding(
+          //  padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerRight,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * .82,
+                // height: 600.0,
+                child: PageView(
+                  physics: ClampingScrollPhysics(),
+                  controller: _pageController,
+                  onPageChanged: (int page) {
+                    setState(() {
+                      _currentPage = page;
+                    });
+                  },
+                  children: <Widget>[
+                    OnBoardOne(),
+                    OnBoardTwo(),
+                    OnBoardThree(),
+                    HomePage()
+                  ],
                 ),
-                Container(
-                  height: 600.0,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: <Widget>[
-                      OnBoardOne(),
-                      OnBoardTwo(),
-                      OnBoardThree(),
-                      HomePage()
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(),
-                ),
-                _currentPage != _numPages - 1
-                    ? Expanded(
-                        child: Align(
-                          alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
-                            onPressed: () {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 22.0,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Icon(
-                                  Icons.arrow_forward,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: _buildPageIndicator(),
+              ),
+              _currentPage != _numPages - 1
+                  ? Expanded(
+                      child: Align(
+                        alignment: FractionalOffset.bottomRight,
+                        child: FlatButton(
+                          onPressed: () {
+                            _pageController.nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Next',
+                                style: TextStyle(
                                   color: Colors.black,
-                                  size: 30.0,
+                                  fontSize: 22.0,
                                 ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(width: 10.0),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.black,
+                                size: 30.0,
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    : Text(''),
-              ],
-            ),
+                      ),
+                    )
+                  : Text(''),
+            ],
           ),
+          // ),
         ),
       ),
       bottomSheet: _currentPage == _numPages - 1
@@ -124,9 +123,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               width: double.infinity,
               color: Colors.greenAccent,
               child: GestureDetector(
-                onTap: () async{
-                  SharedPreferences preferences= await SharedPreferences.getInstance();
-                  preferences.setInt("checkOnboard",2);
+                onTap: () async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  preferences.setInt("checkOnboard", 2);
                 },
                 child: Center(
                   child: Padding(
@@ -144,7 +144,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             )
           : Text(''),
-      )
-    );
+    ));
   }
 }

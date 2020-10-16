@@ -14,31 +14,34 @@ class _OnBoardOneState extends State<OnBoardOne> {
     return Scaffold(
       backgroundColor: Hexcolor("#059b9c"),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
         child: Container(
-          
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              FadeAnimation(1, Text("Welcome to Mind Spark", style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30
-                  ),
-                )
+              FadeAnimation(
+                  1,
+                  Text(
+                    "Welcome to Mind Spark",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  )),
+              SizedBox(
+                height: 10,
               ),
-              SizedBox(height: 10,),
-              FadeAnimation(1.4, Container(
-                height: MediaQuery.of(context).size.height/2,
-                width: MediaQuery.of(context).size.width/2,
-                decoration:  BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/img/image0.png")
+              FadeAnimation(
+                  1.4,
+                  Container(
+                      height: MediaQuery.of(context).size.height / 2,
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/img/image0.png")
+                          )
+                      )
                   )
-                )
-                )
               ),
             ],
           ),

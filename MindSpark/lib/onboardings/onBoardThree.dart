@@ -11,7 +11,7 @@ class OnBoardThree extends StatefulWidget {
 class _OnBoardThreeState extends State<OnBoardThree> {
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       backgroundColor: Hexcolor("#059b9c"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
@@ -22,13 +22,15 @@ class _OnBoardThreeState extends State<OnBoardThree> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              FadeAnimation(1, Text("Build up your profile", style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30
-                  ),
-                )
+              FadeAnimation(
+                  1,
+                  Text(
+                    "Build up your profile",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  )),
+              SizedBox(
+                height: 10,
               ),
-              SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -36,19 +38,16 @@ class _OnBoardThreeState extends State<OnBoardThree> {
                     height: MediaQuery.of(context).size.height / 3,
                     width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/img/Article2For_SwipeFeature.png')
-                      )
-                    ),
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/img/ProfileSelected.png'))),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height / 3,
                     width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/img/Article2For_SwipeFeature.png')
-                      )
-                    ),
+                        image: DecorationImage(
+                            image: AssetImage('assets/img/Profile.png'))),
                   ),
                 ],
               ),

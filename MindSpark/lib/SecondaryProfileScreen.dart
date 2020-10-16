@@ -20,6 +20,7 @@ import 'animations/FadeAnimation.dart';
 import 'components/PostCard.dart';
 import 'articlePage.dart';
 import 'generalsetting.dart';
+import 'package:http/http.dart' as http;
 import 'package:MindSpark/components/CommentBox.dart';
 import 'package:MindSpark/components/PostCommentScreen.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
@@ -42,6 +43,7 @@ class SecondProfile extends StatefulWidget {
 
 class _SecondProfileState extends State<SecondProfile> {
   DiffUser diffUser;
+  bool isFollowed = false;
   _SecondProfileState({this.diffUser});
   @override
   void initState() {
@@ -247,43 +249,84 @@ class _SecondProfileState extends State<SecondProfile> {
                                     icon: Icons.location_on, title: 'Country '),
                               ])),
                               Container(
-                                padding: EdgeInsets.only(left: 20),
+                                padding: EdgeInsets.only(left: 5),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: <Widget>[
+                                    //Padding(padding: EdgeInsets.only(left:  MediaQuery. of(context). size. width*.02, right: MediaQuery. of(context). size. width*.02)),
+                                    Expanded(
+                                    child: GestureDetector(
+                                      onTap: () async{
+                                        SharedPreferences preferences = await SharedPreferences.getInstance();
+                                        String token = preferences.getString("token");
+                                        var response = http.put("https://mindsparkapi.herokuapp.com/api/v1/users/follow/",
+                                          headers:{
+                                            "Authorization":token
+                                          },
+                                          body:{
+                                            "user_id":diffUser.user.id
+                                          }
+                                        );
+                                        setState(() {
+                                          isFollowed = !isFollowed;
+                                        });
+                                      },
+                                      child:Container(
+                                      //padding: EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                            color: isFollowed? Hexcolor('#FFFFFF'):Hexcolor('#1F415F'),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0))),
+                                        child: Column(
+                                          children: <Widget>[
+                                            FittedBox(
+                                              fit: BoxFit.fitWidth,
+                                              child: Text(
+                                                isFollowed? 'Following':'Follow',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      )
+                                    )
+                                    ),
+                                    Padding(padding: EdgeInsets.only(left: 10)),
+                                    Expanded(
+                                    child: Container(
+                                      //padding: EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                            color: Hexcolor('#1F415F'),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0))),
+                                        child: Column(
+                                          children: <Widget>[
+                                Text("${diffUser.followers}",
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                            FittedBox(
+                                              fit: BoxFit.fitWidth,
+                                              child: Text(
+                                                'Followers',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      )
+                                    ),
                                     Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Hexcolor('#1F415F'),
-                                                border: Border.all(
-                                                  color: Hexcolor("#60aaa1"),
-                                                ),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(10.0))),
-                                            child: Column(
-                                              children: <Widget>[
-                                    Text("${Provider.of<UserModel>(context).extraUser.followers}",
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                FittedBox(
-                                                  fit: BoxFit.fitWidth,
-                                                  child: Text(
-                                                    'Followers',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                )
-                                              ],
-                                            ))),
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Expanded(
-                                        child: Container(
+                                          padding: EdgeInsets.all(2),
                                             decoration: BoxDecoration(
                                                 color: Hexcolor('#1F415F'),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(children: <Widget>[
-                              Text("${Provider.of<UserModel>(context).extraUser.followers}",
+                              Text("${diffUser.following}",
                                                   style: TextStyle(
                                                       color: Colors.white)),
                                               FittedBox(
@@ -298,11 +341,9 @@ class _SecondProfileState extends State<SecondProfile> {
                                     Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Container(
+                                          padding: EdgeInsets.all(2),
                                             decoration: BoxDecoration(
                                                 color: Hexcolor("#1f405e"),
-                                                border: Border.all(
-                                                  color: Hexcolor("#60aaa1"),
-                                                ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(
@@ -317,38 +358,13 @@ class _SecondProfileState extends State<SecondProfile> {
                                                     child: Text(
                                                       'Publications',
                                                       style: TextStyle(
-                                                          fontSize: 22,
+                                                          //fontSize: 22,
                                                           color: Colors.white),
                                                     ),
                                                   )
                                                 ]))),
                                     Padding(padding: EdgeInsets.only(left: 5)),
-                                    Expanded(
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              color: Hexcolor("#1f405e"),
-                                              border: Border.all(
-                                                color: Hexcolor("#60aaa1"),
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0))),
-                                          child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("577",
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                FittedBox(
-                                                  fit: BoxFit.fitWidth,
-                                                  child: Text(
-                                                    'Bolts',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                )
-                                              ])),
-                                    ),
+                                    
 //  Padding(padding: EdgeInsets.only(left: 5)),
                                   ],
                                 ),
@@ -356,19 +372,33 @@ class _SecondProfileState extends State<SecondProfile> {
                             ],
                           )),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.tag_faces),
-                            Text('My Content')
-                          ],
-                        ),
-                              
+                        TabBar(
+                          indicatorColor: Colors.black,
+                          indicatorWeight: 0.3,
+                          labelColor: Colors.black,
+                          tabs: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.tag_faces),
+                                Text('Posts')
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.bookmark),
+                                Text('Articles')
+                              ],
+                            ),
+                          ]
+                        )      
                       ],
                     ),
                   ),
                   Expanded(
-                    child: MyArticlesTab(diffUser: diffUser,),
+                    child: TabBarView(
+                        children: [MyArticlesTab(diffUser:diffUser, constraints: constraints), MyPostTab(diffUser:diffUser, constraints: constraints),]),
                   )
                 ],
               ),
@@ -386,12 +416,13 @@ class MyArticlesTab extends StatefulWidget {
   String body;
   List<dynamic> fields;
   List<Comment> comments;
+  BoxConstraints constraints;
   DiffUser diffUser;
   int likes;
   String date;
-   MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
+  MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser, this.constraints});
   @override
-  _MyArticlesTabState createState() => _MyArticlesTabState(diffUser:diffUser);
+  _MyArticlesTabState createState() => _MyArticlesTabState(diffUser:diffUser, constraints: constraints);
 }
 
 class _MyArticlesTabState extends State<MyArticlesTab> {
@@ -403,11 +434,13 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
   DiffUser diffUser;
   List<dynamic> fields;
   List<Comment> comments;
-  _MyArticlesTabState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
+  BoxConstraints constraints;
+  _MyArticlesTabState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser, this.constraints});
   @override
   Widget build(BuildContext context) {
+    double maxHeight = constraints.maxHeight;
     return LayoutBuilder(builder: (context, constraints) {
-      double maxHeight = constraints.maxHeight;
+      
       return 
          Container(height: maxHeight , 
         child:  
@@ -420,7 +453,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
           height: maxHeight,
           child: 
           ListView.builder(
-            itemCount: postModel.extraUser.posts.length,
+            itemCount: diffUser.posts.length,
             itemBuilder: (context, index){
               String author = diffUser.posts[index].author;
               print("aa$author");
@@ -436,6 +469,73 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
               return Container(height: maxHeight ,
               child:
               MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments, id: id,medias: medias,likes:likes)
+              );
+            }
+          )
+        );
+    },));
+    });
+  }
+}
+class MyPostTab extends StatefulWidget {
+  String title;
+  String author;
+  String body;
+  List<dynamic> fields;
+  List<Comment> comments;
+  DiffUser diffUser;
+  int likes;
+  String date;
+  BoxConstraints constraints;
+  MyPostTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser, this.constraints});
+  @override
+  _MyPostTabState createState() => _MyPostTabState(diffUser:diffUser, constraints: constraints);
+}
+
+class _MyPostTabState extends State<MyPostTab> {
+  String title;
+  String author;
+  String body;
+  String date;
+  int likes;
+  DiffUser diffUser;
+  BoxConstraints constraints;
+  List<dynamic> fields;
+  List<Comment> comments;
+  _MyPostTabState({this.constraints,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.diffUser});
+  @override
+  Widget build(BuildContext context) {
+    double maxHeight = constraints.maxHeight;
+    return LayoutBuilder(builder: (context, constraints) {
+      return 
+         Container(height: maxHeight , 
+        child:  
+        Consumer<UserModel>(builder: (context, postModel, child) {
+
+       return   
+       diffUser.articles == null ?
+       Container(child:Text("Hello")):
+        Container(
+          height: maxHeight,
+          child: 
+          ListView.builder(
+            itemCount: diffUser.articles.length,
+            itemBuilder: (context, index){
+              String author = diffUser.articles[index].author;
+              print("aa$author");
+              String title = diffUser.articles[index].title;
+              String body = diffUser.articles[index].body;
+              int likes = diffUser.articles[index].likes;
+              List<dynamic> fields = diffUser.articles[index].fields;
+              String date = diffUser.articles[index].date;
+              List<Comment> comments = diffUser.articles[index].finalComments;
+              List<dynamic> medias = diffUser.articles[index].medias;
+              String id = diffUser.articles[index].id;
+              String subhead = diffUser.articles[index].subHead;
+              print("comment size ${comments}");
+              return Container(height: maxHeight ,
+              child:
+              ArticleCard(subHead: subhead,title: title, author: author, body: body, fields: fields,  date: date, comments: comments, id: id,medias: medias,likes:likes)
               );
             }
           )
