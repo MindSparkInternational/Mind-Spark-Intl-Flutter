@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'home.dart';
+import 'signAndLogStuff/signUpTwo.dart';
 import 'signAndLogStuff/loginScreen.dart';
 import 'profile.dart';
 import 'create.dart';
@@ -44,11 +45,12 @@ main()  async{
         new MaterialApp(
         debugShowCheckedModeBanner: false,
         //home: new MyApp(),
-        //home: Splash()
+        home: Splash()
         //home: SignUpThree()
         //home: email == null ? Login() : MyApp()
         //home: FilePickerDemo()
-        home: Splash()
+        //home: Splash()
+        //home: SignUpTwo()
         //home: HomePage()
         //home: OnboardingScreen()
         //home:SignUp()

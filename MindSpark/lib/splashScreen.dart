@@ -165,7 +165,9 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
       print("made it here");
       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
       print(json.decode(response.body));
-      return list;
+      List<Post> reversedList = new List.from(list.reversed);
+      //list.reversed.toList();
+      return reversedList;
   }
 
   Future<List<Article>> fetchAricleData(BuildContext context) async{
@@ -234,7 +236,8 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin{
       // }
       //var listy = (responseBod as List).map((t) => Post.fromJson(responseBod)).toList();
       print(json.decode(response.body));
-      return list;
+      List<Article> reversedList = new List.from(list.reversed);
+      return reversedList;
   }
   Future<User> getUserData(BuildContext context) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();

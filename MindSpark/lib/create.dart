@@ -1,14 +1,25 @@
-import 'package:animated_widgets/animated_widgets.dart';
-import 'package:animated_widgets/widgets/opacity_animated.dart';
 import 'package:flutter/material.dart';
-import 'package:nice_button/NiceButton.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-//void main() => runApp(new CreatePost());
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: CreatePost());
+  }
+}
 
 class CreatePost extends StatefulWidget {
   @override
@@ -16,47 +27,71 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-  final titleController = TextEditingController();
-  final bodyController = TextEditingController();
+
+  String _title;
+  String _type;
+  // String _fields;
+  String _subhead;
+  String _body;
+  File _image;
+  List<String> selectedReportList = List();
+
+  var title = TextEditingController();
+  var type = TextEditingController();
+  var fields = TextEditingController();
+  var subhead = TextEditingController();
+  var body = TextEditingController();
+  bool titleValidate = false;
+  bool bodyValidate = false;
+  List<String> subjectList = [
+    "Biology",
+    "Math",
+    " Physics",
+    "Robotics",
+    "Chemistry",
+    "Astronomy",
+    "Life Science",
+    "Data Science",
+    "Programming",
+    "Aerospace engineering",
+    "Industrial Engineering",
+    "Electrical Engineering",
+    "Mechanical Engineering",
+    "Civil Engineering",
+    "Artificial Intelligence",
+  ];
+  List<File> files = List<File>();
+  // void getFileList() async {
+  //   files.clear();
+  //   for (int i = 0; i < images.length; i++) {
+  //     var path =
+  //         await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
+  //     //var path = await images[i].filePath;
+  //     print(path);
+  //     var file = await getImageFileFromAsset(path);
+  //     print(file);
+  //     files.add(file);
+  //   }
+  // }
+
+  // Future<File> getImageFileFromAsset(String path) async {
+  //   final file = File(path);
+  //   return file;
+  // }
 
   List<Asset> images = List<Asset>();
-  Future<void> _showSelectionDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-
-            // backgroundColor: Hexcolor("#0d1822"),
-            backgroundColor: Hexcolor("#E5E5E5"),
-            title: Text(
-              "Choose Media",
-              style: TextStyle(color: Colors.black),
-            ),
-            content: GestureDetector(
-              child: Text(
-                "Image from gallery and camera",
-                style: TextStyle(color: Colors.black),
-              ),
-              onTap: () {
-                loadPicture(context);
-              },
-            ),
-          );
-        });
-  }
-
   Future<void> loadPicture(BuildContext context) async {
     List<Asset> resultList;
     resultList = await MultiImagePicker.pickImages(
       maxImages: 3,
       enableCamera: true,
+      selectedAssets: images,
     );
 
     if (!mounted) return;
     setState(() {
       images = resultList;
+      //getFileList();
     });
     Navigator.of(context).pop();
   }
@@ -77,34 +112,59 @@ class _CreatePostState extends State<CreatePost> {
         }));
   }
 
-  List<String> subjectList = [
-    "Biology",
-    "Math",
-    " Physics",
-    "Robotics",
-    "Chemistry",
-    "Astronomy",
-    "Life Science",
-    "Data Science",
-    "Programming",
-    "Aerospace engineering",
-    "Industrial Engineering",
-    "Electrical Engineering",
-    "Mechanical Engineering",
-    "Civil Engineering",
-    "Artificial Intelligence",
-  ];
+  Future<void> _showSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
 
-  List<String> selectedReportList = List();
+            // backgroundColor: Hexcolor("#0d1822"),
+            backgroundColor: Color(0xffE5E5E5),
+            title: Text(
+              "Choose Media",
+              style: TextStyle(color: Colors.black),
+            ),
+            content: GestureDetector(
+              child: Text(
+                "Image from gallery and camera",
+                style: TextStyle(color: Colors.black),
+              ),
+              onTap: () {
+                loadPicture(context);
+                // getGalleryImage();
+              },
+            ),
+          );
+        });
+  }
 
-  _showSubjectDialog() {
+//------------------------Image display
+
+  // Widget _setImageView() {
+  //   if (_image != null) {
+  //     return ClipRRect(
+  //         borderRadius: BorderRadius.circular(50),
+  //         child: Image.file(
+  //           _image,
+  //           width: 400,
+  //           height: 400,
+  //           fit: BoxFit.fill,
+  //         ));
+  //   } else {
+  //     return Text("");
+  //   }
+  // }
+
+  _showSubjectDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(32.0))),
-            backgroundColor: Hexcolor('#E5E5E5'),
+            backgroundColor: Color(0xffE5E5E5),
             title:
                 Text("Choose Subjects", style: TextStyle(color: Colors.black)),
             content: SingleChildScrollView(
@@ -118,7 +178,7 @@ class _CreatePostState extends State<CreatePost> {
             )),
             actions: <Widget>[
               RaisedButton(
-                color: Hexcolor("#1f405e"),
+                color: Color(0xff1f405e),
                 child: Text(
                   "Submit",
                   style: TextStyle(color: Colors.white),
@@ -136,20 +196,66 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
+// CircularProgressIndicator
+    // pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
+
+    // pr.style(
+    //   message: 'Please wait...',
+    //   borderRadius: 10.0,
+    //   backgroundColor: Colors.white,
+    //   progressWidget: CircularProgressIndicator(),
+    //   elevation: 10.0,
+    //   insetAnimCurve: Curves.easeInOut,
+    //   progressTextStyle: TextStyle(
+    //       color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
+    //   messageTextStyle: TextStyle(
+    //       color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
+    // );
+    bool validateTitleField(String userInputTitle) {
+      if (userInputTitle.isEmpty) {
+        setState(() {
+          titleValidate = true;
+        });
+        return false;
+      }
+      setState(() {
+        titleValidate = false;
+        bodyValidate = false;
+      });
+      return true;
+    }
+
+    bool validateBodyField(String userInputBody) {
+      if (userInputBody.isEmpty) {
+        setState(() {
+          bodyValidate = true;
+        });
+        return false;
+      }
+      setState(() {
+        bodyValidate = false;
+      });
+      return true;
+    }
+
     return Scaffold(
-        backgroundColor: Hexcolor('#E5E5E5'),
-        appBar: AppBar(
-          backgroundColor: Hexcolor("#19222c"),
-          title: Text("Create Posts"),
-        ),
-        body: new GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
+      backgroundColor: Color(0xffE5E5E5),
+      appBar: AppBar(
+        backgroundColor: Color(0xff19222c),
+        title: Text("Create Posts"),
+      ),
+      body: SafeArea(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: 10,
+              left: 10,
+              top: 10,
+            ),
             child: SingleChildScrollView(
-              child: Container(
+              child: Form(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                         padding: EdgeInsets.only(
@@ -174,11 +280,11 @@ class _CreatePostState extends State<CreatePost> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        controller: titleController,
+                        controller: title,
                         onChanged: ((String title) {
                           setState(() {
-                            //  _title = title;
-                            //  print(_title);
+                            _title = title;
+                            print(_title);
                           });
                         }),
                         style: TextStyle(color: Colors.black),
@@ -190,19 +296,22 @@ class _CreatePostState extends State<CreatePost> {
                               fontWeight: FontWeight.w400),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Hexcolor("#60aaa1"),
+                              color: Color(0xff60aaa1),
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Hexcolor("#60aaa1"),
+                              color: Color(0xff60aaa1),
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          errorText:
+                              titleValidate ? 'Please enter title' : null,
                         ),
                       ),
                     ),
+
                     SizedBox(
                       height: 20,
                     ),
@@ -223,9 +332,12 @@ class _CreatePostState extends State<CreatePost> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         maxLines: 5,
-                        controller: bodyController,
+                        controller: body,
                         onChanged: ((String body) {
-                          setState(() {});
+                          setState(() {
+                            _body = body;
+                            print(_body);
+                          });
                         }),
                         style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
@@ -236,24 +348,28 @@ class _CreatePostState extends State<CreatePost> {
                               fontWeight: FontWeight.w400),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Hexcolor("#60aaa1"),
+                              color: Color(0xff60aaa1),
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Hexcolor("#60aaa1"),
+                              color: Color(0xff60aaa1),
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
+                          errorText: bodyValidate
+                              ? 'Please write detailed post'
+                              : null,
                         ),
                       ),
                     ),
+
                     SizedBox(
                       height: 10,
                     ),
                     RaisedButton(
-                      color: Hexcolor("#1f405e"),
+                      color: Color(0xff1f405e),
                       child: Text(
                         "Choose subjects",
                         style: TextStyle(color: Colors.white),
@@ -263,7 +379,7 @@ class _CreatePostState extends State<CreatePost> {
                         //side: BorderSide(// color: Hexcolor("#60aaa1"),)
                       ),
                       onPressed: () {
-                        _showSubjectDialog();
+                        _showSubjectDialog(context);
                       },
                     ),
                     SizedBox(
@@ -277,7 +393,7 @@ class _CreatePostState extends State<CreatePost> {
                         itemCount: selectedReportList.length,
                         itemBuilder: (context, index) {
                           return Card(
-                            color: Hexcolor("#FBD772"),
+                            color: Color(0xffFBD772),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                               //side: BorderSide(//color: Hexcolor("#1f405e"),)
@@ -300,7 +416,7 @@ class _CreatePostState extends State<CreatePost> {
                       height: 10,
                     ),
                     RaisedButton(
-                      color: Hexcolor("#1f405e"),
+                      color: Color(0xff1f405e),
                       child: Text(
                         "Choose media",
                         style: TextStyle(color: Colors.white),
@@ -318,31 +434,139 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                     Container(
                       decoration: BoxDecoration(
+                        //  color: Colors.redAccent,
                         borderRadius: BorderRadius.all(Radius.circular(30.0)),
                       ),
                       padding: EdgeInsets.only(right: 10, left: 10),
-                      height: 350,
+                      height: 380,
                       width: 380,
                       child: GestureDetector(
-                        child: _displaySelectedIamge(),
+                        child:
+                            //_setImageView(),
+
+                            _displaySelectedIamge(),
                         onTap: () {
-                          _showSelectionDialog(context);
+                          // _showSelectionDialog(context);
                           Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    )
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+
+                    Center(
+                      child: Container(
+                        width: 300,
+                        //   margin: EdgeInsets.only(top: 50),
+                        alignment: Alignment.center,
+
+                        child: RaisedButton(
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            textAlign: TextAlign.center,
+                          ),
+                          color: Color(0xff1f405e),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            //side: BorderSide(//  color: Hexcolor("#60aaa1"),)
+                          ),
+                          onPressed: () {
+                            validateTitleField(title.text);
+                            validateBodyField(title.text);
+                            uploadPostimages(images);
+                            setState((){
+                              
+                            });
+                            // _startUploading();
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future uploadPostimages(List images) async {
+    Uri uri = Uri.parse(
+      'https://mindsparkapi.herokuapp.com/api/v1/posts/create/',
+    );
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String token = preferences.getString("token");
+    print('$token');
+    var headers = {'Authorization': ' $token'};
+
+    http.MultipartRequest request = new http.MultipartRequest('POST', uri);
+    request.headers.addAll(headers);
+    request.fields['type'] = 'post';
+    request.fields['body'] = _body;
+    request.fields['title'] = _title;
+    request.fields['subhead'] = 'null';
+    request.fields['fields'] = selectedReportList.join(' ');
+
+    if (images != null) {
+      int image_index = 0;
+      // Repeat for Number of Images Selected.
+      for (Asset asset in images) {
+        ByteData byteData = await asset.getByteData();
+        List<int> imageData = byteData.buffer.asUint8List();
+
+        var image_To_Send = "image" + '$image_index';
+        // Prepare Multipart File.
+        MultipartFile multipartFile = new MultipartFile.fromBytes(
+          /* WARNING: Have different name  MultipartFile.fromBytes.string. */
+          image_To_Send,
+          imageData,
+          filename: 'case',
+         contentType: MediaType("image/png", "image/jpg"),
+        );
+
+        // Add Image at the end of Request.
+        //request.files.insert(0, multipartFile);
+        request.files.add(multipartFile);
+        image_index++;
+      }
+      // Send Request to Server (With all images added).
+      var response = await request.send();
+      // We are expecting response.statusCode = 0x200 for SUCESS but it is giving 0x201, Need to look into.
+      if (response.statusCode == 201) {
+        print("Image Uploaded");
+        response.stream.transform(utf8.decoder).listen((value) {
+          print(value);
+        //   Fluttertoast.showToast(
+        //       msg: "Post Created",
+        //       toastLength: Toast.LENGTH_SHORT,
+        //       gravity: ToastGravity.BOTTOM,
+        //       timeInSecForIosWeb: 1,
+        //       backgroundColor: Colors.red,
+        //       textColor: Colors.white,
+        //       fontSize: 16.0);
+        });
+      } else {
+        print(
+            "********Upload Failed Statuc Code - $response.statusCode********");
+        // Fluttertoast.showToast(
+        //     msg: "Post request not successful",
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.BOTTOM,
+        //     timeInSecForIosWeb: 1,
+        //     backgroundColor: Colors.red,
+        //     textColor: Colors.white,
+        //     fontSize: 16.0);
+      }
+    }
   }
 }
 
 class ChooseSubjectChip extends StatefulWidget {
-  final List<String> subjectList;
+  final List<dynamic> subjectList;
   final Function(List<String>) onSelection;
 
   ChooseSubjectChip(this.subjectList, {this.onSelection});
@@ -352,7 +576,6 @@ class ChooseSubjectChip extends StatefulWidget {
 }
 
 class _ChooseSubjectChipState extends State<ChooseSubjectChip> {
-  // String selectedChoice = "";
   List<String> choiceSelected = List();
 
   _choiceList() {
@@ -364,9 +587,9 @@ class _ChooseSubjectChipState extends State<ChooseSubjectChip> {
         padding: const EdgeInsets.all(5.0),
 
         child: ChoiceChip(
-          backgroundColor: Hexcolor('#60aaa1'),
+          backgroundColor: Color(0xff60aaa1),
           //   Hexcolor("#1f405e"),
-          selectedColor: Hexcolor("#FBD772"),
+          selectedColor: Color(0xffFBD772),
           label: Text(
             item,
             style: TextStyle(color: Colors.black),
@@ -380,11 +603,9 @@ class _ChooseSubjectChipState extends State<ChooseSubjectChip> {
               widget.onSelection(choiceSelected);
             });
           },
-          // )
         ),
       ));
     });
-
     return choose;
   }
 

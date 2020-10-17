@@ -23,4 +23,8 @@ class PostModel extends ChangeNotifier{
   void setComments(int index, List<Comment> comment){
     posts[index].finalComments = comment;
   } 
+  void addToBeginning(Post post){
+    posts.insert(0, post);
+    notifyListeners();
+  }
 } 
