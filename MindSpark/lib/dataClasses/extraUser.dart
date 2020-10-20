@@ -32,6 +32,13 @@ class ExtraUser{
     for(Map map in json["bookmarks"]){
       book.add(Article.fromJson(map as Map<String, dynamic>));
     }
+    for(Article article in book){
+      List<Comment> commentsList = new List();
+      for(Map map in article.comments){
+        commentsList.add(Comment.fromJson(map as Map<String, dynamic>));
+      }
+      article.finalComments = commentsList;
+    }
     print("LIST SIZE ${list.length}");
     
     return ExtraUser(

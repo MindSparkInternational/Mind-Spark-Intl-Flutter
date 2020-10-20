@@ -37,6 +37,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   String subHead;
   List<dynamic> fields;
   List<Comment> comments;
+  bool isSaved = false;
  _ArticleScreenState({this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
 
   @override
@@ -195,7 +196,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: Colors.white,
+                                                  color: isSaved ? Colors.grey:Colors.white,
                                                   borderRadius:
                                                       BorderRadius.circular(15),
                                                 ),
@@ -210,18 +211,19 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                           ),
                                         ),
                                         onTap: () async{
-                                           SharedPreferences preferences = await SharedPreferences.getInstance();
-                                           String token = preferences.getString("token");
-                                           var response = await http.put(
-                                             "https://mindsparkapi.herokuapp.com/api/v1/articles/bookmark/",
-                                             headers: {
-                                               "Authorization": token,
-                                             },
-                                             body: {
-                                               "article_id": id
-                                             }
-                                             
-                                           );
+                                          isSaved = !isSaved;
+                                          SharedPreferences preferences = await SharedPreferences.getInstance();
+                                          String token = preferences.getString("token");
+                                          var response = await http.put(
+                                            "https://mindsparkapi.herokuapp.com/api/v1/articles/bookmark/",
+                                            headers: {
+                                              "Authorization": token,
+                                            },
+                                            body: {
+                                              "article_id": id
+                                            }
+                                            
+                                          );
                                         },
                                       ),
                                       

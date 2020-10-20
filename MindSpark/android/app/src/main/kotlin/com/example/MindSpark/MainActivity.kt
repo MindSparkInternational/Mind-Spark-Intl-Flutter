@@ -1,4 +1,4 @@
-package com.example.MindSpark
+package mindspark.example.MindSpark
 
 import io.flutter.embedding.android.FlutterActivity
 

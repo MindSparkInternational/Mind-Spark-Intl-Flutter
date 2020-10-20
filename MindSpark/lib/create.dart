@@ -1,3 +1,5 @@
+import 'package:MindSpark/dataClasses/post.dart';
+import 'package:MindSpark/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -8,7 +10,10 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/postModel.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,6 +39,7 @@ class _CreatePostState extends State<CreatePost> {
   String _subhead;
   String _body;
   File _image;
+  Post finalPost;
   List<String> selectedReportList = List();
 
   var title = TextEditingController();
@@ -476,10 +482,12 @@ class _CreatePostState extends State<CreatePost> {
                             validateTitleField(title.text);
                             validateBodyField(title.text);
                             uploadPostimages(images);
-                            setState((){
-                              
-                            });
-                            // _startUploading();
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                            //Navigator.push( context, MaterialPageRoute( builder: (context) => Home()), ).then((value) => setState(() {
+                              //Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
+                            //}
+                            
+                            //));// _startUploading();
                           },
                         ),
                       ),
@@ -510,6 +518,7 @@ class _CreatePostState extends State<CreatePost> {
     request.fields['title'] = _title;
     request.fields['subhead'] = 'null';
     request.fields['fields'] = selectedReportList.join(' ');
+    
 
     if (images != null) {
       int image_index = 0;
@@ -535,11 +544,16 @@ class _CreatePostState extends State<CreatePost> {
       }
       // Send Request to Server (With all images added).
       var response = await request.send();
+      //print(response.body);
       // We are expecting response.statusCode = 0x200 for SUCESS but it is giving 0x201, Need to look into.
       if (response.statusCode == 201) {
         print("Image Uploaded");
         response.stream.transform(utf8.decoder).listen((value) {
-          print(value);
+          print("aa$value");
+          var test = json.decode(value);
+          finalPost = Post.fromJson(test as Map<String, dynamic>);
+          Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
+          
         //   Fluttertoast.showToast(
         //       msg: "Post Created",
         //       toastLength: Toast.LENGTH_SHORT,

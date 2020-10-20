@@ -172,71 +172,114 @@ class _SecondProfileState extends State<SecondProfile> {
                               )),
                               Container(
                                 padding: EdgeInsets.only(left: 80),
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: FlatButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        onPressed: () {},
-                                        color: Colors.white,
-                                        textColor: Colors.black,
-                                        child: Text("Pioneer",
-                                            style: TextStyle(fontSize: 14)),
-                                      ),
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 30)),
-                                    Align(
-                                        alignment: Alignment.topRight,
-                                        child: RaisedButton(
-                                          color: Colors.white,
+                                child: diffUser.user.rolesList != null ? 
+                                Container(
+                                  height: 30,
+                                  width: constraints.maxWidth,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: diffUser.user.rolesList.length,
+                                    itemBuilder: (context, index){
+                                      return Container(
+                                        padding: EdgeInsets.symmetric(),
+                                        child: FlatButton(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
-                                          onPressed: () {},
-                                          textColor: Colors.white,
-                                          child: Text("Another Role",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black)),
-                                        ))
-                                  ],
-                                ),
+                                          onPressed: () {
+                                            print("${Provider.of<UserModel>(context, listen:true).user.firstName}");
+                                          },
+                                          color: Colors.white,
+                                          textColor: Colors.black,
+                                          child: Text("${diffUser.user.rolesList[index]}",
+                                              style: TextStyle(fontSize: 14)),
+                                        )
+                                      );
+                                    }
+                                  )
+                                )
+                                // Row(
+                                //   children: <Widget>[
+                                //     Align(
+                                //       alignment: Alignment.topLeft,
+                                //       child: FlatButton(
+                                //         shape: RoundedRectangleBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(20.0),
+                                //         ),
+                                //         onPressed: () {
+                                //           print("${Provider.of<UserModel>(context, listen:true).user.firstName}");
+                                //         },
+                                //         color: Colors.white,
+                                //         textColor: Colors.black,
+                                //         child: Text("${Provider.of<UserModel>(context, listen:true).user.roles}",
+                                //             style: TextStyle(fontSize: 14)),
+                                //       ),
+                                //     ),
+                                //     Padding(padding: EdgeInsets.only(left: 30)),
+                                //     Align(
+                                //         alignment: Alignment.topRight,
+                                //         child: RaisedButton(
+                                //           color: Colors.white,
+                                //           shape: RoundedRectangleBorder(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(20.0),
+                                //           ),
+                                //           onPressed: () {},
+                                //           textColor: Colors.white,
+                                //           child: Text("Another Role",
+                                //               style: TextStyle(
+                                //                   fontSize: 14,
+                                //                   color: Colors.black)),
+                                //         ))
+                                //   ],
+                                // ):
+                                :Container()
+                                ,
                               ),
-                              Container(
-                                padding: EdgeInsets.only(left: 30, right: 6),
-                                child: TextField(
-                                  autofocus: false,
-                                  style: TextStyle(
-                                      fontSize: 15.0, color: Colors.white),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Enter About yourself',
-                                    hintStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 14.0, bottom: 6.0, top: 8.0),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Hexcolor("#60aaa1"),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(left:20 ),
+                                child: Align(alignment: Alignment.topLeft,
+                                  child: SingleChildScrollView(
+                                    child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child:
+                                     Text("Enter About yourself ",textAlign: TextAlign.center,style: TextStyle(
+                                       
+                                     ),)
+                                    //   autofocus: false,
+                                    //   style: TextStyle(
+                                    //       fontSize: 15.0, color: Colors.white),
+                                    //   decoration: InputDecoration(
+                                    //     border: InputBorder.none,
+                                    //     hintText: 'Enter About yourself',
+                                    //     hintStyle: TextStyle(
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //     filled: true,
+                                    //     fillColor: Colors.transparent,
+                                    //     contentPadding: const EdgeInsets.only(
+                                    //         left: 14.0, bottom: 6.0, top: 8.0),
+                                    //     focusedBorder: OutlineInputBorder(
+                                    //       borderSide: BorderSide(
+                                    //         color: Hexcolor("#60aaa1"),
+                                    //       ),
+                                    //       borderRadius: BorderRadius.circular(10.0),
+                                    //     ),
+                                    //     enabledBorder: UnderlineInputBorder(
+                                    //       borderSide:
+                                    //           BorderSide(color: Colors.grey),
+                                    //       borderRadius: BorderRadius.circular(10.0),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ),
+                                                                ),
                                 ),
                               ),
+                            
+
                               Container(
                                   child: Row(children: <Widget>[
                                 Padding(padding: EdgeInsets.only(left: 40)),
@@ -249,122 +292,109 @@ class _SecondProfileState extends State<SecondProfile> {
                                     icon: Icons.location_on, title: 'Country '),
                               ])),
                               Container(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: EdgeInsets.all( 5),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: <Widget>[
-                                    //Padding(padding: EdgeInsets.only(left:  MediaQuery. of(context). size. width*.02, right: MediaQuery. of(context). size. width*.02)),
+                                   // Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
-                                    child: GestureDetector(
-                                      onTap: () async{
-                                        SharedPreferences preferences = await SharedPreferences.getInstance();
-                                        String token = preferences.getString("token");
-                                        var response = http.put("https://mindsparkapi.herokuapp.com/api/v1/users/follow/",
-                                          headers:{
-                                            "Authorization":token
-                                          },
-                                          body:{
-                                            "user_id":diffUser.user.id
-                                          }
-                                        );
-                                        setState(() {
-                                          isFollowed = !isFollowed;
-                                        });
-                                      },
-                                      child:Container(
-                                      //padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: isFollowed? Hexcolor('#FFFFFF'):Hexcolor('#1F415F'),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0))),
-                                        child: Column(
-                                          children: <Widget>[
-                                            FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                isFollowed? 'Following':'Follow',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      )
-                                    )
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 10)),
-                                    Expanded(
-                                    child: Container(
-                                      //padding: EdgeInsets.all(2),
-                                        decoration: BoxDecoration(
-                                            color: Hexcolor('#1F415F'),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0))),
-                                        child: Column(
-                                          children: <Widget>[
-                                Text("${diffUser.followers}",
-                                                style: TextStyle(
-                                                    color: Colors.white)),
-                                            FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                'Followers',
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )
-                                          ],
-                                        )
-                                      )
-                                    ),
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Hexcolor('#1F415F'),
+                                                border: Border.all(
+                                                //  color: Hexcolor("#60aaa1"),
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10.0))),
+                                            child: Column(
+                                              children: <Widget>[
+                                    Text("${diffUser.followers}",
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                FittedBox(
+                                                  fit: BoxFit.fitWidth,
+                                                  child: Text(
+                                                    'Followers',
+                                                    style: TextStyle(
+                                                        color: Colors.white,fontWeight: FontWeight.bold),
+                                                  ),
+                                                )
+                                              ],
+                                            ))),
                                     Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Container(
-                                          padding: EdgeInsets.all(2),
                                             decoration: BoxDecoration(
                                                 color: Hexcolor('#1F415F'),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(children: <Widget>[
-                              Text("${diffUser.following}",
+                              Text("${diffUser.followers}",
                                                   style: TextStyle(
-                                                      color: Colors.white)),
+                                                      color: Colors.white,fontWeight: FontWeight.bold)),
                                               FittedBox(
-                                                fit: BoxFit.fitWidth,
+                                                //fit: BoxFit.fitWidth,
                                                 child: Text(
                                                   'Following',
                                                   style: TextStyle(
-                                                      color: Colors.white),
+                                                      color: Colors.white,fontWeight: FontWeight.bold),
                                                 ),
                                               )
                                             ]))),
                                     Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Container(
-                                          padding: EdgeInsets.all(2),
                                             decoration: BoxDecoration(
                                                 color: Hexcolor("#1f405e"),
+                                                border: Border.all(
+                                                 // color: Hexcolor("#60aaa1"),
+                                                ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text("8",
+                                                  Text("0",
                                                       style: TextStyle(
                                                           color: Colors.white)),
                                                   FittedBox(
-                                                    fit: BoxFit.fitWidth,
+                                                   // fit: BoxFit.fitWidth,
                                                     child: Text(
                                                       'Publications',
                                                       style: TextStyle(
                                                           //fontSize: 22,
-                                                          color: Colors.white),
+                                                          color: Colors.white,fontWeight: FontWeight.bold),
                                                     ),
                                                   )
                                                 ]))),
-                                    Padding(padding: EdgeInsets.only(left: 5)),
-                                    
+                                   //  Padding(padding: EdgeInsets.only(left: 10)),
+                                    // Expanded(
+                                    //   child: Container(
+                                    //       decoration: BoxDecoration(
+                                    //           color: Hexcolor("#1f405e"),
+                                    //           border: Border.all(
+                                    //             color: Hexcolor("#60aaa1"),
+                                    //           ),
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(10.0))),
+                                    //       child: Column(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.start,
+                                    //           children: <Widget>[
+                                    //             Text("577",
+                                    //                 style: TextStyle(
+                                    //                     color: Colors.white)),
+                                    //             FittedBox(
+                                    //               fit: BoxFit.fitWidth,
+                                    //               child: Text(
+                                    //                 'Bolts',
+                                    //                 style: TextStyle(
+                                    //                     color: Colors.white),
+                                    //               ),
+                                    //             )
+                                    //           ])
+                                    //           ),
+                                    // ),
 //  Padding(padding: EdgeInsets.only(left: 5)),
                                   ],
                                 ),
@@ -373,26 +403,25 @@ class _SecondProfileState extends State<SecondProfile> {
                           )),
                         ),
                         TabBar(
-                          indicatorColor: Colors.black,
-                          indicatorWeight: 0.3,
-                          labelColor: Colors.black,
-                          tabs: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.tag_faces),
-                                Text('Posts')
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.bookmark),
-                                Text('Articles')
-                              ],
-                            ),
-                          ]
-                        )      
+                            indicatorColor: Colors.black,
+                            indicatorWeight: 0.3,
+                            labelColor: Colors.black,
+                            tabs: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.tag_faces),
+                                  Text('My Content')
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.bookmark),
+                                  Text('SavedPosts')
+                                ],
+                              ),
+                            ])
                       ],
                     ),
                   ),
@@ -459,6 +488,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
               print("aa$author");
               String title = diffUser.posts[index].title;
               String body = diffUser.posts[index].body;
+              DiffUser diffUserSecond = diffUser.posts[index].diffUser;
               int likes = diffUser.posts[index].likes;
               List<dynamic> fields = diffUser.posts[index].fields;
               String date = diffUser.posts[index].date;
@@ -468,7 +498,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
               print("comment size ${comments}");
               return Container(height: maxHeight ,
               child:
-              MyCard2(title: title, author: author, body: body, fields: fields,  date: date, comments: comments, id: id,medias: medias,likes:likes)
+              MyCard2(diffUser: diffUserSecond,title: title, author: author, body: body, fields: fields,  date: date, comments: comments, id: id,medias: medias,likes:likes)
               );
             }
           )

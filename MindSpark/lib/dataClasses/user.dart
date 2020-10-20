@@ -10,12 +10,13 @@ class User{
   String country;
   String img;
   String bio;
-  List<String> roles;
+  String roles;
+  List<String> rolesList;
   User({this.id, this.email, this.firstName, this.lastName, this.date, this.age, this.country, this.img, this.bio, this.roles});
 
   factory User.fromJson(Map<String, dynamic> json){
     print("Made it to User");
-    
+    String tempRoles = json["roles"] == null ? "" : json["roles"];
     return User(
       id: json["id"],
       email: json["email"],
@@ -26,6 +27,7 @@ class User{
       img: "",
       country: "",
       bio: "",
+      roles: json["roles"] == null ? "" : tempRoles.substring(1,tempRoles.length-1)
       
     );
   }

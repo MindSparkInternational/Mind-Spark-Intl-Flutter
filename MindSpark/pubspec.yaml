@@ -59,6 +59,7 @@ dependencies:
   country_list_pick: ^1.0.1+2
   smooth_page_indicator: ^0.2.0
   fluttertoast: ^7.1.1
+  progress_indicators: ^0.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

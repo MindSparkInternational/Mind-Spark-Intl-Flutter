@@ -1,6 +1,7 @@
 import 'package:MindSpark/components/ArticleCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
+import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/home.dart';
 import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/models/userModel.dart';
@@ -168,71 +169,114 @@ class _ProfileState extends State<Profile> {
                               )),
                               Container(
                                 padding: EdgeInsets.only(left: 80),
-                                child: Row(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: FlatButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        onPressed: () {},
-                                        color: Colors.white,
-                                        textColor: Colors.black,
-                                        child: Text("Pioneer",
-                                            style: TextStyle(fontSize: 14)),
-                                      ),
-                                    ),
-                                    Padding(padding: EdgeInsets.only(left: 30)),
-                                    Align(
-                                        alignment: Alignment.topRight,
-                                        child: RaisedButton(
-                                          color: Colors.white,
+                                child: Provider.of<UserModel>(context, listen:true).user.rolesList != null ? 
+                                Container(
+                                  height: 30,
+                                  width: constraints.maxWidth,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: Provider.of<UserModel>(context, listen:true).user.rolesList.length,
+                                    itemBuilder: (context, index){
+                                      return Container(
+                                        padding: EdgeInsets.symmetric(),
+                                        child: FlatButton(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20.0),
                                           ),
-                                          onPressed: () {},
-                                          textColor: Colors.white,
-                                          child: Text("Another Role",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black)),
-                                        ))
-                                  ],
-                                ),
+                                          onPressed: () {
+                                            print("${Provider.of<UserModel>(context, listen:true).user.firstName}");
+                                          },
+                                          color: Colors.white,
+                                          textColor: Colors.black,
+                                          child: Text("${Provider.of<UserModel>(context, listen:true).user.rolesList[index]}",
+                                              style: TextStyle(fontSize: 14)),
+                                        )
+                                      );
+                                    }
+                                  )
+                                )
+                                // Row(
+                                //   children: <Widget>[
+                                //     Align(
+                                //       alignment: Alignment.topLeft,
+                                //       child: FlatButton(
+                                //         shape: RoundedRectangleBorder(
+                                //           borderRadius:
+                                //               BorderRadius.circular(20.0),
+                                //         ),
+                                //         onPressed: () {
+                                //           print("${Provider.of<UserModel>(context, listen:true).user.firstName}");
+                                //         },
+                                //         color: Colors.white,
+                                //         textColor: Colors.black,
+                                //         child: Text("${Provider.of<UserModel>(context, listen:true).user.roles}",
+                                //             style: TextStyle(fontSize: 14)),
+                                //       ),
+                                //     ),
+                                //     Padding(padding: EdgeInsets.only(left: 30)),
+                                //     Align(
+                                //         alignment: Alignment.topRight,
+                                //         child: RaisedButton(
+                                //           color: Colors.white,
+                                //           shape: RoundedRectangleBorder(
+                                //             borderRadius:
+                                //                 BorderRadius.circular(20.0),
+                                //           ),
+                                //           onPressed: () {},
+                                //           textColor: Colors.white,
+                                //           child: Text("Another Role",
+                                //               style: TextStyle(
+                                //                   fontSize: 14,
+                                //                   color: Colors.black)),
+                                //         ))
+                                //   ],
+                                // ):
+                                :Container()
+                                ,
                               ),
-                              Container(
-                                padding: EdgeInsets.only(left: 30, right: 6),
-                                child: TextField(
-                                  autofocus: false,
-                                  style: TextStyle(
-                                      fontSize: 15.0, color: Colors.white),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Enter About yourself',
-                                    hintStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.transparent,
-                                    contentPadding: const EdgeInsets.only(
-                                        left: 14.0, bottom: 6.0, top: 8.0),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Hexcolor("#60aaa1"),
-                                      ),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(left:20 ),
+                                child: Align(alignment: Alignment.topLeft,
+                                  child: SingleChildScrollView(
+                                    child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child:
+                                     Text("Enter About yourself ",textAlign: TextAlign.center,style: TextStyle(
+                                       
+                                     ),)
+                                    //   autofocus: false,
+                                    //   style: TextStyle(
+                                    //       fontSize: 15.0, color: Colors.white),
+                                    //   decoration: InputDecoration(
+                                    //     border: InputBorder.none,
+                                    //     hintText: 'Enter About yourself',
+                                    //     hintStyle: TextStyle(
+                                    //       color: Colors.white,
+                                    //     ),
+                                    //     filled: true,
+                                    //     fillColor: Colors.transparent,
+                                    //     contentPadding: const EdgeInsets.only(
+                                    //         left: 14.0, bottom: 6.0, top: 8.0),
+                                    //     focusedBorder: OutlineInputBorder(
+                                    //       borderSide: BorderSide(
+                                    //         color: Hexcolor("#60aaa1"),
+                                    //       ),
+                                    //       borderRadius: BorderRadius.circular(10.0),
+                                    //     ),
+                                    //     enabledBorder: UnderlineInputBorder(
+                                    //       borderSide:
+                                    //           BorderSide(color: Colors.grey),
+                                    //       borderRadius: BorderRadius.circular(10.0),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ),
+                                                                ),
                                 ),
                               ),
+                            
+
                               Container(
                                   child: Row(children: <Widget>[
                                 Padding(padding: EdgeInsets.only(left: 40)),
@@ -245,16 +289,16 @@ class _ProfileState extends State<Profile> {
                                     icon: Icons.location_on, title: 'Country '),
                               ])),
                               Container(
-                                padding: EdgeInsets.only(left: 20),
+                                padding: EdgeInsets.all( 5),
                                 child: Row(
                                   children: <Widget>[
-                                    Padding(padding: EdgeInsets.only(left: 10)),
+                                   // Padding(padding: EdgeInsets.only(left: 10)),
                                     Expanded(
                                         child: Container(
                                             decoration: BoxDecoration(
                                                 color: Hexcolor('#1F415F'),
                                                 border: Border.all(
-                                                  color: Hexcolor("#60aaa1"),
+                                                //  color: Hexcolor("#60aaa1"),
                                                 ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
@@ -268,7 +312,7 @@ class _ProfileState extends State<Profile> {
                                                   child: Text(
                                                     'Followers',
                                                     style: TextStyle(
-                                                        color: Colors.white),
+                                                        color: Colors.white,fontWeight: FontWeight.bold),
                                                   ),
                                                 )
                                               ],
@@ -283,13 +327,13 @@ class _ProfileState extends State<Profile> {
                                             child: Column(children: <Widget>[
                               Text("${Provider.of<UserModel>(context).extraUser.followers}",
                                                   style: TextStyle(
-                                                      color: Colors.white)),
+                                                      color: Colors.white,fontWeight: FontWeight.bold)),
                                               FittedBox(
-                                                fit: BoxFit.fitWidth,
+                                                //fit: BoxFit.fitWidth,
                                                 child: Text(
                                                   'Following',
                                                   style: TextStyle(
-                                                      color: Colors.white),
+                                                      color: Colors.white,fontWeight: FontWeight.bold),
                                                 ),
                                               )
                                             ]))),
@@ -299,7 +343,7 @@ class _ProfileState extends State<Profile> {
                                             decoration: BoxDecoration(
                                                 color: Hexcolor("#1f405e"),
                                                 border: Border.all(
-                                                  color: Hexcolor("#60aaa1"),
+                                                 // color: Hexcolor("#60aaa1"),
                                                 ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
@@ -307,46 +351,47 @@ class _ProfileState extends State<Profile> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text("8",
+                                                  Text("0",
                                                       style: TextStyle(
                                                           color: Colors.white)),
                                                   FittedBox(
-                                                    fit: BoxFit.fitWidth,
+                                                   // fit: BoxFit.fitWidth,
                                                     child: Text(
                                                       'Publications',
                                                       style: TextStyle(
-                                                          fontSize: 22,
-                                                          color: Colors.white),
+                                                          //fontSize: 22,
+                                                          color: Colors.white,fontWeight: FontWeight.bold),
                                                     ),
                                                   )
                                                 ]))),
-                                    Padding(padding: EdgeInsets.only(left: 5)),
-                                    Expanded(
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              color: Hexcolor("#1f405e"),
-                                              border: Border.all(
-                                                color: Hexcolor("#60aaa1"),
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0))),
-                                          child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text("577",
-                                                    style: TextStyle(
-                                                        color: Colors.white)),
-                                                FittedBox(
-                                                  fit: BoxFit.fitWidth,
-                                                  child: Text(
-                                                    'Bolts',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                )
-                                              ])),
-                                    ),
+                                   //  Padding(padding: EdgeInsets.only(left: 10)),
+                                    // Expanded(
+                                    //   child: Container(
+                                    //       decoration: BoxDecoration(
+                                    //           color: Hexcolor("#1f405e"),
+                                    //           border: Border.all(
+                                    //             color: Hexcolor("#60aaa1"),
+                                    //           ),
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(10.0))),
+                                    //       child: Column(
+                                    //           mainAxisAlignment:
+                                    //               MainAxisAlignment.start,
+                                    //           children: <Widget>[
+                                    //             Text("577",
+                                    //                 style: TextStyle(
+                                    //                     color: Colors.white)),
+                                    //             FittedBox(
+                                    //               fit: BoxFit.fitWidth,
+                                    //               child: Text(
+                                    //                 'Bolts',
+                                    //                 style: TextStyle(
+                                    //                     color: Colors.white),
+                                    //               ),
+                                    //             )
+                                    //           ])
+                                    //           ),
+                                    // ),
 //  Padding(padding: EdgeInsets.only(left: 5)),
                                   ],
                                 ),
@@ -379,7 +424,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Expanded(
                     child: TabBarView(
-                        children: [MyArticlesTab(), SavedScreen(constraints: constraints,)]),
+                        children: [MyArticlesTab(constraints: constraints), SavedScreen(constraints: constraints,)]),
                   )
                 ],
               ),
@@ -397,26 +442,28 @@ class MyArticlesTab extends StatefulWidget {
   String body;
   List<dynamic> fields;
   List<Comment> comments;
+  BoxConstraints constraints;
   int likes;
   String date;
-   MyArticlesTab({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+   MyArticlesTab({this. constraints,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
   @override
-  _MyArticlesTabState createState() => _MyArticlesTabState();
+  _MyArticlesTabState createState() => _MyArticlesTabState(constraints: constraints);
 }
 
 class _MyArticlesTabState extends State<MyArticlesTab> {
- String title;
+  String title;
   String author;
   String body;
   String date;
+  BoxConstraints constraints;
   int likes;
   List<dynamic> fields;
   List<Comment> comments;
-  _MyArticlesTabState({this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
+  _MyArticlesTabState({this.constraints,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date});
   @override
   Widget build(BuildContext context) {
+    double maxHeight = constraints.maxHeight;
     return LayoutBuilder(builder: (context, constraints) {
-      double maxHeight = constraints.maxHeight;
       return 
          Container(height: maxHeight , 
         child:  
@@ -849,10 +896,13 @@ class _SavedScreenState extends State<SavedScreen> {
               String date = savedModel.extraUser.bookmarks[index].date;
               List<Comment> comments = savedModel.extraUser.bookmarks[index].finalComments;
               List<dynamic> medias =  savedModel.extraUser.bookmarks[index].medias;
+              String authorId = savedModel.extraUser.bookmarks[index].authorId;
+              DiffUser diffUser = savedModel.extraUser.bookmarks[index].diffUser;
+              //print(comments.length);
               return 
               Container(
                 height: constraints.maxHeight,
-                child: ArticleCard(author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id)
+                child: ArticleCard(comments: comments,diffUser: diffUser,authorId: authorId,author: author, title: title, body: body, likes: likes, date:date ,fields: fields,subHead: subHead, medias: medias, id:id)
               );
               
             },

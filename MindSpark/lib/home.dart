@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'create.dart';
 
 class Home extends StatefulWidget {
+  
   @override
   _HomeState createState() => _HomeState();
 }
@@ -32,7 +33,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
   }
+  
 
   @override
   Widget build(BuildContext context) => Scaffold(
