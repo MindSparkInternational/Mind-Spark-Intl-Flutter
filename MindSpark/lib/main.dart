@@ -49,10 +49,10 @@ main()  async{
         //home: SignUpThree()
         //home: email == null ? Login() : MyApp()
         //home: FilePickerDemo()
-        //home: Splash()
+        home: Splash()
         //home: SignUpTwo()
         //home: HomePage()
-        home: OnboardingScreen()
+        //home: OnboardingScreen()
         //home:SignUp()
 
       )

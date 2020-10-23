@@ -45,7 +45,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("images/assets/image0.png"), context);
+    precacheImage(AssetImage("assets/img/image0.png"), context);
     return Scaffold(
         backgroundColor: Hexcolor("19222c"),
         body: Column(
@@ -77,7 +77,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
               ),
             ),
             Container(
-                padding: EdgeInsets.only(left: 100, right: 50),
+                padding: EdgeInsets.only(left: 105, right: 80),
                 child: Row(
                   children: [
                     Column(

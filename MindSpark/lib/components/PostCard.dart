@@ -212,29 +212,7 @@ class _MyCard2State extends State<MyCard2> {
                                             ),
                                           ),
 
-                                          Expanded(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 1,
-                                                      horizontal: 5),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Icon(Icons.comment),
-                                                    Text('Comment')
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          
                                           // GestureDetector(
                                           //   child: Expanded(
                                           //     child: Padding(

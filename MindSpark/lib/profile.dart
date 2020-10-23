@@ -59,6 +59,33 @@ class _ProfileState extends State<Profile> {
     initialPage: 0,
   );
 
+_showRoleInfo(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+
+            // backgroundColor: Hexcolor("#0d1822"),
+            backgroundColor: Color(0xffE5E5E5),
+            title: Text(
+              "Role Information",
+              style: TextStyle(color: Colors.black),
+            ),
+            content: GestureDetector(
+              child: Text("",
+                
+                style: TextStyle(color: Colors.black),
+              ),
+              onTap: () {}
+             ),
+          );
+        });
+  }
+
+
+
   //bool dialVisible = true;
   @override
   Widget build(BuildContext context) {
@@ -185,6 +212,7 @@ class _ProfileState extends State<Profile> {
                                                 BorderRadius.circular(20.0),
                                           ),
                                           onPressed: () {
+                                            _showRoleInfo(context);
                                             print("${Provider.of<UserModel>(context, listen:true).user.firstName}");
                                           },
                                           color: Colors.white,
@@ -297,9 +325,9 @@ class _ProfileState extends State<Profile> {
                                         child: Container(
                                             decoration: BoxDecoration(
                                                 color: Hexcolor('#1F415F'),
-                                                border: Border.all(
-                                                //  color: Hexcolor("#60aaa1"),
-                                                ),
+                                                // border: Border.all(
+                                                // //  color: Hexcolor("#60aaa1"),
+                                                // ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(
@@ -342,9 +370,9 @@ class _ProfileState extends State<Profile> {
                                         child: Container(
                                             decoration: BoxDecoration(
                                                 color: Hexcolor("#1f405e"),
-                                                border: Border.all(
-                                                 // color: Hexcolor("#60aaa1"),
-                                                ),
+                                                // border: Border.all(
+                                                //  // color: Hexcolor("#60aaa1"),
+                                                // ),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10.0))),
                                             child: Column(
@@ -415,7 +443,7 @@ class _ProfileState extends State<Profile> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.bookmark),
-                                  Text('SavedPosts')
+                                  Text('Saved Articles')
                                 ],
                               ),
                             ])

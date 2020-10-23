@@ -13,10 +13,23 @@ class PostCommentScreen extends StatefulWidget {
 }
 
 class _PostCommentScreenState extends State<PostCommentScreen> {
+  final commentController = TextEditingController();
   List<Comment> getCaptionText() {
     return widget.captionText;
   }
+  void setCaption(Comment comment){
+    widget.captionText.add(comment);
+  }
 
+//  List<Widget> getItems(int index){
+//    List<CommentBox> commentlist=[];
+//    List comments= getCaptionText();
+//    for(Widget comment in comments)
+//      {
+//        commentlist.add();
+//
+//      }
+//  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,31 +63,56 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-              child: Container(
-                padding: EdgeInsets.all(5),
-                child: Text("Comments"),
+            Expanded(child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  height: constraints.maxHeight,
+                  child: ListView.builder(
+                      itemCount: getCaptionText().length,
+                      itemBuilder: (context, index) {
+                        //var parsedJson = json.decode(getCaptionText()[index]);
+                        print("made it");
+                        return Container(
+                          child: CommentBox(
+                            caption: getCaptionText()[index].content,
+                            author: getCaptionText()[index].author,
+                          ),
+                        );
+                      }),
+                );
+              },
+            )),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.08,
+              decoration: BoxDecoration(
+                  border:
+                      Border(top: BorderSide(color: Colors.black, width: 0.8))),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: TextField(
+                        controller: commentController,
+                        decoration: InputDecoration(
+                          hintText: "Enter your comment here",
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+
+                    child: Icon(
+                      Icons.check,
+                      size: 32,
+                    ),
+                    onTap: () async{
+                      //caption
+                    },
+                  )
+                  
+                ],
               ),
-            ),
-            Divider(
-              thickness: 0.5,
-              color: Colors.grey,
-            ),
-            Expanded(child: LayoutBuilder(builder: (context, constraints) {
-              return Container(
-                height: constraints.maxHeight,
-                child: ListView.builder(
-                    itemCount: getCaptionText().length,
-                    itemBuilder: (context, index) {
-                      //var parsedJson = json.decode(getCaptionText()[index]);
-                      print("made it");
-                      return Container(
-                        child: CommentBox(caption: getCaptionText()[index].content, author: getCaptionText()[index].author,),
-                      );
-                    }),
-              );
-            }))
+            )
           ],
         ),
       )),

@@ -1,3 +1,4 @@
+import 'package:MindSpark/aboutUs.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/dataClasses/post.dart';
@@ -74,8 +75,18 @@ class _HomeState extends State<Home> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
-                            child: Container(
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: AboutUs(),
+                                      type: PageTransitionType.downToUp,
+                                      duration: Duration(milliseconds: 400)));
+                              },
+                              child: Container(
                                 child: Image.asset('assets/img/MindSpark.png')),
+                              )
                           ),
                           GestureDetector(
                             onTap: () {
