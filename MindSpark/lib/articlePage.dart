@@ -267,11 +267,11 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                           ),
                                         ),
                                         onTap: (){
-                                          Navigator.push(
+                                          Navigator.push( 
                                             context,
                                             PageTransition(
-                                                child: PostCommentScreen(
-                                                    comments),
+                                                child: PostCommentScreen(comments,
+                                                    id,0),
                                                 type: PageTransitionType
                                                     .downToUp));
                                         },

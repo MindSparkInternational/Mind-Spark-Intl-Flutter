@@ -13,7 +13,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'models/postModel.dart';
+
+import 'postModel.dart';
 
 void main() {
   runApp(MyApp());
@@ -478,16 +479,19 @@ class _CreatePostState extends State<CreatePost> {
                             borderRadius: BorderRadius.circular(10.0),
                             //side: BorderSide(//  color: Hexcolor("#60aaa1"),)
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             validateTitleField(title.text);
                             validateBodyField(title.text);
                             uploadPostimages(images);
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-                            //Navigator.push( context, MaterialPageRoute( builder: (context) => Home()), ).then((value) => setState(() {
-                              //Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
-                            //}
+                            //setState(() {
+                            Provider.of<PostModel>(context, listen: false).addToBeginning(finalPost);
+                            //});
+                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                            await Navigator.push( context, MaterialPageRoute( builder: (context) => Home()), ).then((value) => setState(() {
+                              Provider.of<PostModel>(context, listen: false).addToBeginning(finalPost);
+                            }
                             
-                            //));// _startUploading();
+                            ));// _startUploading();
                           },
                         ),
                       ),
@@ -552,7 +556,7 @@ class _CreatePostState extends State<CreatePost> {
           print("aa$value");
           var test = json.decode(value);
           finalPost = Post.fromJson(test as Map<String, dynamic>);
-          Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
+          //Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
           
         //   Fluttertoast.showToast(
         //       msg: "Post Created",

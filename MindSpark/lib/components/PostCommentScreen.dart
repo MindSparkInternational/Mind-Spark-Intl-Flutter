@@ -4,9 +4,13 @@ import 'package:MindSpark/components/CommentBox.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class PostCommentScreen extends StatefulWidget {
-  PostCommentScreen(this.captionText);
+  PostCommentScreen(this.captionText, this.id,this.articleOrPost);
+  String id;
+  int articleOrPost;
   List<Comment> captionText;
   @override
   _PostCommentScreenState createState() => _PostCommentScreenState();
@@ -106,7 +110,36 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
                       size: 32,
                     ),
                     onTap: () async{
-                      //caption
+                      SharedPreferences preferences = await SharedPreferences.getInstance();
+                      String token = preferences.getString("token");
+                      var response = widget.articleOrPost==1 ?await http.post("https://mindsparkapi.herokuapp.com/api/v1/posts/comment/",
+                        headers: {
+                          "Authorization":token
+                        },
+                        body:{
+                          "id": widget.id,
+                          "content":commentController.text
+
+                        }
+                      ):
+                      await http.post("https://mindsparkapi.herokuapp.com/api/v1/posts/article/",
+                        headers: {
+                          "Authorization":token
+                        },
+                        body:{
+                          "id": widget.id,
+                          "content":commentController.text
+
+                        }
+                      );
+                      var responseBody = json.decode(response.body);
+                      Comment comment = Comment.fromJson(responseBody);
+                      commentController.text = "";
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+                      setState(() { widget.captionText.add(comment); });
                     },
                   )
                   

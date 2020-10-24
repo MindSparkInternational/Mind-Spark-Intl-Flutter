@@ -16,7 +16,7 @@ import 'components/PostCard.dart';
 import 'components/ArticleCard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'create.dart';
+import 'models/create.dart';
 
 class Home extends StatefulWidget {
   
@@ -26,6 +26,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isDark = false;
+  
   final controller = PageController(
     initialPage: 0,
   );
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    print("home");
     setState(() {});
   }
   
@@ -220,7 +222,7 @@ class _HomeState extends State<Home> {
         List<Comment> comments = Provider.of<PostModel>(context, listen: true).posts[index].finalComments;
         List<dynamic> medias =  Provider.of<PostModel>(context, listen: true).posts[index].medias;
         DiffUser diffUser = Provider.of<PostModel>(context, listen: true).posts[index].diffUser;
-        return MyCard2(diffUser: diffUser,author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, fields: fields, id:id );
+        return MyCard2(inSecond: false,diffUser: diffUser,author: author, title: title, body: body, likes: likes, comments: comments, date:date, medias: medias, fields: fields, id:id );
       });
     },)
     
