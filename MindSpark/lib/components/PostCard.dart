@@ -27,11 +27,12 @@ class MyCard2 extends StatefulWidget {
   int likes;
   String date;
   String id;
+  String profImg;
   bool inSecond = false;
   DiffUser diffUser;
-  MyCard2({this.inSecond,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
+  MyCard2({this.profImg,this.inSecond,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
   @override
-  _MyCard2State createState() => _MyCard2State(inSecond:inSecond,diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date, medias: medias, id:id);
+  _MyCard2State createState() => _MyCard2State(profImg:profImg,inSecond:inSecond,diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, date: date, medias: medias, id:id);
 }
 
 class _MyCard2State extends State<MyCard2> {
@@ -39,6 +40,7 @@ class _MyCard2State extends State<MyCard2> {
   String author;
   String body;
   String id;
+  String profImg;
   bool inSecond = false;
   String date;
   int likes;
@@ -46,7 +48,7 @@ class _MyCard2State extends State<MyCard2> {
   List<dynamic> fields;
   List<dynamic> medias;
   List<Comment> comments;
-  _MyCard2State({this.inSecond,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
+  _MyCard2State({this.profImg,this.inSecond,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date, this.medias, this.id});
   String sampletext =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   bool showFullCaption = false;
@@ -115,10 +117,31 @@ class _MyCard2State extends State<MyCard2> {
                                           children: [
                                             Row(
                                               children: [
+                                                profImg != null?
+                                                  Image.network(
+                                                    '${profImg}',
+                                                    fit: BoxFit.fitWidth,
+                                                  ):
                                                 CircleAvatar(
                                                   backgroundColor: Colors.black,
-                                                  child: Icon(Icons.face),
-                                                  radius: 15,
+                                                  child:
+                                                  diffUser.user.img == null?
+                                                  Icon(
+                                                    Icons.face,
+                                                    size: 30,
+                                                  ):
+                                                  Container(
+                                                    height: 60,
+                                                    width: 60,
+                                                    child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(30),
+                                                    child:
+                                                    Image.network(
+                                                      '${diffUser.user.img}',
+                                                      fit: BoxFit.fitWidth,
+                                                    )
+                                                    ),
+                                                  )
                                                 ),
                                                 SizedBox(
                                                   width: 7,

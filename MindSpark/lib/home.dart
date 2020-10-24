@@ -4,6 +4,7 @@ import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/models/postModel.dart';
+import 'package:MindSpark/models/userModel.dart';
 import 'package:MindSpark/profile.dart';
 import 'package:MindSpark/signAndLogStuff/loginScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,10 +102,17 @@ class _HomeState extends State<Home> {
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
+                              child: Provider.of<UserModel>(context).user.img == null ?
+                              
+                              Image.asset(
                                 'assets/img/Image1.png',
                                 fit: BoxFit.fitWidth,
-                              ),
+                              ):
+                              Image.network(
+                                '${Provider.of<UserModel>(context).user.img}',
+                                fit: BoxFit.fitWidth,
+                              )
+                              ,
                             ),
                           ),
                         ],
@@ -183,9 +191,9 @@ class _HomeState extends State<Home> {
         List<Comment> comments = Provider.of<ArticleModel>(context, listen: true).articles[index].finalComments;
         List<dynamic> medias =  Provider.of<ArticleModel>(context, listen: true).articles[index].medias;
         DiffUser diffUser = Provider.of<ArticleModel>(context, listen: true).articles[index].diffUser;
-        print("THIS IS A DIFF USER TEST ${diffUser.posts.length}");
+        print("THIS IS A LIKES TEST ${likes}");
         return 
-        ArticleCard(diffUser: diffUser ,authorId: authorId,author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id);
+        ArticleCard(inSecond: false,diffUser: diffUser ,authorId: authorId,author: author, title: title, body: body, likes: likes, comments: comments, date:date ,fields: fields,subHead: subHead, medias: medias, id:id);
 
         //ArticleCard
       });

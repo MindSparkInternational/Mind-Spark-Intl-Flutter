@@ -206,7 +206,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                                                 onPressed: () async{
                                                                   SharedPreferences preferences = await SharedPreferences.getInstance();
                                                                   String token = preferences.getString("token");
-                                                                  http.put("https://mindsparkapi.herokuapp.com/api/v1/users/follow/",
+                                                                  var response = await http.put("https://mindsparkapi.herokuapp.com/api/v1/users/follow/",
                                                                     headers: {
                                                                       "Authorization":token
                                                                     },
@@ -454,7 +454,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text("0",
+                                                  Text("${diffUser.articles.length}",
                                                       style: TextStyle(
                                                           color: Colors.white)),
                                                   FittedBox(
@@ -520,7 +520,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.bookmark),
-                                  Text('SavedPosts')
+                                  Text('Articles')
                                 ],
                               ),
                             ])
@@ -717,6 +717,7 @@ class _MyPostTabState extends State<MyPostTab> {
                             return Container(
                                 height: maxHeight,
                                 child: ArticleCard(
+                                    inSecond: true,
                                     subHead: subhead,
                                     title: title,
                                     author: author,

@@ -15,10 +15,11 @@ class ArticleDetails extends StatefulWidget {
   List<dynamic> fields;
   BoxConstraints constraint;
   String authorId;
+  bool inSecond = false;
   DiffUser diffUser;
-  ArticleDetails({this.date, this.author, this.fields, this.constraint, this.authorId, this.diffUser}); 
+  ArticleDetails({this.inSecond,this.date, this.author, this.fields, this.constraint, this.authorId, this.diffUser}); 
   @override
-  _ArticleDetailsState createState() => _ArticleDetailsState(diffUser: diffUser,authorId:authorId,date:date,author:author, fields: fields, constraints: constraint);
+  _ArticleDetailsState createState() => _ArticleDetailsState(inSecond:inSecond,diffUser: diffUser,authorId:authorId,date:date,author:author, fields: fields, constraints: constraint);
 }
 
 class _ArticleDetailsState extends State<ArticleDetails> {
@@ -26,10 +27,11 @@ class _ArticleDetailsState extends State<ArticleDetails> {
   String author;
   String authorId;
   DiffUser diffUser;
+  bool inSecond;
   String date;
   List<dynamic> fields;
   BoxConstraints constraints;
-    _ArticleDetailsState({this.date, this.author,this.authorId, this.fields, this.diffUser, this.constraints});
+    _ArticleDetailsState({this.inSecond,this.date, this.author,this.authorId, this.fields, this.diffUser, this.constraints});
      
   Widget build(BuildContext context) => 
   
@@ -56,7 +58,7 @@ class _ArticleDetailsState extends State<ArticleDetails> {
                       )),
                       onTap: () async{
                         print(authorId);
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondProfile(diffUser: diffUser,)));
+                        inSecond == false ?Navigator.push(context, MaterialPageRoute(builder: (context)=>SecondProfile(diffUser: diffUser,))):print("hello");
                       },
                   )
                 ),

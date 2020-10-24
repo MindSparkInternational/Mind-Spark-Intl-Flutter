@@ -21,9 +21,10 @@ class ArticleScreen extends StatefulWidget {
   DiffUser diffUser;
   String date;
   String id;
-  ArticleScreen({this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date, this.id, this.diffUser});
+  List<dynamic> medias;
+  ArticleScreen({this.medias,this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead, this.date, this.id, this.diffUser});
   @override
-  _ArticleScreenState createState() => _ArticleScreenState(diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date, id: id);
+  _ArticleScreenState createState() => _ArticleScreenState(medias:medias,diffUser:diffUser,title: title, author: author, body: body, fields: fields, likes: likes, comments: comments, subHead: subHead, date: date, id: id);
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
@@ -32,13 +33,14 @@ class _ArticleScreenState extends State<ArticleScreen> {
   String body;
   String date;
   DiffUser diffUser;
+  List<dynamic> medias;
   int likes;
   String id;
   String subHead;
   List<dynamic> fields;
   List<Comment> comments;
   bool isSaved = false;
- _ArticleScreenState({this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
+ _ArticleScreenState({this.medias,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments,this.subHead,this.date, this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +81,25 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                   children: [
                                     Row(
                                       children: [
+                                        diffUser.user.img == null?
                                         Icon(
                                           Icons.face,
                                           size: 30,
-                                        ),
+                                        ):
+                                        Container(
+                                          height: 60,
+                                          width: 60,
+                                          child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(30),
+                                          child:Image.network(
+                                              '${diffUser.user.img}',
+                                              fit: BoxFit.fitWidth,
+                                            ) ,
+                                          ),
+                                        )
+                                       
+                                        
+                                        ,
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 15.0),
@@ -170,11 +187,32 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                       Container(
                                         child: Row(
                                           children: [
-                                            Icon(Icons.thumb_up),
+                                            GestureDetector(
+                                              child:Icon(Icons.thumb_up,),
+                                              onTap: () async{
+                                                SharedPreferences preferences = await SharedPreferences.getInstance();
+                                                String token = preferences.getString("token");
+                                                var response = await http.put("https://mindsparkapi.herokuapp.com/api/v1/articles/like/",
+                                                  headers: {
+                                                    "Authorization":token
+                                                  },
+                                                  body: {
+                                                    "article_id":id
+                                                  }
+                                                );
+                                                setState(() {
+                                                  likes++;
+                                                });
+                                              },
+                                            ),
+                                            
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            Icon(Icons.thumb_down),
+                                            Text("$likes"),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -238,11 +276,8 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                               ),
                                               child: Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.share),
-                                                  Text('Share'),
-                                                ],
+                                                    MainAxisAlignment.spaceEvenly,
+                                                
                                               )),
                                         ),
                                       ),
@@ -257,6 +292,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                                       BorderRadius.circular(15),
                                                 ),
                                                 child: Row(
+                                                  
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
@@ -284,9 +320,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                 height: constraints.maxHeight * 0.35,
                                 width: constraints.maxWidth,
                                 color: Colors.red,
-                                child: Image.asset(
-                                  "assets/img/Image1.png",
-                                  fit: BoxFit.fitWidth,
+                                child: PageView.builder(
+                                  itemCount: medias.length,
+                                  itemBuilder: (context, index) {
+                                    return Image.network("${medias[index]}",
+                                      fit: BoxFit.fitWidth,);
+                                  },
                                 ),
                               ),
                               Container(

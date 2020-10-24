@@ -16,6 +16,7 @@ class ArticleCard extends StatefulWidget {
   String author;
   String body;
   String subHead;
+  bool inSecond = false;
   String id;
   List<dynamic> fields;
   List<Comment> comments;
@@ -24,9 +25,9 @@ class ArticleCard extends StatefulWidget {
   String date;
   String authorId;
   List<dynamic> medias;
-  ArticleCard({this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id, this.authorId});
+  ArticleCard({this.inSecond,this.diffUser,this.title, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id, this.authorId});
   @override
-  _ArticleCardState createState() => _ArticleCardState(diffUser:diffUser,authorId: authorId,title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead, id: id);
+  _ArticleCardState createState() => _ArticleCardState(inSecond:inSecond,diffUser:diffUser,authorId: authorId,title: title, author: author, body: body, fields: fields, likes: likes, medias: medias,comments: comments, date: date,subHead:subHead, id: id);
 }
 
 class _ArticleCardState extends State<ArticleCard> {
@@ -40,10 +41,11 @@ class _ArticleCardState extends State<ArticleCard> {
   String authorId;
   List<dynamic> medias;
   int likes;
+  bool inSecond = false;
   List<dynamic> fields;
   List<Comment> comments;
   PageController controller;
-  _ArticleCardState({this.diffUser,this.title,this.authorId, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
+  _ArticleCardState({this.inSecond,this.diffUser,this.title,this.authorId, this.author, this.body, this.fields, this.likes, this.comments, this.date,this.subHead, this.medias, this.id});
   
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                     Container(),
                                     
                                    Consumer<ArticleModel>(builder: (context, articleModel, child){
-                                      return ArticleDetails(diffUser:diffUser,authorId: authorId,author:author,date:date, fields: fields, constraint: constraints,);
+                                      return ArticleDetails(inSecond: inSecond,diffUser:diffUser,authorId: authorId,author:author,date:date, fields: fields, constraint: constraints,);
                                    },),
                                     //  ArticleDetails(author:author,date: date,),
 //                                      Divider(
@@ -190,7 +192,7 @@ class _ArticleCardState extends State<ArticleCard> {
                                       print("Comment Length for article ${comments.length}");
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
-                                   return ArticleScreen(diffUser: diffUser,title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields, id: id,);
+                                   return ArticleScreen(medias:medias,likes: likes,diffUser: diffUser,title: title,body: body,author: author,date: date, subHead:subHead, comments: comments, fields: fields, id: id,);
                                       }));
                                     },
                                     child: Container(

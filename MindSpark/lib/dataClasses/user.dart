@@ -24,7 +24,7 @@ class User{
       lastName: json["last_name"],
       date: json["date_joined"],
       age: json["age"],
-      img: "",
+      img: json["img"],
       country: "",
       bio: "",
       roles: json["roles"] == null ? "" : tempRoles.substring(1,tempRoles.length-1)

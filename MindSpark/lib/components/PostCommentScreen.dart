@@ -122,7 +122,7 @@ class _PostCommentScreenState extends State<PostCommentScreen> {
 
                         }
                       ):
-                      await http.post("https://mindsparkapi.herokuapp.com/api/v1/posts/article/",
+                      await http.post("https://mindsparkapi.herokuapp.com/api/v1/articles/comment/",
                         headers: {
                           "Authorization":token
                         },
