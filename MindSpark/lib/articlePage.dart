@@ -81,22 +81,22 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        diffUser.user.img == null?
+                                        //diffUser.user.img == null?
                                         Icon(
                                           Icons.face,
                                           size: 30,
-                                        ):
-                                        Container(
-                                          height: 60,
-                                          width: 60,
-                                          child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(30),
-                                          child:Image.network(
-                                              '${diffUser.user.img}',
-                                              fit: BoxFit.fitWidth,
-                                            ) ,
-                                          ),
-                                        )
+                                        )//:
+                                        // Container(
+                                        //   height: 60,
+                                        //   width: 60,
+                                        //   child: ClipRRect(
+                                        //   borderRadius: BorderRadius.circular(30),
+                                        //   child:Image.network(
+                                        //       '${diffUser.user.img}',
+                                        //       fit: BoxFit.fitWidth,
+                                        //     ) ,
+                                        //   ),
+                                        // )
                                        
                                         
                                         ,

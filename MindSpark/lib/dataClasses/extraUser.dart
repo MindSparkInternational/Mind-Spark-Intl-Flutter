@@ -11,9 +11,10 @@ class ExtraUser{
   int following;
   int followers;
   List<Post> posts;
+  List<Article> articles;
   User userFull;
   List<Article> bookmarks;
-  ExtraUser({this.id,  this.user,this.followers, this.following, this.posts, this.bookmarks, this.userFull});
+  ExtraUser({this.articles,this.id,  this.user,this.followers, this.following, this.posts, this.bookmarks, this.userFull});
 
   factory ExtraUser.fromJson(Map<String, dynamic> json){
     print("Made it to User");
@@ -28,6 +29,19 @@ class ExtraUser{
       }
       post.finalComments = commentsList;
     }
+
+    List<Article> articles = new List();
+    for(Map map in json["articles"]){
+      articles.add(Article.fromJson(map as Map<String, dynamic>));
+    }
+    for(Article article in articles){
+      List<Comment> commentsList = new List();
+      for(Map map in article.comments){
+        commentsList.add(Comment.fromJson(map as Map<String, dynamic>));
+      }
+      article.finalComments = commentsList;
+    }
+
     List<Article> book = new List();
     for(Map map in json["bookmarks"]){
       book.add(Article.fromJson(map as Map<String, dynamic>));
@@ -48,7 +62,8 @@ class ExtraUser{
       followers: json["followers"],
       posts: list,
       bookmarks: book,
-      userFull: User.fromJson(json["user"])
+      userFull: User.fromJson(json["user"]),
+      articles: articles
     );
   }
 }

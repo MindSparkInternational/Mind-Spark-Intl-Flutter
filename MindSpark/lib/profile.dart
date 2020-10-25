@@ -1,8 +1,10 @@
 import 'package:MindSpark/components/ArticleCard.dart';
+import 'package:MindSpark/components/ProfilePostCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/diffUser.dart';
 import 'package:MindSpark/home.dart';
+import 'package:MindSpark/models/articleModel.dart';
 import 'package:MindSpark/models/postModel.dart';
 import 'package:MindSpark/models/userModel.dart';
 import 'package:flutter/gestures.dart';
@@ -95,6 +97,7 @@ _showRoleInfo(BuildContext context) {
         child: Scaffold(
           backgroundColor: Hexcolor('#E5E5E5'),
           body: LayoutBuilder(builder: (context, constraints) {
+            String img = Provider.of<UserModel>(context).user.img;
             return Container(
               height: constraints.maxHeight,
               width: constraints.maxWidth,
@@ -140,10 +143,16 @@ _showRoleInfo(BuildContext context) {
                                                   child: Container(
                                                     height: 60,
                                                     width: 60,
-                                                    child: Image.network(
-                                                      'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg',
+                                                    child: img != null?
+                                                    Image.network(
+                                                      '${img}',
                                                       fit: BoxFit.fill,
-                                                    ),
+                                                    ):
+                                                    Icon(
+                                                      Icons.face,
+                                                      size: 30,
+                                                    )
+                                                    ,
                                                   ),
                                                 ),
                                               ),
@@ -452,7 +461,7 @@ _showRoleInfo(BuildContext context) {
                   ),
                   Expanded(
                     child: TabBarView(
-                        children: [MyArticlesTab(constraints: constraints), SavedScreen(constraints: constraints,)]),
+                        children: [CombinedContext(constraints: constraints), SavedScreen(constraints: constraints,)]),
                   )
                 ],
               ),
@@ -463,6 +472,103 @@ _showRoleInfo(BuildContext context) {
     );
   }
 }
+
+class MyPostTab extends StatefulWidget {
+  String title;
+  String author;
+  String body;
+  List<dynamic> fields;
+  List<Comment> comments;
+  DiffUser diffUser;
+  int likes;
+  String date;
+  BoxConstraints constraints;
+  MyPostTab(
+      {this.title,
+      this.author,
+      this.body,
+      this.fields,
+      this.likes,
+      this.comments,
+      this.date,
+      this.diffUser,
+      this.constraints});
+  @override
+  _MyPostTabState createState() =>
+      _MyPostTabState(diffUser: diffUser, constraints: constraints);
+}
+
+class _MyPostTabState extends State<MyPostTab> {
+  String title;
+  String author;
+  String body;
+  String date;
+  int likes;
+  DiffUser diffUser;
+  BoxConstraints constraints;
+  List<dynamic> fields;
+  List<Comment> comments;
+  _MyPostTabState(
+      {this.constraints,
+      this.title,
+      this.author,
+      this.body,
+      this.fields,
+      this.likes,
+      this.comments,
+      this.date,
+      this.diffUser});
+  @override
+  Widget build(BuildContext context) {
+    double maxHeight = constraints.maxHeight;
+    return LayoutBuilder(builder: (context, constraints) {
+      return Container(
+          height: maxHeight,
+          child: Consumer<UserModel>(
+            builder: (context, postModel, child) {
+              return postModel.extraUser.articles == null
+                  ? Container(child: Text("Hello"))
+                  : Container(
+                      height: maxHeight,
+                      child: ListView.builder(
+                          itemCount: postModel.extraUser.articles.length,
+                          itemBuilder: (context, index) {
+                            String author = postModel.extraUser.articles[index].author;
+                            print("aa$author");
+                            String title = postModel.extraUser.articles[index].title;
+                            String body = postModel.extraUser.articles[index].body;
+                            int likes = postModel.extraUser.articles[index].likes;
+                            List<dynamic> fields =
+                                postModel.extraUser.articles[index].fields;
+                            String date = postModel.extraUser.articles[index].date;
+                            List<Comment> comments =
+                                postModel.extraUser.articles[index].finalComments;
+                            List<dynamic> medias =
+                                postModel.extraUser.articles[index].medias;
+                            String id = postModel.extraUser.articles[index].id;
+                            String subhead = postModel.extraUser.articles[index].subHead;
+                            print("comment size ${comments}");
+                            return Container(
+                                height: maxHeight,
+                                child: ArticleCard(
+                                    inSecond: true,
+                                    subHead: subhead,
+                                    title: title,
+                                    author: author,
+                                    body: body,
+                                    fields: fields,
+                                    date: date,
+                                    comments: comments,
+                                    id: id,
+                                    medias: medias,
+                                    likes: likes));
+                          }));
+            },
+          ));
+    });
+  }
+}
+
 
 class MyArticlesTab extends StatefulWidget {
   String title;
@@ -517,7 +623,7 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
             print("aa$comments");
             return Container(height: maxHeight ,
             child:
-            MyCard2(diffUser: DiffUser(),profImg:img,title: title, author: author, body: body, fields: fields,  date: date, comments: comments,medias: medias,likes:likes, id:id)
+            ProfilePostCard(diffUser: DiffUser(),profImg:img,title: title, author: author, body: body, fields: fields,  date: date, comments: comments,medias: medias,likes:likes, id:id)
             );
         }
       ):
@@ -527,7 +633,30 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
   }
 }
 
+class CombinedContext extends StatefulWidget {
+  BoxConstraints constraints;
+  CombinedContext({this.constraints});
+  @override
+  _CombinedContextState createState() => _CombinedContextState(constraints: constraints);
+}
 
+class _CombinedContextState extends State<CombinedContext> {
+  BoxConstraints constraints;
+  _CombinedContextState({this.constraints});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: constraints.maxHeight,
+      color: Hexcolor('#E5E5E5'),
+      child: PageView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          MyArticlesTab(constraints: constraints), MyPostTab(constraints: constraints,)
+        ],
+      ),
+    );
+  }
+}
 
 
 
@@ -549,6 +678,7 @@ class _SavedScreenState extends State<SavedScreen> {
       color: Hexcolor('#E5E5E5'),
       child: Consumer<UserModel>(
         builder: (context, savedModel, child){
+          
           return new ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: savedModel.extraUser.bookmarks.length,

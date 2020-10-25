@@ -1,4 +1,5 @@
 import 'package:MindSpark/components/ArticleCard.dart';
+import 'package:MindSpark/components/ProfilePostCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
 import 'package:MindSpark/dataClasses/diffUser.dart';
@@ -95,6 +96,7 @@ class _SecondProfileState extends State<SecondProfile> {
         child: Scaffold(
           backgroundColor: Hexcolor('#E5E5E5'),
           body: LayoutBuilder(builder: (context, constraints) {
+            String img = diffUser.user.img;
             return Container(
               height: constraints.maxHeight,
               width: constraints.maxWidth,
@@ -141,7 +143,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                                     height: 60,
                                                     width: 60,
                                                     child: Image.network(
-                                                      'http://www.bbk.ac.uk/mce/wp-content/uploads/2015/03/8327142885_9b447935ff.jpg',
+                                                      '$img',
                                                       fit: BoxFit.fill,
                                                     ),
                                                   ),
@@ -216,6 +218,7 @@ class _SecondProfileState extends State<SecondProfile> {
                                                                   );
                                                                   setState(() {
                                                                     isFollowed = !isFollowed;
+                                                                    
                                                                   });
                                                                 }),
                                                         ),
@@ -617,21 +620,23 @@ class _MyArticlesTabState extends State<MyArticlesTab> {
                                 diffUser.posts[index].finalComments;
                             List<dynamic> medias = diffUser.posts[index].medias;
                             String id = diffUser.posts[index].id;
+                            String img = diffUser.user.img;
                             print("comment size ${comments}");
                             return Container(
                                 height: maxHeight,
-                                child: MyCard2(
-                                    diffUser: diffUserSecond,
-                                    title: title,
-                                    author: author,
-                                    body: body,
-                                    fields: fields,
-                                    date: date,
-                                    comments: comments,
-                                    id: id,
-                                    medias: medias,
-                                    inSecond: true,
-                                    likes: likes));
+                                child: ProfilePostCard(
+                                  profImg: img,
+                                  diffUser: diffUserSecond,
+                                  title: title,
+                                  author: author,
+                                  body: body,
+                                  fields: fields,
+                                  date: date,
+                                  comments: comments,
+                                  id: id,
+                                  medias: medias,
+                                  inSecond: true,
+                                  likes: likes));
                           }));
             },
           ));
