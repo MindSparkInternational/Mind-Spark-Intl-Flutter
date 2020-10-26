@@ -118,7 +118,7 @@ class _ProfilePostCardState extends State<ProfilePostCard> {
                                             Row(
                                               children: [
                                                 CircleAvatar(
-                                                  backgroundColor: Colors.black,
+                                                  //backgroundColor: Colors.black,
                                                   child:
                                                   profImg == null?
                                                   Icon(

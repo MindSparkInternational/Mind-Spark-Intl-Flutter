@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:MindSpark/dataClasses/post.dart';
 import 'package:MindSpark/home.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -33,7 +36,6 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-
   String _title;
   String _type;
   // String _fields;
@@ -203,21 +205,6 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-// CircularProgressIndicator
-    // pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
-
-    // pr.style(
-    //   message: 'Please wait...',
-    //   borderRadius: 10.0,
-    //   backgroundColor: Colors.white,
-    //   progressWidget: CircularProgressIndicator(),
-    //   elevation: 10.0,
-    //   insetAnimCurve: Curves.easeInOut,
-    //   progressTextStyle: TextStyle(
-    //       color: Colors.black, fontSize: 13.0, fontWeight: FontWeight.w400),
-    //   messageTextStyle: TextStyle(
-    //       color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
-    // );
     bool validateTitleField(String userInputTitle) {
       if (userInputTitle.isEmpty) {
         setState(() {
@@ -318,7 +305,6 @@ class _CreatePostState extends State<CreatePost> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: 20,
                     ),
@@ -371,7 +357,6 @@ class _CreatePostState extends State<CreatePost> {
                         ),
                       ),
                     ),
-
                     SizedBox(
                       height: 10,
                     ),
@@ -448,26 +433,16 @@ class _CreatePostState extends State<CreatePost> {
                       height: 380,
                       width: 380,
                       child: GestureDetector(
-                        child:
-                            //_setImageView(),
-
-                            _displaySelectedIamge(),
+                        child: _displaySelectedIamge(),
                         onTap: () {
-                          // _showSelectionDialog(context);
                           Navigator.of(context).pop();
                         },
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-
                     Center(
                       child: Container(
                         width: 300,
-                        //   margin: EdgeInsets.only(top: 50),
                         alignment: Alignment.center,
-
                         child: RaisedButton(
                           child: Text(
                             'Save',
@@ -481,17 +456,33 @@ class _CreatePostState extends State<CreatePost> {
                           ),
                           onPressed: () async {
                             validateTitleField(title.text);
-                            validateBodyField(title.text);
+                            validateBodyField(body.text);
                             uploadPostimages(images);
-                            //setState(() {
-                            Provider.of<PostModel>(context, listen: false).addToBeginning(finalPost);
-                            //});
-                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-                            await Navigator.push( context, MaterialPageRoute( builder: (context) => Home()), ).then((value) => setState(() {
-                              Provider.of<PostModel>(context, listen: false).addToBeginning(finalPost);
-                            }
-                            
-                            ));// _startUploading();
+                            Provider.of<PostModel>(context, listen: false)
+                                .addToBeginning(finalPost);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Home()));
+                            Timer(Duration(seconds: 5), () async {
+                              Flushbar(
+                                flushbarPosition: FlushbarPosition.TOP,
+                                backgroundColor: Color(0xff059b9c),
+                                borderRadius: 30.0,
+                                duration: Duration(seconds: 5),
+                                message:
+                                    "Your post is successfully created and will be visible, when you login again in the app.",
+                              )..show(context);
+                              // Fluttertoast.showToast(
+                              //     msg:
+                              //         "Your post is successfully created and will be visible, when you login again in the app.",
+                              //     toastLength: Toast.LENGTH_SHORT,
+                              //     gravity: ToastGravity.TOP,
+                              //     timeInSecForIosWeb: 20,
+                              //     backgroundColor: Color(0xff059b9c),
+                              //     textColor: Colors.white,
+                              //     fontSize: 16.0);
+                            });
                           },
                         ),
                       ),
@@ -521,8 +512,8 @@ class _CreatePostState extends State<CreatePost> {
     request.fields['body'] = _body;
     request.fields['title'] = _title;
     request.fields['subhead'] = 'null';
-    request.fields['fields'] = selectedReportList.join(' ');
-    
+    request.fields['fields'] =
+        selectedReportList == null ? null : selectedReportList.join(',');
 
     if (images != null) {
       int image_index = 0;
@@ -538,7 +529,7 @@ class _CreatePostState extends State<CreatePost> {
           image_To_Send,
           imageData,
           filename: 'case',
-         contentType: MediaType("image/png", "image/jpg"),
+          contentType: MediaType("image/png", "image/jpg"),
         );
 
         // Add Image at the end of Request.
@@ -557,15 +548,15 @@ class _CreatePostState extends State<CreatePost> {
           var test = json.decode(value);
           finalPost = Post.fromJson(test as Map<String, dynamic>);
           //Provider.of<PostModel>(context, listen: true).addToBeginning(finalPost);
-          
-        //   Fluttertoast.showToast(
-        //       msg: "Post Created",
-        //       toastLength: Toast.LENGTH_SHORT,
-        //       gravity: ToastGravity.BOTTOM,
-        //       timeInSecForIosWeb: 1,
-        //       backgroundColor: Colors.red,
-        //       textColor: Colors.white,
-        //       fontSize: 16.0);
+
+          //   Fluttertoast.showToast(
+          //       msg: "Post Created",
+          //       toastLength: Toast.LENGTH_SHORT,
+          //       gravity: ToastGravity.BOTTOM,
+          //       timeInSecForIosWeb: 1,
+          //       backgroundColor: Colors.red,
+          //       textColor: Colors.white,
+          //       fontSize: 16.0);
         });
       } else {
         print(

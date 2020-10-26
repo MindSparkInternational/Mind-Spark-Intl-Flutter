@@ -242,7 +242,8 @@ class _SignUpThreeState extends State<SignUpThree> {
                                           "last_name": lastName,
                                           "age": "0",
                                           "country": country,
-                                          "bio": "String"
+                                          "bio": "String",
+                                          "roles":"Spark"
                                         });
                                   },
                                   minWidth: double.infinity,

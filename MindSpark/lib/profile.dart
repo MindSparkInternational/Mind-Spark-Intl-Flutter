@@ -1,4 +1,5 @@
 import 'package:MindSpark/components/ArticleCard.dart';
+import 'package:MindSpark/components/ProfileArticleCard.dart';
 import 'package:MindSpark/components/ProfilePostCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
@@ -279,7 +280,7 @@ _showRoleInfo(BuildContext context) {
                                     child: Container(
                                     padding: EdgeInsets.all(10),
                                     child:
-                                     Text("Enter About yourself ",textAlign: TextAlign.center,style: TextStyle(
+                                     Text("${Provider.of<UserModel>(context).user.bio!= null ?Provider.of<UserModel>(context).user.bio:""} ",textAlign: TextAlign.center,style: TextStyle(
                                        
                                      ),)
                                     //   autofocus: false,
@@ -318,7 +319,7 @@ _showRoleInfo(BuildContext context) {
                                   child: Row(children: <Widget>[
                                 Padding(padding: EdgeInsets.only(left: 40)),
                                 _getIconName(
-                                    icon: Icons.link, title: 'www.example.com'),
+                                    icon: Icons.link, title: '${Provider.of<UserModel>(context).user.website!= null ?Provider.of<UserModel>(context).user.website:""}'),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -388,7 +389,7 @@ _showRoleInfo(BuildContext context) {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text("0",
+                                                  Text("${Provider.of<UserModel>(context).extraUser.articles.length}",
                                                       style: TextStyle(
                                                           color: Colors.white)),
                                                   FittedBox(
@@ -547,22 +548,24 @@ class _MyPostTabState extends State<MyPostTab> {
                                 postModel.extraUser.articles[index].medias;
                             String id = postModel.extraUser.articles[index].id;
                             String subhead = postModel.extraUser.articles[index].subHead;
+                            String profImg = Provider.of<UserModel>(context).user.img;
                             print("comment size ${comments}");
                             return Container(
                                 height: maxHeight,
-                                child: ArticleCard(
-                                    inSecond: true,
-                                    subHead: subhead,
-                                    title: title,
-                                    author: author,
-                                    body: body,
-                                    fields: fields,
-                                    date: date,
-                                    comments: comments,
-                                    id: id,
-                                    medias: medias,
-                                    likes: likes));
-                          }));
+                                child: ProfileArticleCard(
+                                  profImg: profImg,
+                                  inSecond: true,
+                                  subHead: subhead,
+                                  title: title,
+                                  author: author,
+                                  body: body,
+                                  fields: fields,
+                                  date: date,
+                                  comments: comments,
+                                  id: id,
+                                  medias: medias,
+                                  likes: likes));
+                        }));
             },
           ));
     });
@@ -695,7 +698,7 @@ class _SavedScreenState extends State<SavedScreen> {
               List<dynamic> medias =  savedModel.extraUser.bookmarks[index].medias;
               String authorId = savedModel.extraUser.bookmarks[index].authorId;
               DiffUser diffUser = savedModel.extraUser.bookmarks[index].diffUser;
-              //print(comments.length);
+              print("AAAAA$diffUser");
               return 
               Container(
                 height: constraints.maxHeight,

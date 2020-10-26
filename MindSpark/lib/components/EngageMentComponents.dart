@@ -107,10 +107,7 @@ class SaveBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Icon(
-        Icons.thumb_down,
-        color: Colors.black,
-      ),
+      
     );
   }
 }

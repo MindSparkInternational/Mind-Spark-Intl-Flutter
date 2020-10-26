@@ -34,6 +34,7 @@ class _ArticleScreenState extends State<ArticleScreen> {
   String date;
   DiffUser diffUser;
   List<dynamic> medias;
+  bool isSelected = false;
   int likes;
   String id;
   String subHead;
@@ -201,7 +202,12 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                                   }
                                                 );
                                                 setState(() {
-                                                  likes++;
+                                                  isSelected = !isSelected;
+                                                  if(isSelected)
+                                                    likes +=1;
+                                                  else{
+                                                    likes -=1;
+                                                  }
                                                 });
                                               },
                                             ),
@@ -249,7 +255,10 @@ class _ArticleScreenState extends State<ArticleScreen> {
                                           ),
                                         ),
                                         onTap: () async{
-                                          isSaved = !isSaved;
+                                          setState(() {
+                                            isSaved = !isSaved;
+                                          });
+                                          
                                           SharedPreferences preferences = await SharedPreferences.getInstance();
                                           String token = preferences.getString("token");
                                           var response = await http.put(

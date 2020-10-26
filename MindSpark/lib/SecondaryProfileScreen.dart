@@ -1,4 +1,5 @@
 import 'package:MindSpark/components/ArticleCard.dart';
+import 'package:MindSpark/components/ProfileArticleCard.dart';
 import 'package:MindSpark/components/ProfilePostCard.dart';
 import 'package:MindSpark/components/TagCard.dart';
 import 'package:MindSpark/dataClasses/comment.dart';
@@ -52,6 +53,7 @@ class _SecondProfileState extends State<SecondProfile> {
     // TODO: implement
     getToken();
     super.initState();
+    print("ROLES${diffUser.user.firstName} ${diffUser.user.rolesList}");
   }
 
   void getToken() async {
@@ -239,24 +241,6 @@ class _SecondProfileState extends State<SecondProfile> {
                                             ),
                                           ],
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 15.0),
-                                          child: Container(
-                                              child: InkWell(
-                                            child: Icon(
-                                              Icons.settings,
-                                              color: Colors.white,
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ProfieSettings()));
-                                            },
-                                          )),
-                                        )
                                       ],
                                     ),
                                   ),
@@ -718,10 +702,11 @@ class _MyPostTabState extends State<MyPostTab> {
                                 diffUser.articles[index].medias;
                             String id = diffUser.articles[index].id;
                             String subhead = diffUser.articles[index].subHead;
+                            print(medias);
                             print("comment size ${comments}");
                             return Container(
                                 height: maxHeight,
-                                child: ArticleCard(
+                                child: ProfileArticleCard(
                                     inSecond: true,
                                     subHead: subhead,
                                     title: title,

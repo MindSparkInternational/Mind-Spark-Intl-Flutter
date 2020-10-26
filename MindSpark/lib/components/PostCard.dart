@@ -67,6 +67,7 @@ class _MyCard2State extends State<MyCard2> {
   @override
   Widget build(BuildContext context) => FadeAnimation(0.25, LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
+            
             print(date);
         return Container(
           child: Container(
@@ -123,7 +124,7 @@ class _MyCard2State extends State<MyCard2> {
                                                     fit: BoxFit.fitWidth,
                                                   ):
                                                 CircleAvatar(
-                                                  backgroundColor: Colors.black,
+                                                  //backgroundColor: Colors.black,
                                                   child:
                                                   diffUser.user.img == null?
                                                   Icon(
